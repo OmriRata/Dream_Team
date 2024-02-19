@@ -24,10 +24,16 @@ def getLeagueIdByCountry(country_name):
 
 
 
-@app.route("/players/<team_name>") 
-def getPlayersByTeam(team_name):
-    return "HELLO"
-    pass
+@app.route("/players/<team_id>") 
+def getPlayersByTeam(team_id):
+    querystring = {"team":team_id}
+    
+    response = requests.get(URL+"players/squads", headers=HEADERS, params=querystring)
+    print(response.json()["response"][0]["team"])
+    print(response.json()["response"][0]["players"])
+    return response.json()["response"][0]["players"]
+
+
 
 
 
@@ -37,7 +43,6 @@ def getTeamIdByName(team_name):
     querystring = {"name":team_name}
 
     response = requests.get(URL+"teams", headers=HEADERS, params=querystring)
-    print(response)
     print(response.json()["response"][0]["team"]["id"])
     return str(response.json()["response"][0]["team"])
 
