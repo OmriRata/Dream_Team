@@ -22,7 +22,14 @@ def getLeagueIdByCountry(country_name):
     print(response.json()["response"][0]["league"])
     return response.json()["response"][0]["league"]
 
-
+@app.route("/playerStatistics/<player_id>") 
+def getPlayerStatisticsById(player_id):
+    querystring = {"id":player_id,"season":SEASON}
+    
+    response = requests.get(URL+"players", headers=HEADERS, params=querystring)
+    print(response.json()["response"][0]["player"])
+    print(response.json()["response"][0]["statistics"])
+    return response.json()["response"][0]["statistics"]
 
 @app.route("/players/<team_id>") 
 def getPlayersByTeam(team_id):
