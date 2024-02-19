@@ -6,7 +6,7 @@ HEADERS = {
         "X-RapidAPI-Host": "api-football-beta.p.rapidapi.com"
     }
 
-URL = "https://api-football-beta.p.rapidapi.com/"
+URL = "https://api-football-v1.p.rapidapi.com/v3/"
 SEASON = "2023"
 
 
@@ -22,6 +22,11 @@ def getLeagueIdByCountry(country_name):
     print(response.json()["response"][0]["league"])
     return response.json()["response"][0]["league"]
 
+
+
+@app.route("/players/<team_name>") 
+def getTeamIdByName(team_name):
+    pass
 
 
 @app.route("/teamId/<team_name>") 
