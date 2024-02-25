@@ -1,11 +1,14 @@
 from flask import Flask,request,jsonify
 import requests
 
+
+"""
+    *********** using Sport API from Rpid APi. ***********
+"""
 HEADERS = {
         "X-RapidAPI-Key": "93b410e9abmshddaee8631d23438p128048jsn4f687c9a9322",
         "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
     }
-
 URL = "https://api-football-v1.p.rapidapi.com/v3/"
 SEASON = "2023"
 
@@ -23,7 +26,6 @@ app = Flask(__name__)
     matches the provided country name.
     example : http://localhost:5000/leagueId/spain
     return  : { "id": 140,"logo": "https://media.api-sports.io/football/leagues/140.png","name": "La Liga","type": "League"} 
-
 """
 @app.route("/leagueId/<country_name>") 
 def getLeagueIdByCountry(country_name):
@@ -32,6 +34,8 @@ def getLeagueIdByCountry(country_name):
     response = requests.get(URL+"leagues", headers=HEADERS, params=querystring)
     print(response.json()["response"][0]["league"])
     return response.json()["response"][0]["league"]
+
+
 
 """
     This function retrieves the statistics of a player with a specific ID.
@@ -51,6 +55,7 @@ def getPlayerStatisticsById(player_id):
     print(response.json()["response"][0]["player"])
     print(response.json()["response"][0]["statistics"])
     return response.json()["response"][0]["statistics"]
+
 
 
 """
@@ -75,7 +80,6 @@ def getPlayersByTeam(team_id):
     print(response.json()["response"][0]["team"])
     print(response.json()["response"][0]["players"])
     return response.json()["response"][0]["players"]
-
 
 
 
@@ -122,7 +126,7 @@ def getTeamsByLeague(league_id):
     querystring = {"league":league_id,"season":SEASON}
 
     response = requests.get(URL+"teams", headers=HEADERS, params=querystring)
-    teams_info = [x["team"] for x in response.json()["response"]]
+    teams_info = [ i["team"] for i in response.json()["response"] ]
     print(teams_info)
     ##print(response.json()["response"][0])
     return teams_info
