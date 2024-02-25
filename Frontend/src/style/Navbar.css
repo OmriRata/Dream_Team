@@ -65,10 +65,13 @@ nav .menu span{
         align-items: start;
     }
     nav ul{
-        /*display: none;*/
+        display: none;
         flex-direction: column;
         width: 100%;
         margin-bottom: 0.25rem;   
+    }
+    nav ul.open{
+        display: flex;
     }
     nav ul li{
         width: 100%;
