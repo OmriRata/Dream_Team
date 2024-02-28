@@ -1,10 +1,20 @@
 .App{
+  display: inline;
   background-color: #fefefe;
   height: 100%;
   width: 100%;
 }
 
 .container{
-  margin: 1rem;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.body-home,.body-register {
+  background: seagreen;
+}
+.body-login {
+  background: url('./assets/sport-football-arena-photography.jpg'); /* the most beauty*/ 
+  background-size: cover;
 }
