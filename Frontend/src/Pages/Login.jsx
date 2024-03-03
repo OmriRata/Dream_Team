@@ -8,7 +8,9 @@ function Login(){
     return (
         <div className="warpper">
             <form action="">
-                <h1>Login</h1>
+                <div className="login-header">
+                    <h1>Login</h1>
+                </div>
                 <div className="input-box">        
                     <input type="text" placeholder="Username" required/>
                     <FaUser className="icon"/>  
