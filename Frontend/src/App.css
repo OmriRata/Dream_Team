@@ -1,20 +1,21 @@
 .App{
-  display: inline;
-  background-color: #fefefe;
-  height: 100%;
-  width: 100%;
+    display: inline;
+    background-color: #fefefe;
+    height: 100%;
+    width: 100%;
 }
 
 .container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 .body-home,.body-register {
-  background: seagreen;
+    background: seagreen;
 }
 .body-login {
-  background: url('./assets/sport-football-arena-photography.jpg'); /* the most beauty*/ 
-  background-size: cover;
+    background: url('./assets/sport-football-arena-photography.jpg'); 
+    background-size: cover;
+    /*background-position: center;*/
 }
