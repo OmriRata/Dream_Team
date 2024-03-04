@@ -11,11 +11,20 @@
     align-items: center;
     min-height: 100vh;
 }
-.body-home,.body-register {
-    background: seagreen;
+.body-home{
+  background: seagreen;
+
+}
+.body-register {
+  background: url('./assets/soccer_background_5.jpeg') no-repeat center center fixed;
 }
 .body-login {
-    background: url('./assets/sport-football-arena-photography.jpg'); 
+    background: url('./assets/sport-football-arena-photography.jpg')no-repeat center center fixed; 
+}
+
+.body-login,.body-register{
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
-    /*background-position: center;*/
 }

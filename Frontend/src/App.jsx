@@ -8,17 +8,30 @@ import Login from './Pages/Login'
 import Register from './Pages/Register'
 
 function App() {
-  const [isLoginPage, setBackground] = useState(false);
+  const [className, setClassName] = useState("body-home container");
   const location = useLocation();
 
+  const setBackground = ()=>{
+    switch(location.pathname){
+      case '/':
+          setClassName("body-home container")
+          break
+      case '/login':
+          setClassName("body-login container")
+          break
+      case '/register':
+          setClassName("body-register container")
+          break
+    }
+  }
   useEffect(() => {
-    setBackground(location.pathname == "/login" ? true : false);
+    setBackground();
   }, [location])
 
   return (
     <div className="App">
         <Navbar />
-        <div className={isLoginPage? "body-login container":"body-home container"}>
+        <div className={className}>
           <Routes>
               <Route path="/" element={< Home/> }/>
               <Route path="/login" element={< Login/> }/>
