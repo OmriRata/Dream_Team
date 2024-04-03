@@ -6,6 +6,7 @@ import { Route, Routes,useLocation } from 'react-router-dom';
 import Home from './Pages/Home'
 import Login from './Pages/Login'
 import Register from './Pages/Register'
+import LeagueBuilder from './Pages/LeagueBuilder'
 
 function App() {
   const [className, setClassName] = useState("body-home container");
@@ -36,6 +37,7 @@ function App() {
               <Route path="/" element={< Home/> }/>
               <Route path="/login" element={< Login/> }/>
               <Route path="/register" element={< Register />}/>
+              <Route path="/createLeague" element={< LeagueBuilder />}/>
           </Routes>
         </div>
     </div>
