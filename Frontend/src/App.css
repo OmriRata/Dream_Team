@@ -1,6 +1,6 @@
 .App{
     display: inline;
-    background-color: #fefefe;
+    background-color: whitesmoke;
     height: 100%;
     width: 100%;
 }
@@ -12,7 +12,7 @@
     min-height: 100vh;
 }
 .body-home{
-  background: seagreen;
+  background: lightblue;
 
 }
 .body-register {
