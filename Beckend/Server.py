@@ -1,5 +1,7 @@
 from flask import Flask,request,jsonify
 import requests
+from flask_cors import CORS
+
 
 
 """
@@ -14,7 +16,7 @@ SEASON = "2023"
 
 
 app = Flask(__name__)
-
+CORS(app)
 """
     This function return the league ID based on the country name provided.
     
@@ -103,7 +105,7 @@ def getTeamIdByName(team_name):
 
     response = requests.get(URL+"teams", headers=HEADERS, params=querystring)
     print(response.json()["response"][0]["team"]["id"])
-    return str(response.json()["response"][0]["team"])
+    return jsonify(response.json()["response"][0]["team"])
 
 
 
