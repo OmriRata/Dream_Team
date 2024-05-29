@@ -26,10 +26,10 @@ CORS(app)
     returns the league ID.
     return: The function `getLeagueIdByCountry` is returning the league ID of the first league that
     matches the provided country name.
-    example : http://localhost:5000/leagueId/spain
+    example : http://localhost:5000/api/leagueId/spain
     return  : { "id": 140,"logo": "https://media.api-sports.io/football/leagues/140.png","name": "La Liga","type": "League"} 
 """
-@app.route("/leagueId/<country_name>") 
+@app.route("/api/leagueId/<country_name>") 
 def getLeagueIdByCountry(country_name):
     querystring = {"country":country_name}
 
@@ -49,7 +49,7 @@ def getLeagueIdByCountry(country_name):
     return: The function is making a GET request to a URL with player statistics based on the player_id
     provided in the route parameter. It returns the statistics of the player with the specified player_id (list of statisticts ,for each league).
 """
-@app.route("/playerStatistics/<player_id>") 
+@app.route("/api/playerStatistics/<player_id>") 
 def getPlayerStatisticsById(player_id):
     querystring = {"id":player_id,"season":SEASON}
     
@@ -71,10 +71,10 @@ def getPlayerStatisticsById(player_id):
     players belonging to a particular team.
     The list of players is returned as the output of the function.
 
-    example : http://localhost:5000/players/42
+    example : http://localhost:5000/api/players/42
     return  : list of objects that each object is info about the specified team player.
 """
-@app.route("/players/<team_id>") 
+@app.route("/api/players/<team_id>") 
 def getPlayersByTeam(team_id):
     querystring = {"team":team_id}
     
@@ -95,10 +95,10 @@ def getPlayersByTeam(team_id):
     return : The code is returning the team information in JSON format (object) for the team with the specified
     name. It includes the team's ID and other details.
 
-    example : http://localhost:5000/teamId/arsenal
+    example : http://localhost:5000/api/teamId/arsenal
     return  : {'id': 42, 'name': 'Arsenal', 'code': 'ARS', 'country': 'England', 'founded': 1886, 'national': False, 'logo': 'https://media.api-sports.io/football/teams/42.png'}
 """
-@app.route("/teamId/<team_name>") 
+@app.route("/api/teamId/<team_name>") 
 def getTeamIdByName(team_name):
 
     querystring = {"name":team_name}
@@ -120,10 +120,10 @@ def getTeamIdByName(team_name):
     league ID. The list contains information about each team participating in the league, such as team
     name, ID, and other relevant details.
 
-    example : http://localhost:5000/leagueTeams/39
+    example : http://localhost:5000/api/leagueTeams/39
     return : list of objects that each object is info about premier league team.
 """
-@app.route("/leagueTeams/<league_id>")
+@app.route("/api/leagueTeams/<league_id>")
 def getTeamsByLeague(league_id):
     querystring = {"league":league_id,"season":SEASON}
 
