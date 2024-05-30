@@ -1,49 +1,56 @@
-.modern-form-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  .title{
-    display:grid ;
-  }
-  .modern-form h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
+.league-builder{
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(rgba(255,255,255,0.7),rgba(255,255,255,0.3)),
+    url("../assets/home-banner-background_green.png");
+  background-position: center;
+  background-size: cover;
   
-  .modern-form .form-group {
-    margin-bottom: 20px;
-  }
+}
+.league-form{
+  padding: 50px 90px;
+  border-radius: 10px; 
+  background: transparent;
+  border: 2px solid rgba(255,255,255,.2);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 60px rgba(229, 10, 10, 0.2);
+  border-radius: 30px;  /* margin-left: 25%; */
+  width: 100%;
+}
+h1{
+  color:black;
+  text-align: center;
+}
+input{
+  padding: 15px;
+  margin: 10px 0px;
+  border-radius: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.league-btn{
+  padding: 25px !important;
+  height: 50px !important;
+  width: 100% !important;
+  border-radius: 30px!important;
+  margin-top: 5% !important;
+  background: linear-gradient(#53f800b3,rgba(192, 240, 0, 0.983)) !important;
+  cursor:pointer !important;
+  opacity: 0.8 !important;
   
-  .modern-form label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .modern-form .form-control {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .modern-form .submit-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .modern-form .submit-button:hover {
-    background-color: #0056b3;
-  }
-  
+}
+
+.formInput{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.formInput label{
+  color: blue;
+  text-decoration:blueviolet;
+}
