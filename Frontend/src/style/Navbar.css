@@ -1,12 +1,23 @@
 .active{
     background-color: #1d4ed8;
 }
-
+.flex-container{
+    align-items: center !important;
+    justify-content: center !important;
+    align-content: center !important;
+}
+.flex-container label{
+    font-size: 25px;
+    cursor: pointer;
+}
+.title img{
+    height: 60px;
+}
 nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #0f172a;
+    background-color:#172554;
 }
 
 nav .title{

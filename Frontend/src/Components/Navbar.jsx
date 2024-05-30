@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import {Link, NavLink} from 'react-router-dom'
 import "../style/Navbar.css"
+import logo from "../assets/download.png"
+import { Flex } from '@radix-ui/themes';
+
 
 function Navbar(props){
     const [menuOpen,setMenuOpen] = useState(false);
     const isOpen = () => setMenuOpen(!menuOpen);
     return (
         <nav>
-            <Link className="title" to="/">Dream Team</Link>
+                <Link className="title" to="/">
+                    <Flex className="flex-container" direction="row">
+                    <img src={logo} alt="" />
+                    <label>Dream Team</label>
+                    </Flex>
+                </Link>
             <div className="menu" onClick={isOpen}>
                 <span></span> 
                 <span></span>
