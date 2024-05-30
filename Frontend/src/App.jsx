@@ -10,17 +10,21 @@ import LeagueBuilder from './Pages/LeagueBuilder'
 
 function App() {
   const [className, setClassName] = useState("body-home container");
+  const [page, setPage] = useState("home");
   const location = useLocation();
 
   const setBackground = ()=>{
     switch(location.pathname){
       case '/':
           setClassName("body-home container")
+          setPage("home")
           break
       case '/login':
           setClassName("body-login container")
+          setPage("login")
           break
       case '/register':
+          setPage("register")
           setClassName("body-register container")
           break
     }
@@ -31,10 +35,10 @@ function App() {
 
   return (
     <div className="App">
-        <Navbar />
+        <Navbar page={page}/>
         <div className={className}>
           <Routes>
-              <Route path="/" element={< Home/> }/>
+              <Route path="/" element={< Home c={setPage}/> }/>
               <Route path="/login" element={< Login/> }/>
               <Route path="/register" element={< Register />}/>
               <Route path="/createLeague" element={< LeagueBuilder />}/>
