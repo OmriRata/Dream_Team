@@ -17,12 +17,15 @@
   border: 2px solid rgba(255,255,255,.2);
   backdrop-filter: blur(20px);
   box-shadow: 0 0 60px rgba(229, 10, 10, 0.2);
-  border-radius: 30px;  /* margin-left: 25%; */
-  width: 100%;
+  border-radius: 30px;  
+  /* margin-left: 25%; */
+  width: 65%;
 }
-h1{
+.logo-container h1{
   color:black;
   text-align: center;
+  font-weight: bold;
+  font-size: 40px;
 }
 input{
   padding: 15px;
@@ -43,7 +46,15 @@ input{
   opacity: 0.8 !important;
   
 }
-
+.logo{
+  height: 300px;
+  width: 300px;
+}
+.logo-container{
+  align-items: center;
+  justify-content: center;
+  padding-top: 4%;
+}
 .formInput{
   display: flex;
   flex-direction: column;
