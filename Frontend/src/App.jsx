@@ -7,6 +7,7 @@ import Home from './Pages/Home'
 import Login from './Pages/Login'
 import Register from './Pages/Register'
 import LeagueBuilder from './Pages/LeagueBuilder'
+import '@radix-ui/themes/styles.css';
 
 function App() {
   const [className, setClassName] = useState("body-home container");
