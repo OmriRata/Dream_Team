@@ -19,10 +19,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    margin-left: 10%;
 }
 .primary-heading {
     font-size: clamp(2rem, 5vw, 4rem);
-    color: #4c4c4c;
+    /*color: #4c4c4c;*/
+    color: #262626;
     /* line-height: 5rem; */
     max-width: 600px;
 }

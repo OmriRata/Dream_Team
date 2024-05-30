@@ -3,9 +3,12 @@ import "../style/Home.css"
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"
 import Button from 'react-bootstrap/Button';
-import Home_bg from "../assets/home-banner-background.png"
-import Home_bg1 from "../assets/blue-white-gradient-color-.avif"
+import Orange_bg from "../assets/home-banner-background.png"
+import Green_bg from "../assets/home-banner-background_green.png"
+import Blue_bg from "../assets/home-banner-background_blue.png"
+import Purple_bg from "../assets/home-banner-background_purple.png"
 import {FiArrowRight} from "react-icons/fi";
+import About from "../Components/About";
 
 function Home(){
     const navigate = useNavigate()
@@ -13,12 +16,17 @@ function Home(){
         navigate("/createLeague")
     }
     return (
+        <>
         <div className="home-container">
+            
             <div className="home-banner-container">
                 <div className="home-bannerImage-container">
-                    <img src={Home_bg} alt="" />
+                    <img src={Purple_bg} alt="" />
                 </div>
-                <div className="home-text-section">
+            </div>
+            
+        </div>
+        <div className="home-text-section">
                     <h1 className="primary-heading">
                         Build Your Dream Team !
                     </h1>
@@ -30,9 +38,7 @@ function Home(){
                         Join Now <FiArrowRight />
                     </button>
                 </div>
-            </div>
-            
-        </div>
+        </>
     )
 }
 
