@@ -8,11 +8,12 @@ import Green_bg from "../assets/home-banner-background_green.png"
 import Blue_bg from "../assets/home-banner-background_blue.png"
 import Purple_bg from "../assets/home-banner-background_purple.png"
 import {FiArrowRight} from "react-icons/fi";
-import About from "../Components/About";
 
-function Home(){
+function Home(props){
     const navigate = useNavigate()
     const createLeague = ()=>{
+        console.log("change page")
+        props.c("LeagueBuilder")
         navigate("/createLeague")
     }
     return (
