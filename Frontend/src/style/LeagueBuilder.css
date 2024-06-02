@@ -11,12 +11,14 @@
   
 }
 .league-form{
-  padding: 50px 90px;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
   border-radius: 10px; 
   background: transparent;
   border: 2px solid rgba(255,255,255,.2);
   backdrop-filter: blur(20px);
-  box-shadow: 0 0 60px rgba(229, 10, 10, 0.2);
+  box-shadow: 0 0 60px rgba(229, 10, 10, 0.298);
   border-radius: 30px;  
   /* margin-left: 25%; */
   width: 65%;
@@ -27,12 +29,25 @@
   font-weight: bold;
   font-size: 40px;
 }
-input{
-  padding: 15px;
-  margin: 10px 0px;
-  border-radius: 20px;
-  width: 100%;
-  text-align: center;
+input,.trigger{
+  padding: 15px !important;
+  margin: 10px 0px !important;
+  border-radius: 20px !important;
+  width: 100% !important;
+  height: 100% !important;
+  text-align: center !important;
+  border: 3px solid #ccc;
+  font-size: 16px;
+  font-weight:520;
+  background-color: #f1f1f1 !important;
+}
+.trigger{
+  border: 2px solid #ccc !important;
+
+}
+
+input:focus ,.trigger:focus {
+  border: 3px solid black !important;
 }
 
 .league-btn{
@@ -44,6 +59,7 @@ input{
   background: linear-gradient(#53f800b3,rgba(192, 240, 0, 0.983)) !important;
   cursor:pointer !important;
   opacity: 0.8 !important;
+  font-size: 20px !important;
   
 }
 .logo{
@@ -55,13 +71,34 @@ input{
   justify-content: center;
   padding-top: 4%;
 }
-.formInput{
+.formInput, .flex1{
   display: flex;
   flex-direction: column;
-  text-align: center;
+  text-align: center !important;
 }
 
-.formInput label{
-  color: blue;
-  text-decoration:blueviolet;
+.formInput label, .selectlabel{
+  color: black ;
+  font-family :Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+  font-size: 20px !important;
+  font-weight:  bold !important;
+  text-align: center !important;
+  justify-content: center !important;
+
+}
+.selectItem,.trigger{
+  justify-content: center !important;
+
+}
+
+.content, .trigger{
+  width: 100% !important;
+}
+.selectLeague{
+  justify-content: center !important;
+  display: flex !important;
+  width: 100% !important;
+  text-align: center !important;
+  background-color: #f1f1f1 !important;
+
 }

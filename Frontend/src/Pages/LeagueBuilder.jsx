@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 import "../style/LeagueBuilder.css"
 import logo from "../assets/download.png"
 import FormInput from '../Components/FormInput'
-import { Flex, Text, Button } from '@radix-ui/themes';
+import { Flex, Text, Button,Select } from '@radix-ui/themes';
 
+
+const LAEGUES = ['Spain','England','Garmny','France','Italy'];
 
 
 
 function LeagueBuilder(){
+    const [value, setValue] = useState('');
+
     const fatchData = ()=>{
         fetch('/api/teamId/barcelona')
         .then(res => res.json())
@@ -26,10 +30,20 @@ function LeagueBuilder(){
                 </Flex>
             <form className="league-form">
                 <FormInput placeholder="League Name"/>
-                <FormInput placeholder="participants"/>
-                <FormInput placeholder="choose league"/>
-                <FormInput placeholder="starting budget"/>
-                <Button className="league-btn" color="crimson" variant="soft">Submit</Button>
+                <Flex direction="column" className="flex1">
+                    <Text className="selectlabel">
+                        Choose Leauge:
+                    </Text>
+                    <Select.Root className="selectLeague" value={value} onValueChange={setValue}>
+                        <Select.Trigger placeholder="chosoe league" className="trigger">{value}</Select.Trigger>
+                        <Select.Content className="content">
+                            {LAEGUES.map((league,i)=>{
+                                return <Select.Item className="selectItem" key={i} value={league}>{league}</Select.Item>
+                            })}
+                        </Select.Content>
+                    </Select.Root>
+                </Flex>
+                <Button className="league-btn" color="crimson" variant="soft">Create League</Button>
             </form>
             </Flex>
         </div>
