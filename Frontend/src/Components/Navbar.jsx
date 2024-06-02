@@ -26,11 +26,11 @@ function Navbar(props){
                     <h1 color="white" >{props.page}</h1>
                 </li>
                 <li>
-                    <NavLink to="/login">Login</NavLink>
+                    <NavLink className="navLink" to="/login">Login</NavLink>
                 </li>
                 
                 <li>
-                    <NavLink to="/register">Register</NavLink>
+                    <NavLink className="navLink" to="/register">Register</NavLink>
                 </li>
             </ul>
         </nav>
