@@ -29,7 +29,7 @@
   font-weight: bold;
   font-size: 40px;
 }
-input,.trigger{
+.formInput input,.trigger{
   padding: 15px !important;
   margin: 10px 0px !important;
   border-radius: 20px !important;
