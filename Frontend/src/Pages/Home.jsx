@@ -15,10 +15,15 @@ import { Flex } from '@radix-ui/themes';
 function Home(props){
     const navigate = useNavigate()
     const createLeague = ()=>{
-        console.log("change page")
         props.c("LeagueBuilder")
         navigate("/createLeague")
     }
+    const createTeam = ()=>{
+        console.log("change page")
+        props.c("LeagueBuilder")
+        navigate("/createTeam")
+    }
+    
     return (
         <>
         <div className="home-container">
@@ -42,6 +47,8 @@ function Home(props){
                         </p>
                         <button className="secondary-button" onClick={createLeague}>
                             Join Now <FiArrowRight />
+                        </button><button className="secondary-button" onClick={createTeam}>
+                            Create Your Team <FiArrowRight />
                         </button>
                 </div>
                 <>
