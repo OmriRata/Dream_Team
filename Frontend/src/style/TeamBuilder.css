@@ -1,0 +1,24 @@
+.team-builder{
+    padding:5px;
+    border: 2px solid rgb(0, 195, 255) !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100%;
+    display: table;
+    /* margin:10px; */
+    background-image: url('/home/omrirata/DreamTeam/Dream_Team/Frontend/src/assets/soccer_background_3.jpg');
+    background-size:contain;
+}
+
+.playerSelect{
+    width: 100%;
+    height: 100%;
+    display: table-cell;
+}
+
+.Line-up{
+    width: 100%;
+    height: 100%;
+    display: table-cell;
+}
