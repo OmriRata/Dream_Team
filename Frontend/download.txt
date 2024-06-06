@@ -1,1 +1,4 @@
-npm install express nodemon
+// for mongodb in python
+pip install Flask_cors
+pip install Flask-PyMongo
+npm install axios

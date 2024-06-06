@@ -11,8 +11,29 @@ import '@radix-ui/themes/styles.css';
 import TeamBuilder from './Pages/TeamBuilder';
 
 function App() {
+  const [className, setClassName] = useState("body-home container");
   const [page, setPage] = useState("home");
-  
+  const location = useLocation();
+
+  const setBackground = ()=>{
+    switch(location.pathname){
+      case '/':
+          setClassName("body-home container")
+          setPage("home")
+          break
+      case '/login':
+          setClassName("body-login container")
+          setPage("login")
+          break
+      case '/register':
+          setPage("register")
+          setClassName("body-register container")
+          break
+    }
+  }
+  useEffect(() => {
+    setBackground();
+  }, [location])
 
   return (
     <div className="App">
