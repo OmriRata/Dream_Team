@@ -1,3 +1,4 @@
+// register.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
@@ -33,7 +34,7 @@ function Register() {
     return (
         <div className="register">
             <div className="wrapper">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} method="POST">
                     <div className="login-header">
                         <h1>Register</h1>
                     </div>
