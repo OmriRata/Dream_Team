@@ -1,0 +1,21 @@
+.line-up{
+    padding: 10px;
+    margin: 5px;
+}
+
+.teamH1{
+    color:rgb(20,60,20);
+    font-size: 40px;
+    text-align: center;
+
+}
+.applyBtn{
+    width: 100%;
+}
+.fieldImg{
+    height: 700px;
+    width: 700px;
+    background: transparent;
+    opacity: 0.8;
+    margin: 10px;
+}
