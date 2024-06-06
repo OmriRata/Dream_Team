@@ -23,6 +23,15 @@
     position: relative ;
     background-color: white;
 }
+.player-box{
+    opacity:unset;
+    width: 600px !important;
+    max-width: 100% !important;
+    background-color: green;
+    border-radius:inherit;
+
+}
+
 
 .card{
     width: 100% !important;
@@ -31,5 +40,13 @@
     width: 100px;
 }
 .addBtn,.searchBtn{
-    float: right !important;
+    float:right !important;
+}
+
+.addBtn{
+    /* margin-right: 5%; */
+    position: absolute;
+    width: 20%;
+    right: 3% !important;
+    /* height: inherit; */
 }
