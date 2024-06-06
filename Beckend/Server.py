@@ -17,6 +17,7 @@ SEASON = "2023"
 
 app = Flask(__name__)
 CORS(app)
+users = []
 """
     This function return the league ID based on the country name provided.
     
@@ -132,6 +133,26 @@ def getTeamsByLeague(league_id):
     print(teams_info)
     ##print(response.json()["response"][0])
     return teams_info
+
+##register
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+    
+    # Simple user registration logic (no database involved for simplicity)
+    if not username or not password:
+        return jsonify({"error": "Username and password are required"}), 400
+
+    # Check if user already exists
+    for user in users:
+        if user['username'] == username:
+            return jsonify({"error": "User already exists"}), 400
+
+    # Add new user
+    users.append({'username': username, 'password': password})
+    return jsonify({"message": "User registered successfully"}), 201
 
 
 
