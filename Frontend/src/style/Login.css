@@ -1,3 +1,14 @@
+.login{
+    background: url('../assets/sport-football-arena-photography.jpg')no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
 .warpper{
     width: 420px;
     color: #fff;

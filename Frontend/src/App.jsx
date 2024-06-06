@@ -38,7 +38,6 @@ function App() {
   return (
     <div className="App">
         <Navbar page={page}/>
-        <div className={className}>
           <Routes>
               <Route path="/" element={< Home c={setPage}/> }/>
               <Route path="/login" element={< Login/> }/>
@@ -46,7 +45,6 @@ function App() {
               <Route path="/createLeague" element={< LeagueBuilder />}/>
               <Route path="/createTeam" element={< TeamBuilder />}/>
           </Routes>
-        </div>
     </div>
   )
 }

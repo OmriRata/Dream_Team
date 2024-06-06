@@ -6,6 +6,7 @@ import { FaUser ,FaLock } from "react-icons/fa";
 
 function Login(){
     return (
+    <div className="login">
         <div className="warpper">
             <form action="">
                 <div className="login-header">
@@ -29,6 +30,7 @@ function Login(){
                 </div>
             </form>
         </div>
+</div>
     )
 }
 
