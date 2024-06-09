@@ -1,8 +1,12 @@
 .line-up{
-    padding: 10px;
-    margin: 5px;
+    /* padding: 10px;
+    margin: 5px; */
 }
-
+.line{
+    background: url("/home/omrirata/DreamTeam/Dream_Team/Frontend/src/assets/soccer_field2.jpg")no-repeat; 
+    height: 950px;
+    width: 650px;
+}
 .teamH1{
     color:rgb(20,60,20);
     font-size: 40px;
@@ -10,12 +14,13 @@
 
 }
 .applyBtn{
-    width: 100%;
+    width: 600px;
+    align-items: center;
 }
-.fieldImg{
+/* .fieldImg{
     height: 700px;
     width: 700px;
     background: transparent;
     opacity: 0.8;
     margin: 10px;
-}
+} */
