@@ -3,19 +3,25 @@
     align-items: center;
     position: relative;
 }
+.scroll{
+    margin-top: 5px;
+    width: 600px;
+    width: 100%;
+}
 .player-selection .search table{
-    /* max-width:100%; */
+    max-width:100%;
     /* margin: 7px; */
     padding-top: 10px;
 }
 .search{
-     width: 600px; /*Adjust the width as needed */
+    width: 600px; /*Adjust the width as needed */
     margin: 0 auto;
 }
 .mt-4{
     color:rgb(20,60,20);
     font-size: 40px;
     text-align: center;
+    margin:5px;
 }
 .my-3{
     max-width: 100%;
@@ -27,7 +33,7 @@
     opacity:unset;
     width: 600px !important;
     max-width: 100% !important;
-    background-color: green;
+    /* background-color: green; */
     border-radius:inherit;
 
 }
@@ -37,12 +43,17 @@
     width: 100% !important;
 }
 .searchBtn{
-    width: 100px;
+    width: 25%;
 }
 .addBtn,.searchBtn{
     float:right !important;
 }
+.price{
+    float: right;
+    position: absolute;
+    right: 25%;
 
+}
 .addBtn{
     /* margin-right: 5%; */
     position: absolute;
