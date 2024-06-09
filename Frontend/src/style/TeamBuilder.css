@@ -1,13 +1,13 @@
 .team-builder{
     padding:5px;
-    border: 2px solid rgb(0, 195, 255) !important;
+    /* border: 2px solid rgb(0, 195, 255) !important; */
     position: relative !important;
     width: 100% !important;
     height: 100% !important;
     max-height: 100%;
     display: table;
     /* margin:10px; */
-    background-image: url('../src/assets/soccer_background_3.jpg');
+    background: url('../src/assets/soccer_background_3.jpg');
     background-size:contain;
 }
 
