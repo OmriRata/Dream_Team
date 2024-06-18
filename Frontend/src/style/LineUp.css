@@ -6,7 +6,7 @@
     height: 100%;
 }
 .line{
-    background: url("/home/omrirata/DreamTeam/Dream_Team/Frontend/src/assets/soccer_field2.jpg")no-repeat; 
+    background: url("../assets/soccer_field2.jpg")no-repeat; 
     height: 700px;
     width: 635px;
     /* width: 100%;
