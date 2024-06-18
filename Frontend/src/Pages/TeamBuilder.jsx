@@ -7,10 +7,6 @@ import LineUp from '../Components/LineUp';
 
 function TeamBuilder() {
     const [players,setPlayers] = useState([])
-    useEffect(()=>{
-        console.log('first')
-
-    },[players])
 
 return (
         <Flex className="team-builder" direction="column" gap="2">
@@ -18,7 +14,7 @@ return (
                 <PlayerSelection setPlayers={setPlayers} players={players} />
             </div>
             <div className='Line-up'>
-                <LineUp players={players}/>
+                <LineUp players={players} setPlayers={setPlayers}/>
             </div>
         </Flex>
 )
