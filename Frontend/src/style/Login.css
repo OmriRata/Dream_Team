@@ -1,5 +1,5 @@
 .login{
-    background: url('../assets/sport-football-arena-photography.jpg')no-repeat center center fixed; 
+    background: url('../assets/soccer_background_5.jpeg')no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -14,7 +14,7 @@
     color: #fff;
     background: transparent;
     border: 2px solid rgba(255,255,255,.2);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(50px);
     box-shadow: 0 0 20px rgba(255,255,255,.2);
     border-radius: 10px;
     padding: 50px 40px;
