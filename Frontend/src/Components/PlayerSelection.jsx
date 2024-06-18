@@ -8,18 +8,16 @@ import { useEffect, useState } from 'react'
 function PlayerSelection(props) {
     const [data,setData] = useState([]);
     const [search,setSearch] = useState('');
-
+    const disabled = true;
     function abc(){
         setData(Data)
-        console.log("first")
     }
 
-    const addPlayers = (i)=>{
+    const addPlayers = (player,e)=>{
         props.setPlayers([
             ...props.players,
-            i.photo
+            player
         ]);
-
     } 
     useEffect(() => {
         abc()
@@ -27,7 +25,6 @@ function PlayerSelection(props) {
 
     return (
         <div className='player-selection'>
-            <div >
             <Container className='search'>
                 <h1 className='text-center mt-4'>Add Players</h1>
                 <form className='search-form'>
@@ -60,8 +57,12 @@ function PlayerSelection(props) {
                                                 <label className='price'>price : 31222M</label>
                                                 :    
                                                 <label className='price'>price : 22M</label>
-                                            } 
-                                                <Button color="cyan" variant="soft" onClick={()=>addPlayers(item)} className='addBtn'>Add</Button>
+                                            } {
+                                                props.players.includes(item)?
+                                                <Button color="gray" style={{backgroundColor:"gray"}}  disabled={disabled} variant="soft" onClick={(e)=>addPlayers(item,e)} className='addBtn'>Add</Button>
+                                                :
+                                                <Button color="cyan" disabled={!disabled} variant="soft" onClick={(e)=>addPlayers(item,e)} className='addBtn'>Add</Button>
+                                                }
                                             </Flex>
 
                                         </Card>
@@ -71,7 +72,6 @@ function PlayerSelection(props) {
                 </ScrollArea>
 
             </Container>
-    </div>
         </div>
     )
 }
