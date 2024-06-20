@@ -1,9 +1,12 @@
 from flask import Flask,request,jsonify
 import requests
-from flask_cors import CORS
+from flask_cors import CORS,cross_origin
+import pymongo
+import os
+import pprint
+from werkzeug.security import generate_password_hash,check_password_hash 
 
-
-
+printer = pprint.PrettyPrinter()
 """
     *********** using Sport API from Rpid APi. ***********
 """
@@ -15,9 +18,31 @@ URL = "https://api-football-v1.p.rapidapi.com/v3/"
 SEASON = "2023"
 
 
+DB_URL = "mongodb://localhost:27017/"
+
 app = Flask(__name__)
 CORS(app)
-users = []
+#password = os.environ.get("DB_PWD")
+client = pymongo.MongoClient(DB_URL)
+db = client.myDb
+usrs = db.users
+
+@app.route('/add')
+def add():
+    obj = {
+        "name":"shimon",
+        "last_name":"avraham",
+        "pwd":"12345346"
+    }
+    id = usrs.insert_one(obj).inserted_id;
+    print("!!!!!!!!!!!!!!!!!")
+    print(id)
+    print("!!!!!!!!!!!!!!!!!")
+    
+    return jsonify(obj)
+
+
+
 """
     This function return the league ID based on the country name provided.
     
@@ -136,26 +161,41 @@ def getTeamsByLeague(league_id):
 
 ##register
 @app.route('/register', methods=['POST'])
+@cross_origin()
 def register():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
+    email = data.get('email')
     
+
     # Simple user registration logic (no database involved for simplicity)
     if not username or not password:
         return jsonify({"error": "Username and password are required"}), 400
 
     # Check if user already exists
-    for user in users:
-        if user['username'] == username:
-            return jsonify({"error": "User already exists"}), 400
+    users = usrs.find()
+
+    if usrs.find_one({"username":username}) or usrs.find_one({"email":email}):
+        return jsonify({"error": "User already exists"}), 400
+    
 
     # Add new user
-    users.append({'username': username, 'password': password})
-    return jsonify({"message": "User registered successfully"}), 201
+    newUser = {
+        "username":username,
+        "pwd":generate_password_hash(password),
+        "email":email,
+    }
+    usrs.insert_one(newUser);
+    response = jsonify("User registered successfully")
+    response.status_code = 200
+
+    return response
 
 
-
+@app.route('/login', methods=['POST'])
+def login():
+    pass
 
 
 
@@ -165,4 +205,6 @@ def home():
 
 
 if __name__ == "__main__":
+    print("hello")
+
     app.run(debug=True)

@@ -26,9 +26,11 @@ function Register() {
                 password
             });
             setMessage(response.data.message);
+            window.location.href = '/';
         } catch (error) {
-            setMessage(error.response.data.message);
+            setMessage(error.response.data.error);
         }
+
     };
 
     return (
