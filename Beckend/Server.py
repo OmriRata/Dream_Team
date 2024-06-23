@@ -6,6 +6,8 @@ import os
 import pprint
 from werkzeug.security import generate_password_hash,check_password_hash 
 
+
+
 printer = pprint.PrettyPrinter()
 """
     *********** using Sport API from Rpid APi. ***********
@@ -18,7 +20,9 @@ URL = "https://api-football-v1.p.rapidapi.com/v3/"
 SEASON = "2023"
 
 
-DB_URL = "mongodb://localhost:27017/"
+DB_URL = "mongodb+srv://Dream_Team:8XUzq7rcn6w1gf3d@dreamteam.lvd2kmm.mongodb.net/"
+#mongodb+srv://Dream_Team:8XUzq7rcn6w1gf3d@dreamteam.lvd2kmm.mongodb.net/
+
 
 app = Flask(__name__)
 CORS(app)
@@ -26,20 +30,6 @@ CORS(app)
 client = pymongo.MongoClient(DB_URL)
 db = client.myDb
 usrs = db.users
-
-@app.route('/add')
-def add():
-    obj = {
-        "name":"shimon",
-        "last_name":"avraham",
-        "pwd":"12345346"
-    }
-    id = usrs.insert_one(obj).inserted_id;
-    print("!!!!!!!!!!!!!!!!!")
-    print(id)
-    print("!!!!!!!!!!!!!!!!!")
-    
-    return jsonify(obj)
 
 
 
