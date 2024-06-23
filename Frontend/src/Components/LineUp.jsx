@@ -3,6 +3,7 @@ import '../style/LineUp.css'
 import field from '../assets/soccer_field2.jpg'
 import { Avatar, Button, Flex, Box, Grid,Card } from '@radix-ui/themes'
 import data from '../Data/data'
+
 function LineUp(props) {
 
     const removePlayer = (player)=>{
@@ -13,13 +14,11 @@ function LineUp(props) {
     function addplayers(id, position) {
         const player = props.players.find(p => p.id === id);
         if (player && position == player.position) {
-            return <Box className='plyr' size="9" width='350px'>
-
-                    <Avatar className='plyrImg' size="5" src={player.photo} radius="full" fallback="T" color="indigo" />
-                    <Button size='1' color="red" variant="surface" onClick={()=>{removePlayer(player)}}>X</Button>
-
-                    <h5 className='plyrName'><span>{player.name}</span></h5>
-            </Box>
+            return <Box className='plyr' size="9" width='250'>
+                            <Button className='rmvBtn' size='1' color="red" radius='full' onClick={()=>{removePlayer(player)}}>X</Button>
+                            <Avatar className='plyrImg' size="5" src={player.photo} radius='full' fallback="T" color="indigo" />
+                            <h5 className='plyrName'><span>{player.name}</span></h5>
+                    </Box>
         }
     }
     useEffect(()=>{
