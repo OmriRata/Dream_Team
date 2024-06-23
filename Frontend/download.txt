@@ -2,3 +2,6 @@
 pip install Flask_cors
 pip install Flask-PyMongo
 npm install axios
+##open Web api
+cd Frontend
+npm run dev
