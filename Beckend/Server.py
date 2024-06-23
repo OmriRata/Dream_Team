@@ -1,9 +1,12 @@
-from flask import Flask,request,jsonify
+from flask import Flask,request,jsonify,session
 import requests
+from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required,JWTManager
 from flask_cors import CORS,cross_origin
 import pymongo
 import os
 import pprint
+from datetime import datetime,timedelta
+from functools import wraps
 from werkzeug.security import generate_password_hash,check_password_hash 
 
 
@@ -20,8 +23,9 @@ URL = "https://api-football-v1.p.rapidapi.com/v3/"
 SEASON = "2023"
 
 
-DB_URL = "mongodb+srv://Dream_Team:8XUzq7rcn6w1gf3d@dreamteam.lvd2kmm.mongodb.net/"
+DB_URL = "mongodb://localhost:27017/"
 #mongodb+srv://Dream_Team:8XUzq7rcn6w1gf3d@dreamteam.lvd2kmm.mongodb.net/
+
 
 
 app = Flask(__name__)
@@ -30,7 +34,20 @@ CORS(app)
 client = pymongo.MongoClient(DB_URL)
 db = client.myDb
 usrs = db.users
+app.config['JWT_SECRET_KEY'] = 'cc998a93a9c349178aae3b31a1cc7913'
+jwt = JWTManager(app)
 
+
+def token_required(func):
+    @wraps(func)
+    def decorated(*arg,**kwargs):
+        token = request.args.get('token')
+        if not token:
+            return jsonify({'error':'Token is missung'})
+        try:
+            payload = jwt.decode(token,app.config['SECRET_KEY'])
+        except:
+            return jsonify({'error':'Invalid Token'})
 
 
 """
@@ -182,7 +199,6 @@ def register():
 
     return response
 
-
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -196,8 +212,9 @@ def login():
     elif not check_password_hash(user['pwd'],password):
         return jsonify({"error": "Incorrect Password"}), 400
 
-    print(check_password_hash(user['pwd'],password))
-    return jsonify("User Login successfully"),200
+    token = create_access_token(identity=username)
+    app.config['SECRET_KEY']
+    return jsonify(access_token=token),200
 
 
 
