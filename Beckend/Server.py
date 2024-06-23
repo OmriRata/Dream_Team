@@ -195,7 +195,19 @@ def register():
 
 @app.route('/login', methods=['POST'])
 def login():
-    pass
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+    
+    user = usrs.find_one({'username':username})
+    if not user:
+        return jsonify({"error": "User Not exists"}), 400
+
+    elif not check_password_hash(user['pwd'],password):
+        return jsonify({"error": "Incorrect Password"}), 400
+
+    print(check_password_hash(user['pwd'],password))
+    return jsonify("User Login successfully"),200
 
 
 
@@ -205,6 +217,4 @@ def home():
 
 
 if __name__ == "__main__":
-    print("hello")
-
     app.run(debug=True)
