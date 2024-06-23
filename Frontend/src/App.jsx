@@ -9,31 +9,15 @@ import Register from './Pages/Register'
 import LeagueBuilder from './Pages/LeagueBuilder'
 import '@radix-ui/themes/styles.css';
 import TeamBuilder from './Pages/TeamBuilder';
+import Leagues from './Pages/Leagues';
+import Team from './Pages/Team';
 
 function App() {
   const [className, setClassName] = useState("body-home container");
   const [page, setPage] = useState("home");
   const location = useLocation();
 
-  const setBackground = ()=>{
-    switch(location.pathname){
-      case '/':
-          setClassName("body-home container")
-          setPage("home")
-          break
-      case '/login':
-          setClassName("body-login container")
-          setPage("login")
-          break
-      case '/register':
-          setPage("register")
-          setClassName("body-register container")
-          break
-    }
-  }
-  useEffect(() => {
-    setBackground();
-  }, [location])
+
 
   return (
     <div className="App">
@@ -44,6 +28,8 @@ function App() {
               <Route path="/register" element={< Register />}/>
               <Route path="/createLeague" element={< LeagueBuilder />}/>
               <Route path="/createTeam" element={< TeamBuilder />}/>
+              <Route path="/leagues" element={< Leagues />}/>
+              <Route path="/team" element={< Team />}/>
           </Routes>
     </div>
   )
