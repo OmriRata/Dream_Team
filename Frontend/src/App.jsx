@@ -9,6 +9,7 @@ import Register from './Pages/Register'
 import LeagueBuilder from './Pages/LeagueBuilder'
 import '@radix-ui/themes/styles.css';
 import TeamBuilder from './Pages/TeamBuilder';
+import ExplanationPage from './Pages/ExplanationPage'
 
 function App() {
   const [className, setClassName] = useState("body-home container");
@@ -44,6 +45,7 @@ function App() {
               <Route path="/register" element={< Register />}/>
               <Route path="/createLeague" element={< LeagueBuilder />}/>
               <Route path="/createTeam" element={< TeamBuilder />}/>
+              <Route path="/ExplanationPage" element={< ExplanationPage />}/>
           </Routes>
     </div>
   )
