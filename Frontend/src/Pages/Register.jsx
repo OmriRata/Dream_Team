@@ -40,6 +40,7 @@ function Register() {
                     <div className="login-header">
                         <h1>Register</h1>
                     </div>
+                    {message && <p>{message}</p>}
                     <div className="input-box">
                         <input
                             type="text"
