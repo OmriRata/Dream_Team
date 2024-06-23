@@ -107,3 +107,8 @@
 .register-link p a:hover{
     text-decoration: underline;
 }
+.message{
+    color: #f60707;
+    text-align: center;
+    margin-top: 10px;
+}
