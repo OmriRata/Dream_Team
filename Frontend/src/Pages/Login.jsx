@@ -1,10 +1,14 @@
 import React,{ useState }  from "react";
 import "../style/Login.css"
 import { FaUser ,FaLock } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 
 
-function Login(){
+
+function Login(props){
+    const navigate = useNavigate();
+    
     const [message, setMessage] = useState("");
     const [timeoutID, settimeoutID] = useState();
 
@@ -36,7 +40,10 @@ function Login(){
                 return
             }
             console.log('successful login')
-            window.location.href = '/';
+            console.log(json)
+            props.setToken(json.access_token)
+            localStorage.setItem('username',json.username)
+            navigate("/");
         })
         .catch (error=> {
             console.log(error)
