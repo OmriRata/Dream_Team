@@ -1,11 +1,12 @@
+import json
 from flask import Flask,request,jsonify,session
 import requests
-from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required,JWTManager
+from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity,jwt_required,JWTManager,unset_jwt_cookies
 from flask_cors import CORS,cross_origin
 import pymongo
 import os
 import pprint
-from datetime import datetime,timedelta
+from datetime import datetime,timedelta,timezone
 from functools import wraps
 from werkzeug.security import generate_password_hash,check_password_hash 
 
@@ -35,19 +36,8 @@ client = pymongo.MongoClient(DB_URL)
 db = client.myDb
 usrs = db.users
 app.config['JWT_SECRET_KEY'] = 'cc998a93a9c349178aae3b31a1cc7913'
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=15)
 jwt = JWTManager(app)
-
-
-def token_required(func):
-    @wraps(func)
-    def decorated(*arg,**kwargs):
-        token = request.args.get('token')
-        if not token:
-            return jsonify({'error':'Token is missung'})
-        try:
-            payload = jwt.decode(token,app.config['SECRET_KEY'])
-        except:
-            return jsonify({'error':'Invalid Token'})
 
 
 """
@@ -63,6 +53,7 @@ def token_required(func):
     return  : { "id": 140,"logo": "https://media.api-sports.io/football/leagues/140.png","name": "La Liga","type": "League"} 
 """
 @app.route("/api/leagueId/<country_name>") 
+@jwt_required()
 def getLeagueIdByCountry(country_name):
     querystring = {"country":country_name}
 
@@ -132,6 +123,7 @@ def getPlayersByTeam(team_id):
     return  : {'id': 42, 'name': 'Arsenal', 'code': 'ARS', 'country': 'England', 'founded': 1886, 'national': False, 'logo': 'https://media.api-sports.io/football/teams/42.png'}
 """
 @app.route("/api/teamId/<team_name>") 
+@jwt_required()
 def getTeamIdByName(team_name):
 
     querystring = {"name":team_name}
@@ -168,7 +160,6 @@ def getTeamsByLeague(league_id):
 
 ##register
 @app.route('/register', methods=['POST'])
-@cross_origin()
 def register():
     data = request.get_json()
     username = data.get('username')
@@ -213,8 +204,32 @@ def login():
         return jsonify({"error": "Incorrect Password"}), 400
 
     token = create_access_token(identity=username)
-    app.config['SECRET_KEY']
-    return jsonify(access_token=token),200
+    return jsonify({'access_token':token,'username':username}),200
+
+
+
+@app.route('/logout',methods=['POST'])
+def logout():
+    response = jsonify({'msg':'logout succsuful'})
+    unset_jwt_cookies(response)
+    return response
+
+@app.after_request
+def refresh_expiring_jwts(response):
+    try:
+        exp_timestamp =get_jwt()['exp'] 
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now+timedelta(minutes=2))
+        if target_timestamp>exp_timestamp:
+            access_token = create_access_token(identity=get_jwt_identity())
+            data = response.get_json()
+            if type(data) is dict:
+                data['access_token'] = access_token
+                response.data = json.dumps(data)
+        return response
+    except(RuntimeError,KeyError):
+        return response
+
 
 
 
