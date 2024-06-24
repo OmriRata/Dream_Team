@@ -72,8 +72,9 @@
     font-weight: 700;
 }
 
-.register p {
-    color: #fff;
+
+.message{
+    color: #f60707;
     text-align: center;
     margin-top: 10px;
 }
