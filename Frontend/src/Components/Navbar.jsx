@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Link, NavLink} from 'react-router-dom'
+import {Link, NavLink, Navigate} from 'react-router-dom'
 import "../style/Navbar.css"
 import logo from "../assets/download.png"
 import { Flex } from '@radix-ui/themes';
@@ -7,15 +7,19 @@ import { Flex } from '@radix-ui/themes';
 
 function Navbar(props){
     const [menuOpen,setMenuOpen] = useState(false);
-    const [user,setUser] = useState(false);
+    const [isConnected,setIsConnected] = useState(false);
     const isOpen = () => setMenuOpen(!menuOpen);
     
     useEffect(()=>{
-        setUser(localStorage.getItem('user'));
-    },)
+        if(props.token){
+            setIsConnected(true)
+        }
+    },[props.token])
 
     const logout = ()=>{
-        localStorage.removeItem('user')
+        props.removeToken()
+        localStorage.removeItem("username")
+        setIsConnected(false)
     }
 
     return (
@@ -35,16 +39,16 @@ function Navbar(props){
                 <li>
                     <h1 color="white" >{props.page}</h1>
                 </li>
-                { user?(
+                { isConnected?(
                     <>
                     <li>
-                        <NavLink className="navLink" to="/leagues">Team</NavLink>
+                        <NavLink className="navLink" to="/team">Team</NavLink>
                     </li>
                     <li>
-                        <NavLink className="navLink" to="/team">Leagues</NavLink>
+                        <NavLink className="navLink" to="/leagues">Leagues</NavLink>
                     </li>
                     <li>
-                        <a className='navLink' onClick={()=>logout()} href="login">Logout</a>
+                        <NavLink onClick={()=>logout()}className="navLink" to="/login">Logout</NavLink>
                     </li>
                     </>
                 ):(<>
