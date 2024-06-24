@@ -1,21 +1,32 @@
 // register.jsx
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import "../style/Register.css";
 
 function Register() {
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState("");
+    const [timeoutID, settimeoutID] = useState();
 
+
+
+    const setErrorMessage = (message)=>{
+        clearTimeout(timeoutID)
+        setMessage(message)
+        settimeoutID(setTimeout(function(){setMessage("")},5000));
+    }
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            setMessage("Passwords do not match");
+            setErrorMessage("Passwords do not match");
             return;
         }
 
@@ -25,10 +36,10 @@ function Register() {
                 email,
                 password
             });
-            setMessage(response.data.message);
-            window.location.href = '/';
+            setErrorMessage(response.data.message);
+            navigate('/login');
         } catch (error) {
-            setMessage(error.response.data.error);
+            setErrorMessage(error.response.data.error);
         }
 
     };
@@ -40,7 +51,7 @@ function Register() {
                     <div className="login-header">
                         <h1>Register</h1>
                     </div>
-                    {message && <p>{message}</p>}
+                    {message && <p className="message">{message}</p>}
                     <div className="input-box">
                         <input
                             type="text"
@@ -82,7 +93,6 @@ function Register() {
                         <FaLock className="icon" />
                     </div>
                     <button type="submit">Register</button>
-                    {message && <p>{message}</p>}
                 </form>
             </div>
         </div>
