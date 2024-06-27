@@ -1,24 +1,42 @@
 import React ,{useState,useEffect} from "react";
 import { Link } from "react-router-dom";
-import "../style/LeagueBuilder.css"
+import "../style/LeagueBuilder.css";
+import axios from "axios";
+import { json } from "react-router-dom";
 import logo from "../assets/download.png"
 import FormInput from '../Components/FormInput'
-import { Flex, Text, Button,Select } from '@radix-ui/themes';
+import {Avatar, Flex, Text, Button,Select } from '@radix-ui/themes';
+import Leagues from "./Leagues";
 
 
-const LAEGUES = ['Spain','England','Garmny','France','Italy'];
 
 
 
 function LeagueBuilder(){
     const [value, setValue] = useState('');
+    const [Leagues,setLeagues] = useState([]);
+    const LAEGUES_ID = ['39','140','78','135','61'];
 
-    const fatchData = ()=>{
-        fetch('/api/teamId/barcelona')
-        .then(res => res.json())
-        .then(data => console.log(data))
+
+    const fetchData = async(id)=>{
+        try{
+
+            const responses = await Promise.all(LAEGUES.map(id =>{
+                return fetch(`/api/leagueInfo/${id}`)
+            }))
+            const result = await Promise.all(responses.map(res=>res.json()));
+            setLeagues(result)
+        }
+        catch(err){
+            console.log(err)
+        } 
+        
     }
+    
     useEffect(()=>{
+        LAEGUES_ID.map((i)=>{
+            fetchData(i)
+        })
     },[])
 
     return (
@@ -37,9 +55,14 @@ function LeagueBuilder(){
                     <Select.Root className="selectLeague" value={value} onValueChange={setValue}>
                         <Select.Trigger placeholder="chosoe league" className="trigger">{value}</Select.Trigger>
                         <Select.Content className="content">
-                            {LAEGUES.map((league,i)=>{
-                                return <Select.Item className="selectItem" key={i} value={league}>{league}</Select.Item>
-                            })}
+                            {Leagues && Leagues.map((league,i)=>{
+                                return  <Select.Item className="selectItem" key={i} value={league.name}>
+                                            <Avatar size="1" src={league.logo} radius="full" fallback="T" color="indigo" />
+                                            
+                                            {league.name}
+                                </Select.Item>
+                            })
+                            }
                         </Select.Content>
                     </Select.Root>
                 </Flex>
