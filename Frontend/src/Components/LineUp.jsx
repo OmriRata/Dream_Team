@@ -7,8 +7,7 @@ import data from '../Data/data'
 function LineUp(props) {
 
     const removePlayer = (player)=>{
-        const updatedPlayers = props.players.filter(p => p.id !== player.id);
-        props.setPlayers(updatedPlayers)
+        props.setPlayers(props.players.filter(p => p.id !== player.id))
     }
 
     function addplayers(id, position) {
