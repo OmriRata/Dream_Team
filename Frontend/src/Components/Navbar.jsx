@@ -11,7 +11,7 @@ function Navbar(props){
     const isOpen = () => setMenuOpen(!menuOpen);
     
     useEffect(()=>{
-        if(props.token){
+        if(props.token !== undefined && props.token && props.token !== ''){
             setIsConnected(true)
         }
     },[props.token])
