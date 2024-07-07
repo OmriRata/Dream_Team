@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import '../style/LineUp.css'
-import field from '../assets/soccer_field2.jpg'
 import { Avatar, Button, Flex, Box, Grid,Card } from '@radix-ui/themes'
-import data from '../Data/data'
 
 function LineUp(props) {
 

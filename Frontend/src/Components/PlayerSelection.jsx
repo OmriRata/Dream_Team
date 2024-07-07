@@ -1,16 +1,21 @@
 import React from 'react'
-import {TextField,Container,Box,Card,Flex,Avatar,Text, Button, Separator,ScrollArea } from '@radix-ui/themes'
+import {Theme,TextField,Container,Box,Card,Flex,Avatar,Text, Button, Slider,ScrollArea,Separator } from '@radix-ui/themes'
 import '../style/PlayerSelection.css'
-import Data from '../Data/data'
+import {playersData,barcePlayers} from '../Data/data'
 import { useEffect, useState } from 'react'
+import Fillterbar from './Fillterbar'
 
 
 function PlayerSelection(props) {
     const [data,setData] = useState([]);
     const [search,setSearch] = useState('');
     const disabled = true;
-    function abc(){
-        setData(Data)
+    const filters = [
+        {'Position':['Goalkeeper','Defender','Midfielder','Attacker']},
+        {'Teams':['Barcelone','Arsenal']},
+    ]
+    const resetFillters = ()=>{
+        setData(playersData.concat(barcePlayers))    
     }
 
     const addPlayers = (player,e)=>{
@@ -20,19 +25,38 @@ function PlayerSelection(props) {
         ]);
     } 
     useEffect(() => {
-        abc()
-    }, [data])
+        setData(playersData.concat(barcePlayers))    
+
+    },[])
 
     return (
         <div className='player-selection'>
             <Container className='search'>
                 <h1 className='text-center mt-4'>Add Players</h1>
                 <form className='search-form'>
-                    <Flex>
-                    <TextField.Root className='my-3' variant="soft" onChange={(e)=>{setSearch(e.target.value)}} placeholder="Search Players…" />
-                    <Button className='searchBtn'>Search</Button>
-                    </Flex>
+                    <Theme radius="large">
+                        <TextField.Root size="3" onChange={(e)=>{setSearch(e.target.value)}} placeholder="Search Players…">
+                            <TextField.Slot side="right" px="1">
+                                <Button size="2">Send</Button>
+                            </TextField.Slot>
+                        </TextField.Root>
+                    </Theme>
                 </form>
+                <Flex className='fillterCat' direction={'row'} gap={'4'}>
+                        {
+
+                            filters.map((i,key)=>{
+                                const placeholder = Object.keys(i)[0]
+                                const values = Object.values(i)[0]
+                                return <Fillterbar key={key} players={data} setPlayers={setData} placeholder={placeholder} values={values} />
+                            })
+                        }
+                        <Text style={{color:'gray',marginTop:'0.7%'}}>Price:</Text>
+                        <Slider className='slider' defaultValue={[25, 75]} />
+                    </Flex>
+                    <Button color="gray" variant="classic" onClick={resetFillters}>
+                            Reset Filters
+                        </Button>
                 <ScrollArea className='scroll' type="always" scrollbars="vertical" size="3" style={{ height: 700 ,color:'ActiveBorder'}}>
                         {data.filter(i=>{
                             return search.toLowerCase()===''? i: i.name.toLowerCase().includes(search);

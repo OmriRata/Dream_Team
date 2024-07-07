@@ -4,6 +4,14 @@
     position: relative;
     height: 900px;
 }
+.fillterCat{
+    padding: 2%;
+    /* background-color:azure; */
+    border-radius: 30px;
+}
+.slider{
+    margin-top: 2%;
+}
 .scroll{
     margin-top: 5px;
     width: 600px;

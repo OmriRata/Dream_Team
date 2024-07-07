@@ -14,6 +14,7 @@ import Team from './Pages/Team';
 import PrivateRoutes from './Components/PrivateRoutes';
 import ExplanationPage from './Pages/ExplanationPage';
 import useToken from './Components/useToken';
+import ResetPassword from './Pages/ResetPassword';
 
 function App() {
   const [className, setClassName] = useState("body-home container");
@@ -27,16 +28,15 @@ function App() {
         <Navbar page={page} token={token} removeToken={removeToken}/>
           <Routes>
               <Route element={<PrivateRoutes token={token}/>}>
-              <Route path="/leagues" element={< Leagues />}/>
-              <Route path="/team" element={< Team />}/>
+                <Route path="/leagues" element={< Leagues />}/>
+                <Route path="/team" element={< Team />}/>
               </Route>
               <Route path="/" element={< Home c={ setPage }/> }/>
               <Route path="/login" element={< Login setToken={ setToken } /> } />
+              <Route path="/res" element={< ResetPassword/>} />  
               <Route path="/register" element={< Register />}/>
               <Route path="/createLeague" element={< LeagueBuilder />}/>
               <Route path="/createTeam" element={< TeamBuilder />}/>
-              <Route path="/leagues" element={< Leagues />}/>
-              <Route path="/team" element={< Team token={token}/>}/>
               <Route path="/ExplanationPage" element={< ExplanationPage />}/>
           </Routes>
     </div>
