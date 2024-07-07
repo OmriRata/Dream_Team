@@ -30,13 +30,13 @@ function App() {
               <Route element={<PrivateRoutes token={token}/>}>
                 <Route path="/leagues" element={< Leagues />}/>
                 <Route path="/team" element={< Team />}/>
+                <Route path="/createLeague" element={< LeagueBuilder />}/>
+                <Route path="/createTeam" element={< TeamBuilder />}/>
               </Route>
               <Route path="/" element={< Home c={ setPage }/> }/>
               <Route path="/login" element={< Login setToken={ setToken } /> } />
               {/* <Route path="/res" element={< ResetPassword/>} />   */}
               <Route path="/register" element={< Register />}/>
-              <Route path="/createLeague" element={< LeagueBuilder />}/>
-              <Route path="/createTeam" element={< TeamBuilder />}/>
               <Route path="/ExplanationPage" element={< ExplanationPage />}/>
           </Routes>
     </div>

@@ -1,37 +1,57 @@
+/* src/App.css */
+.App {
+  position: relative;
+  min-height: 100vh;
+}
+
+.video-container {
+  position: absolute;
+  top: 30%;
+  right:60px;
+}
+
+video {
+  border: 1px solid #ccc;
+  border-radius:100px;
+  width: 720px; /* Adjust as necessary */
+  height: 60%; /* Maintain aspect ratio */
+}
+
 .explanation-container {
-    margin: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .explanation-container h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .explanation-container h2 {
-    font-size: 2em;
-    margin-top: 20px;
-    color: #333;
-  }
-  
-  .explanation-container h3 {
-    font-size: 1.5em;
-    margin-top: 15px;
-    color: #666;
-  }
-  
-  .explanation-container ul, .explanation-container ol {
-    margin-left: 20px;
-  }
-  
-  .explanation-container ul li, .explanation-container ol li {
-    margin-bottom: 10px;
-  }
-  
-  .explanation-container p {
-    margin-top: 20px;
-    font-size: 1.2em;
-    color: #555;
-  }
-  
+  margin: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.explanation-container h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.explanation-container h2 {
+  font-size: 2em;
+  margin-top: 20px;
+  color: #333;
+}
+
+.explanation-container h3 {
+  font-size: 1.5em;
+  margin-top: 15px;
+  color: #666;
+}
+
+.explanation-container ul,
+.explanation-container ol {
+  margin-left: 20px;
+}
+
+.explanation-container ul li,
+.explanation-container ol li {
+  margin-bottom: 10px;
+}
+
+.explanation-container p {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #555;
+}

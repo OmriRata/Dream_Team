@@ -23,6 +23,12 @@ function Home(props){
         props.c("LeagueBuilder")
         navigate("/createTeam")
     }
+    const info = ()=>{
+        console.log("change page")
+        props.c("LeagueBuilder")
+        navigate("/ExplanationPage")
+    }
+    
     
     return (
         <>
@@ -49,6 +55,9 @@ function Home(props){
                             Join Now <FiArrowRight />
                         </button><button className="secondary-button" onClick={createTeam}>
                             Create Your Team <FiArrowRight />
+                        </button>
+                        <button className="secondary-button" onClick={info}>
+                        information <FiArrowRight />
                         </button>
                 </div>
                 <>
