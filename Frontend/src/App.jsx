@@ -14,7 +14,7 @@ import Team from './Pages/Team';
 import PrivateRoutes from './Components/PrivateRoutes';
 import ExplanationPage from './Pages/ExplanationPage';
 import useToken from './Components/useToken';
-import ResetPassword from './Pages/ResetPassword';
+// import ResetPassword from './Pages/ResetPassword';
 
 function App() {
   const [className, setClassName] = useState("body-home container");
@@ -33,7 +33,7 @@ function App() {
               </Route>
               <Route path="/" element={< Home c={ setPage }/> }/>
               <Route path="/login" element={< Login setToken={ setToken } /> } />
-              <Route path="/res" element={< ResetPassword/>} />  
+              {/* <Route path="/res" element={< ResetPassword/>} />   */}
               <Route path="/register" element={< Register />}/>
               <Route path="/createLeague" element={< LeagueBuilder />}/>
               <Route path="/createTeam" element={< TeamBuilder />}/>

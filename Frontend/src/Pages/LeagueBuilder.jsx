@@ -7,6 +7,8 @@ import logo from "../assets/download.png"
 import FormInput from '../Components/FormInput'
 import {Avatar, Flex, Text, Button,Select } from '@radix-ui/themes';
 import Leagues from "./Leagues";
+import {leaguesData} from '../Data/data'
+
 
 
 
@@ -21,11 +23,13 @@ function LeagueBuilder(){
     const fetchData = async(id)=>{
         try{
 
-            const responses = await Promise.all(LAEGUES.map(id =>{
-                return fetch(`/api/leagueInfo/${id}`)
-            }))
-            const result = await Promise.all(responses.map(res=>res.json()));
-            setLeagues(result)
+            // const responses = await Promise.all(LAEGUES.map(id =>{
+            //     return fetch(`/api/leagueInfo/${id}`)
+            // }))
+            // const result = await Promise.all(responses.map(res=>res.json()));
+            // setLeagues(result)
+
+            setLeagues(leaguesData)
         }
         catch(err){
             console.log(err)

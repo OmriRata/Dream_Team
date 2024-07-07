@@ -18,19 +18,30 @@ SEASON = "2024"
 
 
 # player statistic by team id and league id
+@api.route("/playerStatistic/<player_id>") 
+def getPlayerStatisticsById(player_id):
+    querystring = {"id":player_id,"season":SEASON}
+    response = requests.get(URL+"player", headers=HEADERS, params=querystring)
+    
+    return response.json()["response"][0]
+
+# player statistic by team id and league id
 @api.route("/playerStatistics/<team_id>") 
-def getPlayerStatisticsById(team_id):
-    querystring = {"id":team_id,"season":SEASON}
+def getPlayerStatisticsByTeamId(team_id):
+    querystring = {"team":team_id,"season":SEASON}
     response = requests.get(URL+"players", headers=HEADERS, params=querystring)
     
-    return response.json()["response"][0]["statistics"]
+    return response.json()["response"]
 
 
 @api.route("/players/<team_id>") 
 def getPlayersByTeam(team_id):
-    querystring = {"team":team_id}
+    # querystring = {"team":team_id}
+    querystring = {"league":"39","season":"2023"}
+
     
-    response = requests.get(URL+"players/squads", headers=HEADERS, params=querystring)
+    response = requests.get(URL+"players", headers=HEADERS, params=querystring)
+    return response.json()["response"]
     print(response.json()["response"][0]["team"])
     print(response.json()["response"][0]["players"])
     return response.json()["response"][0]["players"]
@@ -38,7 +49,7 @@ def getPlayersByTeam(team_id):
 
 
 @api.route("/teamId/<team_name>") 
-@jwt_required()
+# @jwt_required()
 def getTeamIdByName(team_name):
 
     querystring = {"name":team_name}
@@ -59,7 +70,7 @@ def getTeamsByLeague(league_id):
 
 
 @api.route("/leagueId/<country_name>") 
-@jwt_required()
+# @jwt_required()
 def getLeagueIdByCountry(country_name):
     querystring = {"country":country_name}
 
@@ -71,9 +82,8 @@ def getLeagueIdByCountry(country_name):
 # @jwt_required()
 def getLeagueInfoById(league_id):
     querystring = {"id":league_id}
-
     response = requests.get(URL+"leagues", headers=HEADERS, params=querystring)
     print("=================================")
-    print(response.json())
+    # print(response.json()["response"][0)
     print("=================================")
-    return response.json()["response"][0]["league"]
+    return response.json()

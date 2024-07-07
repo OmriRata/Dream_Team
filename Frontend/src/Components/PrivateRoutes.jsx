@@ -4,7 +4,7 @@ function PrivateRoutes(props) {
     const auth = {'token':props.token} 
 
     return (
-        auth.token ? <Outlet/> : <Navigate to="/login" state={{ from: location }} replace/>
+        auth.token ? <Outlet/> : <Navigate to="/login"/>
     )
 }
  export default PrivateRoutes;
