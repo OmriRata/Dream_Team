@@ -47,10 +47,6 @@ function Home(props){
                         <h1 className="primary-heading">
                             Build Your Dream Team !
                         </h1>
-                        <p className="primary-text">
-                            home-banner-background.png
-                            home-banner-background.png
-                        </p>
                         <button className="secondary-button" onClick={createLeague}>
                             Join Now <FiArrowRight />
                         </button><button className="secondary-button" onClick={createTeam}>
