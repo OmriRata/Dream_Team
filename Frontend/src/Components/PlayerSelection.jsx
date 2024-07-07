@@ -1,21 +1,53 @@
 import React from 'react'
-import {Theme,TextField,Container,Box,Card,Flex,Avatar,Text, Button, Slider,ScrollArea,Separator } from '@radix-ui/themes'
+import {Theme,TextField,Container,Box,Card,Flex,Avatar,Text, Button, Slider,ScrollArea } from '@radix-ui/themes'
 import '../style/PlayerSelection.css'
-import {playersData,barcePlayers} from '../Data/data'
+import {playersData,barcePlayers, englandTeams,englandPlayers} from '../Data/data'
 import { useEffect, useState } from 'react'
 import Fillterbar from './Fillterbar'
+import axios from "axios";
 
 
 function PlayerSelection(props) {
     const [data,setData] = useState([]);
     const [search,setSearch] = useState('');
+    const [league,setLeague] = useState('39');
+    const [teams,setTeams] = useState([]);
     const disabled = true;
-    const filters = [
-        {'Position':['Goalkeeper','Defender','Midfielder','Attacker']},
-        {'Teams':['Barcelone','Arsenal']},
-    ]
+    const positions = [
+        'Goalkeeper','Defender','Midfielder','Attacker']
     const resetFillters = ()=>{
-        setData(playersData.concat(barcePlayers))    
+        fetchPlayers()   
+    }
+    const fetchTeams = async ()=>{
+        try {
+            // const response = await axios.get("/api/leagueTeams/"+league);
+            // const data = response.data
+            // setTeams(data)
+            setTeams(englandTeams)
+        }
+        catch(error){
+            console.log(error)
+        }
+
+    }
+
+    const fetchPlayers = async ()=>{
+        try {
+            // const response = await axios.get("/api/playersByLeague/"+league);
+            // const players = response.data
+            // console.log(players)
+            // const newData = []
+            // for(const item of data){
+            //     newData.push(item.player)
+            // } 
+            // setData(players)
+            // console.log(newData)
+            setData(englandPlayers)
+        }
+        catch(e){
+            console.log(e)
+        }
+
     }
 
     const addPlayers = (player,e)=>{
@@ -24,8 +56,11 @@ function PlayerSelection(props) {
             player
         ]);
     } 
+
     useEffect(() => {
-        setData(playersData.concat(barcePlayers))    
+        // setData(playersData.concat(barcePlayers)) 
+        fetchTeams()
+        fetchPlayers()
 
     },[])
 
@@ -43,14 +78,10 @@ function PlayerSelection(props) {
                     </Theme>
                 </form>
                 <Flex className='fillterCat' direction={'row'} gap={'4'}>
-                        {
+                        
+                        <Fillterbar players={data} setPlayers={setData} placeholder={'Teams'} values={teams} />
+                        <Fillterbar players={data} setPlayers={setData} placeholder={'Position'} values={positions} />
 
-                            filters.map((i,key)=>{
-                                const placeholder = Object.keys(i)[0]
-                                const values = Object.values(i)[0]
-                                return <Fillterbar key={key} players={data} setPlayers={setData} placeholder={placeholder} values={values} />
-                            })
-                        }
                         <Text style={{color:'gray',marginTop:'0.7%'}}>Price:</Text>
                         <Slider className='slider' defaultValue={[25, 75]} />
                     </Flex>
@@ -59,29 +90,27 @@ function PlayerSelection(props) {
                         </Button>
                 <ScrollArea className='scroll' type="always" scrollbars="vertical" size="3" style={{ height: 700 ,color:'ActiveBorder'}}>
                         {data.filter(i=>{
-                            return search.toLowerCase()===''? i: i.name.toLowerCase().includes(search);
+                            return search.toLowerCase()===''? i: i.player.name.toLowerCase().includes(search);
                         }).map((item,index)=>{
                             return  <Box key={index} className='player-box' width='350px'>
                                         <Card size="2">
                                             <Flex position="relative" gap="4" align="center">
-                                                <Avatar size="3" src={item.photo} radius="full" fallback="T" color="indigo" />
+                                                <Avatar size="3" src={item.player.photo} radius="full" fallback="T" color="indigo" />
                                                 <Box>
                                                 <Text as="div" size="2" weight="bold">
                                                     {/* {data[0] && data[0].name} */}
-                                                    {item.name}
+                                                    {item.player.name}
                                                 </Text>
                                                 
                                                 <Text as="div" size="2" color="gray">
                                                     {/* Engineering */}
-                                                    {item.position}
+                                                    {item.statistics[0].games.position}
                                                 </Text>
 
                                                 </Box> 
-                                                {item.id.toString().startsWith('2')?
-                                                <label className='price'>price : 31222M</label>
-                                                :    
-                                                <label className='price'>price : 22M</label>
-                                            } {
+                                                  
+                                                <label className='price'>price {item.statistics[0].games.rating}</label>
+                                                {
                                                 props.players.includes(item)?
                                                 <Button color="gray" style={{backgroundColor:"gray"}}  disabled={disabled} variant="soft" onClick={(e)=>addPlayers(item,e)} className='addBtn'>Add</Button>
                                                 :

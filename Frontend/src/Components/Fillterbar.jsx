@@ -8,20 +8,23 @@ function Fillterbar(props){
     const [placeholder,setPlaceHolder] = useState(props.placeholder)
 
     const filterByPosition = (position)=>{
-        setPlaceHolder("hello")
         props.setPlayers(
-            players.filter((player)=>{
-                return player.position == position
-            })
+            players.filter(player=>player.statistics[0].games.position == position
+            )
         )
-        }
+    }
 
     useEffect(()=>{
         setPlay(props.players)
     },[players])
 
-    const filterByteam = ()=>{
-        console.log('team')
+    const filterByteam = (team)=>{
+        const teamName = team.name
+        console.log(teamName)
+        props.setPlayers(
+            players.filter(player=>player.statistics[0].team.name == teamName
+            )
+        )
     }
 
     return (
@@ -31,8 +34,8 @@ function Fillterbar(props){
                 {
                     props.values.map((val,i)=>{
                         return <Select.Item key={i} value={val}>
-                            <Avatar src={"https://media.api-sports.io/football/players/336653.png"} style={{marginRight:'10px'}} size={'1'}></Avatar>
-                            {val}
+                            <Avatar src={props.placeholder =='Position'?val:val.logo} style={{marginRight:'10px'}} size={'1'}></Avatar>
+                            {props.placeholder =='Position'?val:val.name}
                             </Select.Item>
                     })
                 }
