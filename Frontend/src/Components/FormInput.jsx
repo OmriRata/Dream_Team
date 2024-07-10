@@ -6,7 +6,7 @@ function FormInput(props){
     return(
         <div className="formInput">
             <label>{props.placeholder+":"}</label>
-            <input placeholder={props.placeholder} />
+            <input onChange={e=>props.setLeagueName(e.target.value)} placeholder={props.placeholder} />
         </div>
     )
 }

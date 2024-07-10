@@ -5,3 +5,8 @@ npm install axios
 ##open Web api
 cd Frontend
 npm run dev
+
+idea:
+1) בהצטרפות לליגה קבלת מייל עם בקשה להצטפות 
+2) יצירת הרשאות למנהלים 
+3) למידת מכונה לחיזוי שחקנים שכדי לבחור

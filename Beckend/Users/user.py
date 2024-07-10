@@ -12,6 +12,7 @@ DB_URL = "mongodb://localhost:27017/"
 client = pymongo.MongoClient(DB_URL)
 db = client.myDb
 users_collection = db.users
+league_collection=db.league
 
 
 ##register
@@ -69,6 +70,30 @@ def logout():
     response = jsonify({'msg':'logout succsuful'})
     unset_jwt_cookies(response)
     return response
+
+@user.route('/createLeague', methods=['POST'])
+def create_league():
+    data = request.json
+    league_id = data.get('leagueId')
+    league_name = data.get('leagueName')
+    username = data.get('username')
+    
+
+    # Process the data as needed, e.g., save it to a database
+    print(f"Received data: League ID: {league_id}, League Name: {league_name}, Username: {username}")
+    leagueName = league_collection.find()
+    # Return a response
+    if league_collection.find_one({"league_name":league_name}):
+         return jsonify({"error": "league name already exists"}), 400
+    newLeague = {
+        "league_name":league_name,
+        "league_id":league_id,
+        # "email":email,
+        'username':username
+
+    }
+    league_collection.insert_one(newLeague);
+    return jsonify({"message": "League created successfully"}), 200
 
 @user.after_request
 def refresh_expiring_jwts(response):
