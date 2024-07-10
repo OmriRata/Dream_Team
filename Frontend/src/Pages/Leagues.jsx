@@ -1,10 +1,11 @@
 import React,{ useState }  from "react";
+import CustomizedTables from '../Components/Table'
 //import "../style/Leagues.css"
 
 
 
 function Leagues(){
-    return <div>Leagues</div>
+    return <div><CustomizedTables/></div>
 }
 
 export default Leagues;
