@@ -1241,7 +1241,7 @@ export const englandPlayers = [
           "id": 19095,
           "injured": false,
           "lastname": "O'Connell",
-          "name": "J. O&apos;Connell",
+          "name": "J.O'Connell",
           "nationality": "England",
           "photo": "https://media.api-sports.io/football/players/19095.png",
           "weight": "85 kg"
