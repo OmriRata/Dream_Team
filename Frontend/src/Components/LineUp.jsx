@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import '../style/LineUp.css'
-import { Avatar, Button, Flex, Box, Grid,Card } from '@radix-ui/themes'
+import { Avatar, Button, Flex, Box, Grid,Card,AlertDialog } from '@radix-ui/themes'
+import Alert from '@mui/material/Alert'
+import axios from "axios";
+
+
 
 function LineUp(props) {
+    const league_code = 160;
+    const btnRef = useRef();
+    const [errorMsg,setError] = useState('You Need to Choose 11 players')
+    // const errorMsg= 'You Need to Choose 11 players';
+
 
     const removePlayer = (player)=>{
-        console.log(player)
-        console.log(props.players)
         props.setPlayers(props.players.filter(p => p.player.id !== player.player.id))
     }
 
     function addplayers(id, position) {
         const player = props.players.find(p => p.player.id === id);
         if (player && position == player.statistics[0].games.position) {
-            return <Box className='plyr' size="9" width='250'>
+            return <Box key={id} className='plyr' size="9" width='250'>
                             <Button className='rmvBtn' size='1' color="red" radius='full' onClick={()=>{removePlayer(player)}}>X</Button>
                             <Avatar className='plyrImg' size="5" src={player.player.photo} radius='full' fallback="T" color="indigo" />
                             {/* <h5 className='plyrName'><span>{player.player.name}</span></h5> */}
@@ -23,6 +30,27 @@ function LineUp(props) {
     
     useEffect(()=>{
     },[props.players])
+
+    const createTeam = async ()=>{
+        if(props.players.length<11){
+            console.log(props.players)
+            setError(errorMsg)
+            btnRef.current?.click()
+        }
+        else{
+            try {
+                const response = await axios.post('/users/addTeam', {
+                    players : props.players,
+                    league_code:league_code,
+                    username:localStorage.getItem("username")
+                });
+                console.log(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+    }
 
     return (
         <div className='line-up'>
@@ -58,8 +86,20 @@ function LineUp(props) {
                     }
                 </div>
             </Flex>
-            <Button className='applyBtn'> Apply </Button>
-
+            <Button on onClick={createTeam} className='applyBtn'> Apply </Button>
+            <AlertDialog.Root>
+            <AlertDialog.Trigger>
+                <button ref={btnRef} hidden variant="soft">Size 2</button>
+            </AlertDialog.Trigger>
+            <AlertDialog.Content size="2" maxWidth="400px">
+                <Alert severity="warning" variant="outlined">{errorMsg}</Alert>
+                <AlertDialog.Cancel>
+                    <Button style={{ marginTop: '16px' }}variant="soft" color="gray">
+                    Cancel
+                    </Button>
+                </AlertDialog.Cancel>
+            </AlertDialog.Content>
+        </AlertDialog.Root>
         </div>
     )
 }

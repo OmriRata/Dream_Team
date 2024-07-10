@@ -102,23 +102,23 @@ function PlayerSelection(props) {
         switch(checkPlayers(player)){
             case 'Goalkeeper':
                 setErrorMsg('Only 1 Goalkeeper.')
-                console.log(btnRef.current?.click())
+                btnRef.current?.click()
                 break;
             case 'Defender':
                 setErrorMsg('Only 3-5 Defender.')
-                console.log(btnRef.current?.click())
+                btnRef.current?.click()
                 break;
             case 'Midfielder':
-                setErrorMsg('Only 3-5 Midfielder.')
-                console.log(btnRef.current?.click())
+                setErrorMsg('Only 2-5 Midfielder.')
+                btnRef.current?.click()
                     break;
             case 'Attacker':
                 setErrorMsg('Only 1-3 Midfielder.')
-                console.log(btnRef.current?.click())
+                btnRef.current?.click()
                 break;
             case 'Players Limit':
                 setErrorMsg('You Can Choose Only 11 players.')
-                console.log(btnRef.current?.click())
+                btnRef.current?.click()
                 break;
             default:props.setPlayers([
                 ...props.players,
