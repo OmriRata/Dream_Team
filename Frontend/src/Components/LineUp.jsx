@@ -5,7 +5,9 @@ import { Avatar, Button, Flex, Box, Grid,Card } from '@radix-ui/themes'
 function LineUp(props) {
 
     const removePlayer = (player)=>{
-        props.setPlayers(props.players.filter(p => p.id !== player.id))
+        console.log(player)
+        console.log(props.players)
+        props.setPlayers(props.players.filter(p => p.player.id !== player.player.id))
     }
 
     function addplayers(id, position) {
@@ -14,7 +16,7 @@ function LineUp(props) {
             return <Box className='plyr' size="9" width='250'>
                             <Button className='rmvBtn' size='1' color="red" radius='full' onClick={()=>{removePlayer(player)}}>X</Button>
                             <Avatar className='plyrImg' size="5" src={player.player.photo} radius='full' fallback="T" color="indigo" />
-                            <h5 className='plyrName'><span>{player.player.name}</span></h5>
+                            {/* <h5 className='plyrName'><span>{player.player.name}</span></h5> */}
                     </Box>
         }
     }
