@@ -1,28 +1,40 @@
 import React from 'react'
-import {Theme,TextField,Container,Box,Card,Flex,Avatar,Text, Button, Slider,ScrollArea } from '@radix-ui/themes'
+import Slider from '@mui/material/Slider';
+import {Theme,TextField,Container,Box,Card,Flex,Avatar,Text, Button,ScrollArea } from '@radix-ui/themes'
 import '../style/PlayerSelection.css'
 import {playersData,barcePlayers, englandTeams,englandPlayers} from '../Data/data'
-import { useEffect, useState } from 'react'
+import { useEffect, useState,useRef } from 'react'
 import Fillterbar from './Fillterbar'
 import axios from "axios";
 
 
 function PlayerSelection(props) {
+    const positionRef = useRef();
+    const teamRef = useRef();
+    const [allPlayers,setAll] = useState([]);
     const [data,setData] = useState([]);
     const [search,setSearch] = useState('');
+    const [positionFilter,setPositionFilter] = useState('');
+    const [teamFilter,setTeamFilter] = useState('');
     const [league,setLeague] = useState('39');
     const [teams,setTeams] = useState([]);
     const disabled = true;
     const positions = [
         'Goalkeeper','Defender','Midfielder','Attacker']
+    
     const resetFillters = ()=>{
-        fetchPlayers()   
+        positionRef.current.resetFilters()
+        teamRef.current.resetFilters()
+        setData(allPlayers)
+        setPositionFilter('')
+        setTeamFilter('')
     }
     const fetchTeams = async ()=>{
         try {
             // const response = await axios.get("/api/leagueTeams/"+league);
             // const data = response.data
             // setTeams(data)
+            
             setTeams(englandTeams)
         }
         catch(error){
@@ -30,18 +42,26 @@ function PlayerSelection(props) {
         }
 
     }
-
+    const getPrice = (rating)=>{
+        if(rating == undefined){
+            return 2
+        }
+        else{
+            rating = (parseFloat(rating)- Math.floor(parseFloat(rating)))*10
+            if(parseFloat(rating)- Math.floor(parseFloat(rating))>0.5){
+                return Math.ceil(parseFloat(rating))
+            }
+            return Math.floor(parseFloat(rating))
+        }
+    }
     const fetchPlayers = async ()=>{
         try {
             // const response = await axios.get("/api/playersByLeague/"+league);
             // const players = response.data
             // console.log(players)
-            // const newData = []
-            // for(const item of data){
-            //     newData.push(item.player)
-            // } 
             // setData(players)
-            // console.log(newData)
+            // setAll(players)
+            setAll(englandPlayers)
             setData(englandPlayers)
         }
         catch(e){
@@ -63,7 +83,22 @@ function PlayerSelection(props) {
         fetchPlayers()
 
     },[])
+    const [value,setValue] = useState([1,10])
+    const minDistance = 1;
+    const handleChange1 = (event, newValue, activeThumb) => {
+        if (!Array.isArray(newValue)) {
+            return;
+        }
 
+        if (activeThumb === 0) {
+            setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
+        } else {
+            setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
+        }
+        filterByPrice()
+    };
+    
+    
     return (
         <div className='player-selection'>
             <Container className='search'>
@@ -79,24 +114,48 @@ function PlayerSelection(props) {
                 </form>
                 <Flex className='fillterCat' direction={'row'} gap={'4'}>
                         
-                        <Fillterbar players={data} setPlayers={setData} placeholder={'Teams'} values={teams} />
-                        <Fillterbar players={data} setPlayers={setData} placeholder={'Position'} values={positions} />
+                        <Fillterbar 
+                        ref={teamRef}
+                        setTeamFilter={setTeamFilter}
+                        positionFilter={positionFilter}
+                        teamFilter={teamFilter} players={data}
+                        setPlayers={setData}
+                        placeholder={'Team'}
+                        values={teams} />
+
+                        <Fillterbar
+                        ref={positionRef}
+                        setPositionFilter={setPositionFilter}
+                        positionFilter={positionFilter}teamFilter={teamFilter}
+                        players={data}
+                        setPlayers={setData}
+                        placeholder={'Position'}
+                        values={positions} />
 
                         <Text style={{color:'gray',marginTop:'0.7%'}}>Price:</Text>
-                        <Slider className='slider' defaultValue={[25, 75]} />
+                        <Slider
+                        getAriaLabel={() => 'Minimum distance shift'}
+                        value={value}
+                        onChange={handleChange1}
+                        valueLabelDisplay="auto"
+                        min={1}
+                        max={10}
+                        // getAriaValueText={"valuetext"}
+                        disableSwap
+                        />
                     </Flex>
                     <Button color="gray" variant="classic" onClick={resetFillters}>
                             Reset Filters
                         </Button>
-                <ScrollArea className='scroll' type="always" scrollbars="vertical" size="3" style={{ height: 700 ,color:'ActiveBorder'}}>
+                <ScrollArea className='scroll' type="always" scrollbars="vertical" size="3" style={{ height: 600 ,color:'ActiveBorder'}}>
                         {data.filter(i=>{
                             return search.toLowerCase()===''? i: i.player.name.toLowerCase().includes(search);
                         }).map((item,index)=>{
                             return  <Box key={index} className='player-box' width='350px'>
                                         <Card size="2">
-                                            <Flex position="relative" gap="4" align="center">
-                                                <Avatar size="3" src={item.player.photo} radius="full" fallback="T" color="indigo" />
-                                                <Box>
+                                            <Flex position="relative" gap="3" align="center">
+                                                <Avatar size="5" src={item.player.photo} radius="full" fallback="T" color="indigo" />
+                                                <Box className='boxx'>
                                                 <Text as="div" size="2" weight="bold">
                                                     {/* {data[0] && data[0].name} */}
                                                     {item.player.name}
@@ -106,10 +165,15 @@ function PlayerSelection(props) {
                                                     {/* Engineering */}
                                                     {item.statistics[0].games.position}
                                                 </Text>
-
+                                                <Flex>
+                                                <Text as="div" size="2" color="black">
+                                                    {/* Engineering */}
+                                                    {item.statistics[0].team.name}&nbsp;
+                                                </Text>
+                                                <Avatar size="1" src={item.statistics[0].team.logo}></Avatar>
+                                                </Flex>
                                                 </Box> 
-                                                  
-                                                <label className='price'>price {item.statistics[0].games.rating}</label>
+                                                <label className='price'>price :{getPrice(item.statistics[0].games.rating)}M</label>
                                                 {
                                                 props.players.includes(item)?
                                                 <Button color="gray" style={{backgroundColor:"gray"}}  disabled={disabled} variant="soft" onClick={(e)=>addPlayers(item,e)} className='addBtn'>Add</Button>
