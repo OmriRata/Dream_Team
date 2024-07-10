@@ -85,8 +85,7 @@ def addTeam():
         "players":players,
         'username':username,
     }
-    x = teams_collection.insert_one(newTeam);
-    print(x)
+    teams_collection.insert_one(newTeam);
     return jsonify({"message": "League created successfully"}), 200
 
 
