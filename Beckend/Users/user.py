@@ -15,6 +15,7 @@ client = pymongo.MongoClient(DB_URL)
 db = client.myDb
 users_collection = db.users
 league_collection=db.league
+teams_collection=db.teams
 
 
 ##register
@@ -72,6 +73,22 @@ def logout():
     response = jsonify({'msg':'logout succsuful'})
     unset_jwt_cookies(response)
     return response
+
+@user.route('/addTeam',methods=['POST'])
+def addTeam():
+    data = request.json
+    league_code = data.get('league_code')
+    players = data.get('players')
+    username = data.get('username')
+    newTeam = {
+        "league_code":league_code,
+        "players":players,
+        'username':username,
+    }
+    x = teams_collection.insert_one(newTeam);
+    print(x)
+    return jsonify({"message": "League created successfully"}), 200
+
 
 @user.route('/createLeague', methods=['POST'])
 def create_league():
