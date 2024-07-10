@@ -21,13 +21,17 @@ function PlayerSelection(props) {
     const disabled = true;
     const positions = [
         'Goalkeeper','Defender','Midfielder','Attacker']
-    
+    const [value,setValue] = useState([1,10])
+    const minDistance = 1;
+
+
     const resetFillters = ()=>{
         positionRef.current.resetFilters()
         teamRef.current.resetFilters()
         setData(allPlayers)
         setPositionFilter('')
         setTeamFilter('')
+        setValue([1,10])
     }
     const fetchTeams = async ()=>{
         try {
@@ -83,8 +87,7 @@ function PlayerSelection(props) {
         fetchPlayers()
 
     },[])
-    const [value,setValue] = useState([1,10])
-    const minDistance = 1;
+
     const handleChange1 = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
             return;
@@ -92,11 +95,53 @@ function PlayerSelection(props) {
 
         if (activeThumb === 0) {
             setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
+            filterByPrice(newValue[0],value[1])
         } else {
             setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
+            filterByPrice(value[0],newValue[1])
         }
-        filterByPrice()
+        
     };
+
+    const filterByPrice =(minValue,maxValue)=>{
+        if(teamFilter =='' && positionFilter ==''){
+            setData(
+                allPlayers.filter((player)=>{
+                    const price = getPrice(player.statistics[0].games.rating);
+                    return price>=minValue && price<=maxValue
+                    })
+            )
+        }else if(positionFilter ==''){
+            setData(
+                allPlayers.filter((player)=>{
+                    const price = getPrice(player.statistics[0].games.rating);
+                    return price>=minValue && price<=maxValue 
+                            && player.statistics[0].team.name == teamFilter
+                    })
+            )
+        }else if(teamFilter ==''){
+            setData(
+                allPlayers.filter((player)=>{
+                    const price = getPrice(player.statistics[0].games.rating);
+                    return price>=minValue && price<=maxValue 
+                            && player.statistics[0].games.position == positionFilter
+                    })
+            )
+
+        }else{
+            setData(
+                allPlayers.filter((player)=>{
+                    const price = getPrice(player.statistics[0].games.rating);
+                        return price>=minValue && price<=maxValue 
+                            && player.statistics[0].games.position == positionFilter
+                            && player.statistics[0].team.name == teamFilter
+                    })
+            )
+
+        }
+        
+
+    }
     
     
     return (
@@ -114,7 +159,9 @@ function PlayerSelection(props) {
                 </form>
                 <Flex className='fillterCat' direction={'row'} gap={'4'}>
                         
-                        <Fillterbar 
+                        <Fillterbar
+                        getPrice={getPrice}
+                        priceRange={value}
                         ref={teamRef}
                         setTeamFilter={setTeamFilter}
                         positionFilter={positionFilter}
@@ -124,6 +171,8 @@ function PlayerSelection(props) {
                         values={teams} />
 
                         <Fillterbar
+                        getPrice={getPrice}
+                        priceRange={value}
                         ref={positionRef}
                         setPositionFilter={setPositionFilter}
                         positionFilter={positionFilter}teamFilter={teamFilter}
@@ -131,16 +180,18 @@ function PlayerSelection(props) {
                         setPlayers={setData}
                         placeholder={'Position'}
                         values={positions} />
-
                         <Text style={{color:'gray',marginTop:'0.7%'}}>Price:</Text>
                         <Slider
+                        marks
+                        aria-label='Restricted values'
+                        step={1}
                         getAriaLabel={() => 'Minimum distance shift'}
                         value={value}
                         onChange={handleChange1}
                         valueLabelDisplay="auto"
                         min={1}
                         max={10}
-                        // getAriaValueText={"valuetext"}
+                        // getAriaValueText="valuetext"
                         disableSwap
                         />
                     </Flex>

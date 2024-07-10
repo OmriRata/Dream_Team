@@ -29,13 +29,20 @@ const Fillterbar = forwardRef((props,ref)=>{
             console.log("first")
             
             props.setPlayers(
-                allPlayers.filter(player=>player.statistics[0].games.position == position)
+                allPlayers.filter((player)=>{
+                    const price = props.getPrice(player.statistics[0].games.rating);
+                    return player.statistics[0].games.position == position
+                        && price >= props.priceRange[0] && price <= props.priceRange[1]
+                })
             )
         }else{
             props.setPlayers(
-                allPlayers.filter(player=>player.statistics[0].team.name == props.teamFilter 
-                    && player.statistics[0].games.position == position
-                )
+                allPlayers.filter((player)=>{
+                    const price = props.getPrice(player.statistics[0].games.rating);
+                    return player.statistics[0].team.name == props.teamFilter 
+                        && player.statistics[0].games.position == position
+                        && price >= props.priceRange[0] && price <= props.priceRange[1]
+                })
             )
         }
     }
@@ -57,13 +64,21 @@ const Fillterbar = forwardRef((props,ref)=>{
             console.log("first")
             
             props.setPlayers(
-                allPlayers.filter(player=>player.statistics[0].team.name == teamName)
+                allPlayers.filter((player)=>{
+                    const price = props.getPrice(player.statistics[0].games.rating);
+                    return player.statistics[0].team.name == teamName
+                        && price >= props.priceRange[0] && price <= props.priceRange[1]
+                })
+                
             )
         }else{
             props.setPlayers(
-                allPlayers.filter(player=>player.statistics[0].team.name == teamName 
-                    && player.statistics[0].games.position == props.positionFilter
-                )
+                allPlayers.filter((player)=>{
+                    const price = props.getPrice(player.statistics[0].games.rating);
+                    return player.statistics[0].team.name == teamName 
+                        && player.statistics[0].games.position == props.positionFilter
+                        && price >= props.priceRange[0] && price <= props.priceRange[1]
+                })
             )
         }
     }
