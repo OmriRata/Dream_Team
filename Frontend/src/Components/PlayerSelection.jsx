@@ -1,6 +1,7 @@
 import React from 'react'
 import Slider from '@mui/material/Slider';
-import {Theme,TextField,Container,Box,Card,Flex,Avatar,Text, Button,ScrollArea } from '@radix-ui/themes'
+import Alert from '@mui/material/Alert'
+import {Theme,TextField,Container,Box,Card,Flex,Avatar,Text,AlertDialog,Button,ScrollArea } from '@radix-ui/themes'
 import '../style/PlayerSelection.css'
 import {playersData,barcePlayers, englandTeams,englandPlayers} from '../Data/data'
 import { useEffect, useState,useRef } from 'react'
@@ -11,6 +12,7 @@ import axios from "axios";
 function PlayerSelection(props) {
     const positionRef = useRef();
     const teamRef = useRef();
+    const btnRef = useRef();
     const [allPlayers,setAll] = useState([]);
     const [data,setData] = useState([]);
     const [search,setSearch] = useState('');
@@ -18,6 +20,7 @@ function PlayerSelection(props) {
     const [teamFilter,setTeamFilter] = useState('');
     const [league,setLeague] = useState('39');
     const [teams,setTeams] = useState([]);
+    const [errorMsg,setErrorMsg] = useState('');
     const disabled = true;
     const positions = [
         'Goalkeeper','Defender','Midfielder','Attacker']
@@ -73,12 +76,55 @@ function PlayerSelection(props) {
         }
 
     }
-
+    const checkPlayers = (player)=>{
+        const newPlayers = props.players.concat(player)
+        const goalkeeperCount = newPlayers.filter(
+            player => player.statistics[0].games.position == 'Goalkeeper').length;
+        const defenderCount = newPlayers.filter(
+            player => player.statistics[0].games.position == 'Defender').length;
+        const midfielderCount = newPlayers.filter(
+            player => player.statistics[0].games.position == 'Midfielder').length;
+        const attackerCount = newPlayers.filter(
+            player => player.statistics[0].games.position == 'Attacker').length;
+        if(goalkeeperCount > 1){
+            return 'Goalkeeper'
+        }else if(defenderCount>5){
+            return 'Defender'
+        }else if(midfielderCount>5){
+            return 'Midfielder'
+        }else if(attackerCount>3){
+            return 'Attacker'
+        }else if(goalkeeperCount+defenderCount+midfielderCount+attackerCount>11){
+            return 'Players Limit'
+        }
+    }
     const addPlayers = (player,e)=>{
-        props.setPlayers([
-            ...props.players,
-            player
-        ]);
+        switch(checkPlayers(player)){
+            case 'Goalkeeper':
+                setErrorMsg('Only 1 Goalkeeper.')
+                console.log(btnRef.current?.click())
+                break;
+            case 'Defender':
+                setErrorMsg('Only 3-5 Defender.')
+                console.log(btnRef.current?.click())
+                break;
+            case 'Midfielder':
+                setErrorMsg('Only 3-5 Midfielder.')
+                console.log(btnRef.current?.click())
+                    break;
+            case 'Attacker':
+                setErrorMsg('Only 1-3 Midfielder.')
+                console.log(btnRef.current?.click())
+                break;
+            case 'Players Limit':
+                setErrorMsg('You Can Choose Only 11 players.')
+                console.log(btnRef.current?.click())
+                break;
+            default:props.setPlayers([
+                ...props.players,
+                player
+            ]);
+        }
     } 
 
     useEffect(() => {
@@ -146,6 +192,19 @@ function PlayerSelection(props) {
     
     return (
         <div className='player-selection'>
+        <AlertDialog.Root>
+            <AlertDialog.Trigger>
+                <button ref={btnRef} hidden variant="soft">Size 2</button>
+            </AlertDialog.Trigger>
+            <AlertDialog.Content size="2" maxWidth="400px">
+                <Alert severity="warning" variant="outlined">{errorMsg}</Alert>
+                <AlertDialog.Cancel>
+                    <Button style={{ marginTop: '16px' }}variant="soft" color="gray">
+                    Cancel
+                    </Button>
+                </AlertDialog.Cancel>
+            </AlertDialog.Content>
+        </AlertDialog.Root>
             <Container className='search'>
                 <h1 className='text-center mt-4'>Add Players</h1>
                 <form className='search-form'>

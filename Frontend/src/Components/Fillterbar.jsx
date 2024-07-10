@@ -59,10 +59,6 @@ const Fillterbar = forwardRef((props,ref)=>{
         const teamName = team.name
         props.setTeamFilter(teamName)
         if(props.positionFilter ==''){
-            console.log("first")
-            console.log(props.positionFilter)
-            console.log("first")
-            
             props.setPlayers(
                 allPlayers.filter((player)=>{
                     const price = props.getPrice(player.statistics[0].games.rating);
