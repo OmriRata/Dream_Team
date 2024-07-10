@@ -4,6 +4,8 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity,jwt_required,JWTManager,unset_jwt_cookies
 from datetime import timedelta,timezone,datetime
 import pymongo
+import uuid
+import hashlib
 
 user = Blueprint('user',__name__)
 
@@ -77,10 +79,9 @@ def create_league():
     league_id = data.get('leagueId')
     league_name = data.get('leagueName')
     username = data.get('username')
-    
-
+    id = create_unique_id_from_string(league_name)
     # Process the data as needed, e.g., save it to a database
-    print(f"Received data: League ID: {league_id}, League Name: {league_name}, Username: {username}")
+    print(f"Received data: League ID: {league_id}, League Name: {league_name}, Username: {username},id:{id}")
     leagueName = league_collection.find()
     # Return a response
     if league_collection.find_one({"league_name":league_name}):
@@ -89,7 +90,8 @@ def create_league():
         "league_name":league_name,
         "league_id":league_id,
         # "email":email,
-        'username':username
+        'username':username,
+        'id':id
 
     }
     league_collection.insert_one(newLeague);
@@ -110,3 +112,15 @@ def refresh_expiring_jwts(response):
         return response
     except(RuntimeError,KeyError):
         return response
+def unique_id(collection):
+    while True:
+        # Generate a new UUID
+        new_id = str(uuid.uuid4())
+        
+        # Check if the UUID exists in the collection
+        if not collection.find_one({'id': new_id}):
+            return new_id
+def create_unique_id_from_string(input_string): 
+    hash_object = hashlib.sha256(input_string.encode())
+    unique_id = hash_object.hexdigest()    
+    return int(unique_id[:16], 16)% (10**8)
