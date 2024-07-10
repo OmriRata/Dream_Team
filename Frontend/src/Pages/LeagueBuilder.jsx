@@ -6,6 +6,7 @@ import { json } from "react-router-dom";
 import logo from "../assets/download.png"
 import FormInput from '../Components/FormInput'
 import {Avatar, Flex, Text, Button,Select } from '@radix-ui/themes';
+
 import Leagues from "./Leagues";
 import {leaguesData} from '../Data/data'
 
@@ -16,6 +17,7 @@ import {leaguesData} from '../Data/data'
 
 function LeagueBuilder(){
     const [value, setValue] = useState('');
+    const [leagueId, setLeagueId] = useState('');
     const [Leagues,setLeagues] = useState([]);
     const LAEGUES_ID = ['39','140','78','135','61'];
 
@@ -42,7 +44,12 @@ function LeagueBuilder(){
             fetchData(i)
         })
     },[])
-
+    const clicked = (e)=>{
+        const id = Leagues.find(league=>league.name === e)
+        setLeagueId(id.id)
+        setValue(e)
+    }
+    
     return (
         <div className="league-builder">
             <Flex direction="row" gap="2">
@@ -56,14 +63,16 @@ function LeagueBuilder(){
                     <Text className="selectlabel">
                         Choose Leauge:
                     </Text>
-                    <Select.Root className="selectLeague" value={value} onValueChange={setValue}>
-                        <Select.Trigger placeholder="chosoe league" className="trigger">{value}</Select.Trigger>
+                    <Select.Root className="selectLeague" value={value} onValueChange={clicked}>
+                        <Select.Trigger placeholder="choose league" className="trigger">
+                        </Select.Trigger>
                         <Select.Content className="content">
                             {Leagues && Leagues.map((league,i)=>{
                                 return  <Select.Item className="selectItem" key={i} value={league.name}>
                                             <Avatar size="1" src={league.logo} radius="full" fallback="T" color="indigo" />
-                                            
+                                            &nbsp;
                                             {league.name}
+                                            &nbsp;
                                 </Select.Item>
                             })
                             }
