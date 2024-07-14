@@ -48,7 +48,7 @@ function Home(props){
                             Build Your Dream Team !
                         </h1>
                         <button className="secondary-button" onClick={createLeague}>
-                            Join Now <FiArrowRight />
+                        Create League <FiArrowRight />
                         </button><button className="secondary-button" onClick={createTeam}>
                             Create Your Team <FiArrowRight />
                         </button>

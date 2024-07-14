@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "../style/LeagueBuilder.css";
 import axios from "axios";
@@ -6,9 +6,8 @@ import logo from "../assets/download.png";
 import FormInput from '../Components/FormInput';
 import AlertTitle from '@mui/material/AlertTitle';
 import Alert from '@mui/material/Alert';
-import {Theme,TextField,Container,Box,Card,AlertDialog,ScrollArea } from '@radix-ui/themes'
+import { Theme, TextField, Container, Box, Card, AlertDialog, ScrollArea } from '@radix-ui/themes';
 import { Avatar, Flex, Text, Button, Select } from '@radix-ui/themes';
-
 
 import { leaguesData } from '../Data/data';
 
@@ -17,9 +16,9 @@ function LeagueBuilder() {
     const [leagueId, setLeagueId] = useState('');
     const [leagues, setLeagues] = useState([]);
     const [username, setUsername] = useState('');
-    const [leagueName,setLeagueName] = useState('');
+    const [leagueName, setLeagueName] = useState('');
     const [message, setMessage] = useState("");
-    const [timeoutID, settimeoutID] = useState();
+    const [timeoutID, setTimeoutID] = useState();
     const btnRef = useRef();
     const LEAGUES_ID = ['39', '140', '78', '135', '61'];
 
@@ -32,7 +31,7 @@ function LeagueBuilder() {
     };
 
     useEffect(() => {
-        LEAGUES_ID.map((i) => {
+        LEAGUES_ID.forEach((i) => {
             fetchData(i);
         });
     }, []);
@@ -45,14 +44,17 @@ function LeagueBuilder() {
 
     const handleUsernameChange = (e) => {
         setLeagueName(e.target.value);
-        console.log(e.target.value)
+        console.log(e.target.value);
     };
-    const setErrorMessage = (message)=>{
-        clearTimeout(timeoutID)
-        setMessage(message)
-        settimeoutID(setTimeout(function(){setMessage("")},5000));
-    }
-    
+
+    const setErrorMessage = (message) => {
+        clearTimeout(timeoutID);
+        setMessage(message);
+        setTimeoutID(setTimeout(() => {
+            setMessage("");
+            btnRef.current?.click();
+        }, 3000));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -60,14 +62,14 @@ function LeagueBuilder() {
             const response = await axios.post('/users/createLeague', {
                 leagueId,
                 leagueName: leagueName,
-                username:localStorage.getItem("username")
+                username: localStorage.getItem("username")
             });
             setErrorMessage(response.data.message);
             console.log(response.data);
         } catch (error) {
             console.error(error.response.data.error);
             setErrorMessage(error.response.data.error);
-            btnRef.current?.click()
+            btnRef.current?.click();
         }
     };
 
@@ -83,7 +85,7 @@ function LeagueBuilder() {
                         placeholder="League Name"
                         value={leagueName}
                         setLeagueName={setLeagueName}
-                        onChange={e=>setLeagueName(e.target.value)}
+                        onChange={e => setLeagueName(e.target.value)}
                     />
                     <Flex direction="column" className="flex1">
                         <Text className="selectlabel">
@@ -105,18 +107,18 @@ function LeagueBuilder() {
                 </form>
             </Flex>
             <AlertDialog.Root>
-            <AlertDialog.Trigger>
-                <button ref ={btnRef} hidden  variant="soft">Size 2</button>
-            </AlertDialog.Trigger>
-            <AlertDialog.Content size="2" maxWidth="400px">
-                <Alert severity="warning" variant="outlined">{message}</Alert>
-                <AlertDialog.Cancel>
-                    <Button style={{ marginTop: '16px' }}variant="soft" color="gray">
-                    Cancel
-                    </Button>
-                </AlertDialog.Cancel>
-            </AlertDialog.Content>
-        </AlertDialog.Root>
+                <AlertDialog.Trigger>
+                    <button ref={btnRef} hidden variant="soft">Size 2</button>
+                </AlertDialog.Trigger>
+                <AlertDialog.Content size="2" maxWidth="400px">
+                    <Alert severity="warning" variant="outlined">{message}</Alert>
+                  {/*}  <AlertDialog.Cancel>
+                        <Button style={{ marginTop: '16px' }} variant="soft" color="gray">
+                            Cancel
+                        </Button>
+                    </AlertDialog.Cancel>*/}
+                </AlertDialog.Content>
+            </AlertDialog.Root>
         </div>
     );
 }
