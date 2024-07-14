@@ -115,7 +115,7 @@ def create_league():
     leagueName = league_collection.find()
     # Return a response
     if league_collection.find_one({"league_name":league_name}):
-         return jsonify({"error": "league name already exists"}), 400
+        return jsonify({"error": "league name already exists"}), 400
     if  league_id == ""  or league_name=="" :
         return jsonify({"error": "Please fill in both fields."}), 400
     newLeague = {
@@ -123,7 +123,8 @@ def create_league():
         "league_id":league_id,
         # "email":email,
         'username':username,
-        'id':id
+        'id':id,
+        'participants':[username]
 
     }
     league_collection.insert_one(newLeague);
