@@ -100,6 +100,24 @@ def getPlayers():
     return jsonify({"players":user["players"]}),200
     
 
+@user.route('/getUserLeagues',methods=['POST'])
+def getLeagues():
+    data = request.json
+    username = data.get('username')
+    query = {'participants': {'$in': [username]}}
+    result = league_collection.find(query)
+    
+
+    # Print the results
+    if not list(league_collection.find(query)):
+        return jsonify({"error": "ther is no leagues for this user"}), 400
+
+        
+    for doc in result:
+        print(doc)
+
+
+    return jsonify({'leagues': list(result)})
 
 
 
