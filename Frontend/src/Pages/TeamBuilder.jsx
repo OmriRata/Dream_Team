@@ -14,7 +14,7 @@ return (
                 <PlayerSelection setPlayers={setPlayers} players={players} />
             </div>
             <div className='Line-up'>
-                <LineUp players={players} setPlayers={setPlayers}/>
+                <LineUp isCreate={true} players={players} setPlayers={setPlayers}/>
             </div>
         </Flex>
 )
