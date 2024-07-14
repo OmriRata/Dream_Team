@@ -116,6 +116,8 @@ def create_league():
     # Return a response
     if league_collection.find_one({"league_name":league_name}):
          return jsonify({"error": "league name already exists"}), 400
+    if  league_id == ""  or league_name=="" :
+        return jsonify({"error": "Please fill in both fields."}), 400
     newLeague = {
         "league_name":league_name,
         "league_id":league_id,

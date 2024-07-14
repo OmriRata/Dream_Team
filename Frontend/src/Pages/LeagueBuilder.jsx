@@ -64,7 +64,6 @@ function LeagueBuilder() {
                 leagueName: leagueName,
                 username: localStorage.getItem("username")
             });
-            setErrorMessage(response.data.message);
             console.log(response.data);
         } catch (error) {
             console.error(error.response.data.error);
