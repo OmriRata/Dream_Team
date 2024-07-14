@@ -1,11 +1,19 @@
-import React,{ useState }  from "react";
+import React,{ useEffect, useState }  from "react";
 import CustomizedTables from '../Components/Table'
-//import "../style/Leagues.css"
+import "../style/Leagues.css"
 
 
 
 function Leagues(){
-    return <div><CustomizedTables/></div>
+    const getLeagues = async()=>{
+
+    }
+    useEffect(()=>{
+        getLeagues()
+    })
+    return <div className="leagues">
+        <CustomizedTables className='league_table'/>
+    </div>
 }
 
 export default Leagues;

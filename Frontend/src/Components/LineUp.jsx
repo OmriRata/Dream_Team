@@ -7,14 +7,15 @@ import axios from "axios";
 
 
 function LineUp(props) {
-    const league_code = 16000;
+    const league_code = 27922503;
     const [isCreateMode,setIsCreateMode] = useState(props.isCreate)
     const btnRef = useRef();
     const [errorMsg,setError] = useState('You Need to Choose 11 players')
 
     // const errorMsg= 'You Need to Choose 11 players';
 
-
+    
+        
     const removePlayer = (player)=>{
         props.setPlayers(props.players.filter(p => p.player.id !== player.player.id))
     }
