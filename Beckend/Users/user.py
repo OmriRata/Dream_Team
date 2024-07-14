@@ -88,6 +88,20 @@ def addTeam():
     teams_collection.insert_one(newTeam);
     return jsonify({"message": "League created successfully"}), 200
 
+@user.route('/getTeamPlayers',methods=['POST'])
+def getPlayers():
+    data = request.json
+    username = data.get('username')
+    user = teams_collection.find_one({'username':username})
+    
+    if not user:
+        return jsonify({"error": "User Not exists"}), 400
+    
+    return jsonify({"players":user["players"]}),200
+    
+
+
+
 
 @user.route('/createLeague', methods=['POST'])
 def create_league():
