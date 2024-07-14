@@ -7,7 +7,8 @@ import axios from "axios";
 
 
 function LineUp(props) {
-    const league_code = 160;
+    const league_code = 16000;
+    const [isCreateMode,setIsCreateMode] = useState(props.isCreate)
     const btnRef = useRef();
     const [errorMsg,setError] = useState('You Need to Choose 11 players')
     // const errorMsg= 'You Need to Choose 11 players';
@@ -21,7 +22,7 @@ function LineUp(props) {
         const player = props.players.find(p => p.player.id === id);
         if (player && position == player.statistics[0].games.position) {
             return <Box key={id} className='plyr' size="9" width='250'>
-                            <Button className='rmvBtn' size='1' color="red" radius='full' onClick={()=>{removePlayer(player)}}>X</Button>
+                            {isCreateMode?<Button className='rmvBtn' size='1' color="red" radius='full' onClick={()=>{removePlayer(player)}}>X</Button>:<></>}
                             <Avatar className='plyrImg' size="5" src={player.player.photo} radius='full' fallback="T" color="indigo" />
                             {/* <h5 className='plyrName'><span>{player.player.name}</span></h5> */}
                     </Box>
@@ -86,7 +87,7 @@ function LineUp(props) {
                     }
                 </div>
             </Flex>
-            <Button on onClick={createTeam} className='applyBtn'> Apply </Button>
+            {isCreateMode?<Button on onClick={createTeam} className='applyBtn'> Apply </Button>:<></>}
             <AlertDialog.Root>
             <AlertDialog.Trigger>
                 <button ref={btnRef} hidden variant="soft">Size 2</button>
