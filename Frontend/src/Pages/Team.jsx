@@ -30,14 +30,14 @@ function Team(){
         getPlayers()
     },[])
     
-    return <div style={{margin:'auto',width:'40',height:'100%'}}>
+    return <div>
         {isPlayers?
-        <LineUp isCreate={false} style={{height:'100% important!;'}} players={players} setPlayers={setPlayers}/>:
-        <div>
-            You need to create a Team
-            <br></br>
-            <NavLink  style={{color:'black',backgroundColor:'green'}}  className="navLink" to="/createTeam">Create Team</NavLink>
-        </div>
+            <LineUp isCreate={false} players={players} setPlayers={setPlayers}/>:
+            <div>
+                You need to create a Team
+                <br></br>
+                <NavLink  style={{color:'black',backgroundColor:'green'}}  className="navLink" to="/createTeam">Create Team</NavLink>
+            </div>
         }
     </div>
 }

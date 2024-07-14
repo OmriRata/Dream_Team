@@ -10,6 +10,8 @@ import axios from "axios";
 
 
 function PlayerSelection(props) {
+    const [amountInt,setAmountInt] = useState(100)
+    const InitialAmount = 100;
     const positionRef = useRef();
     const teamRef = useRef();
     const btnRef = useRef();
@@ -60,6 +62,14 @@ function PlayerSelection(props) {
             }
             return Math.floor(parseFloat(rating))
         }
+    }
+    const updateAmount=()=>{
+        const newAmount = props.players.reduce((total,player)=>{
+            return total-getPrice(player.statistics[0].games.rating)
+        },InitialAmount)
+        setAmountInt(newAmount)
+        props.setAmount(newAmount.toString()+'M')
+        
     }
     const fetchPlayers = async ()=>{
         try {
@@ -128,23 +138,26 @@ function PlayerSelection(props) {
     } 
 
     useEffect(() => {
-        // setData(playersData.concat(barcePlayers)) 
         fetchTeams()
         fetchPlayers()
 
     },[])
+    useEffect(()=>{
+        updateAmount() 
+    },[props.players])
 
-    const handleChange1 = (event, newValue, activeThumb) => {
+    const handleChange1 = (event, newValue, activeThumb,x) => {
         if (!Array.isArray(newValue)) {
             return;
         }
 
         if (activeThumb === 0) {
+
             setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
-            filterByPrice(newValue[0],value[1])
+            filterByPrice(Math.min(newValue[0], value[1] - minDistance), value[1])
         } else {
             setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
-            filterByPrice(value[0],newValue[1])
+            filterByPrice(value[0], Math.max(newValue[1], value[0] + minDistance))
         }
         
     };

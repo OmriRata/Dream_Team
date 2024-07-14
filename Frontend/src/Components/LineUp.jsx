@@ -11,6 +11,7 @@ function LineUp(props) {
     const [isCreateMode,setIsCreateMode] = useState(props.isCreate)
     const btnRef = useRef();
     const [errorMsg,setError] = useState('You Need to Choose 11 players')
+
     // const errorMsg= 'You Need to Choose 11 players';
 
 
@@ -19,6 +20,7 @@ function LineUp(props) {
     }
 
     function addplayers(id, position) {
+        
         const player = props.players.find(p => p.player.id === id);
         if (player && position == player.statistics[0].games.position) {
             return <Box key={id} className='plyr' size="9" width='250'>
@@ -27,14 +29,11 @@ function LineUp(props) {
                             {/* <h5 className='plyrName'><span>{player.player.name}</span></h5> */}
                     </Box>
         }
+        
     }
-    
-    useEffect(()=>{
-    },[props.players])
 
     const createTeam = async ()=>{
         if(props.players.length<11){
-            console.log(props.players)
             setError(errorMsg)
             btnRef.current?.click()
         }
@@ -50,17 +49,18 @@ function LineUp(props) {
                 console.error(error);
             }
         }
-
     }
 
     return (
         <div className='line-up'>
-            <h1 className='teamH1'>My Team:</h1>
+            {isCreateMode?<h1 className='teamH1'>Amount: {props.amount}</h1>:<h1 style={{color:'green',marginLeft:'13%'}} className='teamH1'>My Team:</h1>}
             <Flex className='line' direction="column" rows="4" gap="3" width="auto">
                 <div id='goalkeeper' className='position goalkeeper'>
                     {
                         props.players.map((player, i) => {
-                            return addplayers(player.player.id, "Goalkeeper")
+                            if('Goalkeeper'== player.statistics[0].games.position){
+                                return addplayers(player.player.id, "Goalkeeper")
+                            }                        
                         })
                     }
                 </div>
@@ -68,22 +68,28 @@ function LineUp(props) {
                 <div id='defender' className='position defender'>
                     {
                         props.players.map((player, i) => {
-                            return addplayers(player.player.id, "Defender")
+                            if('Defender'== player.statistics[0].games.position){
+                                return addplayers(player.player.id, "Defender")
+                            }
                         })
                     }
                 </div>
                 <div id='midfielder' className='position midfielder'>
                     {
                         props.players.map((player, i) => {
-                            return addplayers(player.player.id, "Midfielder")
+                            if('Midfielder'== player.statistics[0].games.position){
+                                return addplayers(player.player.id, "Midfielder")
+                            }
+
                         })
                     }
                 </div>
                 <div id='attacker' className='position attacker'>
                     {
                         props.players.map((player, i) => {
-                            return addplayers(player.player.id, "Attacker")
-                        })
+                            if('Attacker'== player.statistics[0].games.position){
+                                return addplayers(player.player.id, "Attacker")
+                            }                        })
                     }
                 </div>
             </Flex>

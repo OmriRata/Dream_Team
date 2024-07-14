@@ -7,14 +7,16 @@ import LineUp from '../Components/LineUp';
 
 function TeamBuilder() {
     const [players,setPlayers] = useState([])
+    const [amount,setAmount] = useState('100M')
+
 
 return (
         <Flex className="team-builder" direction="column" gap="2">
             <div className="playerSelect" >
-                <PlayerSelection setPlayers={setPlayers} players={players} />
+                <PlayerSelection setAmount={setAmount} setPlayers={setPlayers} players={players} />
             </div>
             <div className='Line-up'>
-                <LineUp isCreate={true} players={players} setPlayers={setPlayers}/>
+                <LineUp amount={amount} isCreate={true} players={players} setPlayers={setPlayers}/>
             </div>
         </Flex>
 )
