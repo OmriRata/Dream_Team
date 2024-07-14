@@ -102,3 +102,9 @@ input:focus ,.trigger:focus {
   background-color: #f1f1f1 !important;
 
 }
+
+.message{
+  color: #f60707;
+  text-align: center;
+  margin-top: 10px;
+}
