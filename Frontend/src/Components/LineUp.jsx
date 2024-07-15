@@ -3,10 +3,12 @@ import '../style/LineUp.css'
 import { Avatar, Button, Flex, Box, Grid,Card,AlertDialog } from '@radix-ui/themes'
 import Alert from '@mui/material/Alert'
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 
 
 function LineUp(props) {
+    const navigate = useNavigate();
     const league_code = 27922503;
     const [isCreateMode,setIsCreateMode] = useState(props.isCreate)
     const btnRef = useRef();
@@ -46,15 +48,35 @@ function LineUp(props) {
                     username:localStorage.getItem("username")
                 });
                 console.log(response.data);
+                navigate('/team')
             } catch (error) {
                 console.error(error);
             }
         }
     }
 
+    const editTeam = async ()=>{
+        if(props.players.length<11){
+            setError(errorMsg)
+            btnRef.current?.click()
+        }
+        else{
+            try {
+                const response = await axios.post('/users/updateTeam', {
+                    players : props.players,
+                    league_code:league_code,
+                    username:localStorage.getItem("username")
+                });
+                console.log(response.data);
+                navigate('/team')
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }
     return (
         <div className='line-up'>
-            {isCreateMode?<h1 className='teamH1'>Amount: {props.amount}</h1>:<h1 style={{color:'green',marginLeft:'13%'}} className='teamH1'>My Team:</h1>}
+            {isCreateMode?<h1 className='teamH1'>Amount: {props.amount}</h1>:<></>}
             <Flex className='line' direction="column" rows="4" gap="3" width="auto">
                 <div id='goalkeeper' className='position goalkeeper'>
                     {
@@ -94,7 +116,7 @@ function LineUp(props) {
                     }
                 </div>
             </Flex>
-            {isCreateMode?<Button on onClick={createTeam} className='applyBtn'> Apply </Button>:<></>}
+            {isCreateMode?<Button on onClick={props.isEditMode?editTeam:createTeam} className='applyBtn'> Apply </Button>:<></>}
             <AlertDialog.Root>
             <AlertDialog.Trigger>
                 <button ref={btnRef} hidden variant="soft">Size 2</button>
