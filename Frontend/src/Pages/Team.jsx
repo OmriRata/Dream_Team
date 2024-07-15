@@ -1,17 +1,21 @@
-import React,{ useEffect, useState }  from "react";
+import React,{ useEffect, useState,useRef }  from "react";
 //import "../style/Team.css"
 import LineUp from "../Components/LineUp";
+import "../style/Team.css";
 import { englandPlayers, playersData } from "../Data/data";
 import axios from "axios";
-import {NavLink} from 'react-router-dom'
+import {NavLink,Navigate} from 'react-router-dom'
+import { Button } from "@radix-ui/themes";
 
 
 
 
 
 function Team(){
+    const lineupRef = useRef()
     const [players,setPlayers] = useState([]);
-    const [isPlayers,setIsPlayers] = useState(false);  
+    const [isPlayers,setIsPlayers] = useState(false);
+    const [x,setX] = useState(false)
 
     const getPlayers= async ()=>{
         try{
@@ -27,12 +31,22 @@ function Team(){
         }
     }
     useEffect(()=>{
+        console.log(lineupRef.current?.league_code)
         getPlayers()
     },[])
-    
-    return <div>
+    return <div className="team">
         {isPlayers?
-            <LineUp isCreate={false} players={players} setPlayers={setPlayers}/>:
+            // <div className="updateTeam">  
+                <div class="inner">
+                <NavLink to={'/createTeam'} state={{ players: players,isEditMode:true }}><Button className='updateBtn'>
+                    edit lineup</Button>
+                    </NavLink>
+                <LineUp ref={lineupRef} isCreate={x} players={players} setPlayers={setPlayers}/>
+                    
+            </div>
+// /            </div>
+
+            :
             <div>
                 You need to create a Team
                 <br></br>
