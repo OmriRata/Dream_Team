@@ -85,8 +85,24 @@ def addTeam():
         "players":players,
         'username':username,
     }
+    id = teams_collection.insert_one(newTeam);
+    print(id.inserted_id)
+    return jsonify({"message": "Team created successfully",'id':id.inserted_id}), 200
+
+
+@user.route('/updateTeam',methods=['POST'])
+def updateTeam():
+    data = request.json
+    league_code = data.get('league_code')
+    players = data.get('players')
+    username = data.get('username')
+    newTeam = {
+        "league_code":league_code,
+        "players":players,
+        'username':username,
+    }
     teams_collection.insert_one(newTeam);
-    return jsonify({"message": "League created successfully"}), 200
+    return jsonify({"message": "Team created successfully"}), 200
 
 @user.route('/getTeamPlayers',methods=['POST'])
 def getPlayers():
