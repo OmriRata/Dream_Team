@@ -1,21 +1,15 @@
-.updateTeam{
-    display: table-cell;
-    vertical-align:middle;
-}
+
 .team{
-    display: table;
-    /* position: absolute; */
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-}
-.inner {
-    margin-left: 30%;
-    margin-right: 30%;
-    width: 400px;
-    /* Whatever width you want */
+    background-color:azure;
+    display: flex;
+    height: 20%;
+    justify-content: center; /* Align children horizontally at the center */
+    align-items: center; /* Align children vertically at the center */
 }
 .updateBtn{
-    width: 625px;
+    width: 100%;
+    margin-top:1%;
+    margin-bottom:1%;
+    font-size: larger;
+    height: 40px;
 }

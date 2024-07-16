@@ -5,7 +5,7 @@ import "../style/Team.css";
 import { englandPlayers, playersData } from "../Data/data";
 import axios from "axios";
 import {NavLink,Navigate} from 'react-router-dom'
-import { Button } from "@radix-ui/themes";
+import { Button ,Flex} from "@radix-ui/themes";
 
 
 
@@ -14,6 +14,8 @@ import { Button } from "@radix-ui/themes";
 function Team(){
     const lineupRef = useRef()
     const [players,setPlayers] = useState([]);
+    const [league_code,setLeagueCode] = useState();
+    const [team_id,setTeamId] = useState();
     const [isPlayers,setIsPlayers] = useState(false);
     const [x,setX] = useState(false)
 
@@ -24,6 +26,8 @@ function Team(){
             });
             const data = response.data
             setPlayers(data.players)
+            setLeagueCode(data.league_code)
+            setTeamId(data.team_id)
             setIsPlayers(true)
 
         }catch(error){
@@ -31,21 +35,17 @@ function Team(){
         }
     }
     useEffect(()=>{
-        console.log(lineupRef.current?.league_code)
         getPlayers()
     },[])
     return <div className="team">
         {isPlayers?
-            // <div className="updateTeam">  
-                <div class="inner">
-                <NavLink to={'/createTeam'} state={{ players: players,isEditMode:true }}><Button className='updateBtn'>
-                    edit lineup</Button>
+                <Flex direction={'column'}>
+                <NavLink to={'/createTeam'} state={{team_id:team_id,league_code:league_code, players: players,isEditMode:true }}><Button  color="gray" variant="solid" highContrast className='updateBtn'>
+                    Edit Lineup</Button>
                     </NavLink>
                 <LineUp ref={lineupRef} isCreate={x} players={players} setPlayers={setPlayers}/>
                     
-            </div>
-// /            </div>
-
+            </Flex>
             :
             <div>
                 You need to create a Team
