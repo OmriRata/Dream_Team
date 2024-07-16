@@ -16,7 +16,6 @@ function LineUp(props) {
 
     // const errorMsg= 'You Need to Choose 11 players';
 
-    
         
     const removePlayer = (player)=>{
         props.setPlayers(props.players.filter(p => p.player.id !== player.player.id))
@@ -64,10 +63,8 @@ function LineUp(props) {
             try {
                 const response = await axios.post('/users/updateTeam', {
                     players : props.players,
-                    league_code:league_code,
-                    username:localStorage.getItem("username")
+                    team_id :props.team_id,
                 });
-                console.log(response.data);
                 navigate('/team')
             } catch (error) {
                 console.error(error);
@@ -77,7 +74,7 @@ function LineUp(props) {
     return (
         <div className='line-up'>
             {isCreateMode?<h1 className='teamH1'>Amount: {props.amount}</h1>:<></>}
-            <Flex className='line' direction="column" rows="4" gap="3" width="auto">
+            <Flex className={isCreateMode?'line':"line2"} direction="column" rows="4" gap="3" width="auto">
                 <div id='goalkeeper' className='position goalkeeper'>
                     {
                         props.players.map((player, i) => {
@@ -86,6 +83,7 @@ function LineUp(props) {
                             }                        
                         })
                     }
+                    
                 </div>
 
                 <div id='defender' className='position defender'>
@@ -112,11 +110,13 @@ function LineUp(props) {
                         props.players.map((player, i) => {
                             if('Attacker'== player.statistics[0].games.position){
                                 return addplayers(player.player.id, "Attacker")
-                            }                        })
+                            }                        
+                        })
                     }
                 </div>
             </Flex>
-            {isCreateMode?<Button on onClick={props.isEditMode?editTeam:createTeam} className='applyBtn'> Apply </Button>:<></>}
+            {isCreateMode?<Button onClick={props.isEditMode?editTeam:createTeam} className='applyBtn'> {props.isEditMode?"Update":"Apply"} </Button>:<></>}
+
             <AlertDialog.Root>
             <AlertDialog.Trigger>
                 <button ref={btnRef} hidden variant="soft">Size 2</button>
