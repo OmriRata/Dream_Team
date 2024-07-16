@@ -6,6 +6,8 @@ from datetime import timedelta,timezone,datetime
 import pymongo
 import uuid
 import hashlib
+from bson.objectid import ObjectId
+
 
 user = Blueprint('user',__name__)
 
@@ -87,7 +89,7 @@ def addTeam():
     }
     id = teams_collection.insert_one(newTeam);
     print(id.inserted_id)
-    return jsonify({"message": "Team created successfully",'id':id.inserted_id}), 200
+    return jsonify({"message": "Team created successfully",'id':str(id.inserted_id)}), 200
 
 
 @user.route('/updateTeam',methods=['POST'])
@@ -95,25 +97,36 @@ def updateTeam():
     data = request.json
     league_code = data.get('league_code')
     players = data.get('players')
-    username = data.get('username')
-    newTeam = {
-        "league_code":league_code,
-        "players":players,
-        'username':username,
-    }
-    teams_collection.insert_one(newTeam);
-    return jsonify({"message": "Team created successfully"}), 200
+    team_id= data.get('team_id')
+
+    query = {"_id": ObjectId(team_id) }
+
+    update = {"$set": {"players":players}}  # Change this to your update
+
+    result = teams_collection.find_one_and_update(
+    query, 
+    update, 
+    return_document=True)
+    if result:
+        print("Updated document:", result)    
+        return jsonify({"message": "Team Updated successfully"}), 200
+
+    else:
+        print("No document found matching the query")
+        return jsonify({"error": "Team Not Found"}), 400
+
 
 @user.route('/getTeamPlayers',methods=['POST'])
 def getPlayers():
     data = request.json
     username = data.get('username')
-    user = teams_collection.find_one({'username':username})
+    team = teams_collection.find_one({'username':username})
     
-    if not user:
-        return jsonify({"error": "User Not exists"}), 400
+    if not team:
+        return jsonify({"error": "Team Not Found"}), 400
     
-    return jsonify({"players":user["players"]}),200
+    print(team['_id'])
+    return jsonify({"players":team["players"],'league_code':team["league_code"],'team_id':str(team['_id'])}),200
     
 
 @user.route('/getUserLeagues',methods=['POST'])
