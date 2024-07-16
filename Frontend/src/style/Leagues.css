@@ -1,8 +1,14 @@
-.league_table{
-    width: 50%;
+/* .league_table{
+    width: 50px;
     height: 50px;
-}
+} */
+.container{
+    width: 50%;
 
+}
 .leagues{
-    background-color: antiquewhite;
+    background-color:aliceblue;
+    display: flex;
+    justify-content: center; /* Align children horizontally at the center */
+    align-items: center; /* Align children vertically at the center */
 }

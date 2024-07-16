@@ -1,6 +1,8 @@
 import React,{ useEffect, useState }  from "react";
 import CustomizedTables from '../Components/Table'
 import "../style/Leagues.css"
+import {Flex, Button } from "@radix-ui/themes";
+
 
 
 
@@ -12,7 +14,9 @@ function Leagues(){
         getLeagues()
     })
     return <div className="leagues">
-        <CustomizedTables className='league_table'/>
+        <Flex className="container">
+            <CustomizedTables className='league_table'/>
+        </Flex>
     </div>
 }
 
