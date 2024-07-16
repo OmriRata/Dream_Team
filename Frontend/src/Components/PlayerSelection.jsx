@@ -60,7 +60,7 @@ function PlayerSelection(props) {
             if(parseFloat(rating)- Math.floor(parseFloat(rating))>0.5){
                 return Math.ceil(parseFloat(rating))
             }
-            return Math.floor(parseFloat(rating))
+            return Math.floor(parseFloat(rating))+1*1.5
         }
     }
     const updateAmount=()=>{
@@ -143,10 +143,10 @@ function PlayerSelection(props) {
 
     },[])
     useEffect(()=>{
-        updateAmount() 
+        updateAmount()
     },[props.players])
 
-    const handleChange1 = (event, newValue, activeThumb,x) => {
+    const sliderChange = (event, newValue, activeThumb,x) => {
         if (!Array.isArray(newValue)) {
             return;
         }
@@ -255,11 +255,11 @@ function PlayerSelection(props) {
                         <Text style={{color:'gray',marginTop:'0.7%'}}>Price:</Text>
                         <Slider
                         marks
-                        aria-label='Restricted values'
+                        // aria-label='Restricted values'
                         step={1}
                         getAriaLabel={() => 'Minimum distance shift'}
                         value={value}
-                        onChange={handleChange1}
+                        onChange={sliderChange}
                         valueLabelDisplay="auto"
                         min={1}
                         max={10}
@@ -298,7 +298,7 @@ function PlayerSelection(props) {
                                                 </Box> 
                                                 <label className='price'>price :{getPrice(item.statistics[0].games.rating)}M</label>
                                                 {
-                                                props.players.includes(item)?
+                                                props.players.some( player => player.player.id === item.player.id)?
                                                 <Button color="gray" style={{backgroundColor:"gray"}}  disabled={disabled} variant="soft" onClick={(e)=>addPlayers(item,e)} className='addBtn'>Add</Button>
                                                 :
                                                 <Button color="cyan" disabled={!disabled} variant="soft" onClick={(e)=>addPlayers(item,e)} className='addBtn'>Add</Button>
