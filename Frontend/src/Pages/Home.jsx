@@ -20,16 +20,16 @@ function Home(props){
     }
     const createTeam = ()=>{
         console.log("change page")
-        props.c("LeagueBuilder")
+        props.c("TeamBuilder")
         navigate("/createTeam")
     }
     const info = ()=>{
         console.log("change page")
-        props.c("LeagueBuilder")
+        props.c("ExplanationPage")
         navigate("/ExplanationPage")
     }
     
-    
+    props.c('HomePage')
     return (
         <>
         <div className="home-container">
