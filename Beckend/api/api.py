@@ -95,4 +95,4 @@ def getLeagueInfoById(league_id):
     print("=================================")
     # print(response.json()["response"][0)
     print("=================================")
-    return response.json()
+    return response.json()["response"][0]['league']
