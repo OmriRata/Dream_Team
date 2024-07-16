@@ -8,7 +8,6 @@ import AlertTitle from '@mui/material/AlertTitle';
 import Alert from '@mui/material/Alert';
 import { Theme, TextField, Container, Box, Card, AlertDialog, ScrollArea } from '@radix-ui/themes';
 import { Avatar, Flex, Text, Button, Select } from '@radix-ui/themes';
-
 import { leaguesData } from '../Data/data';
 
 function LeagueBuilder() {
@@ -21,9 +20,16 @@ function LeagueBuilder() {
     const [timeoutID, setTimeoutID] = useState();
     const btnRef = useRef();
     const LEAGUES_ID = ['39', '140', '78', '135', '61'];
+    const LEAGUES = ['england', 'spain', 'germany', 'france', 'italy'];
 
-    const fetchData = async (id) => {
+    const fetchData = async () => {
         try {
+            // const responses = await Promise.all(LEAGUES_ID.map(id =>{
+            //     return fetch(`/api/leagueInfo/${id}`)
+            // }))
+            // const result = await Promise.all(responses.map(res=>res.json()));
+            // setLeagues(result)
+            // console.log(result)
             setLeagues(leaguesData);
         } catch (err) {
             console.log(err);
@@ -31,9 +37,7 @@ function LeagueBuilder() {
     };
 
     useEffect(() => {
-        LEAGUES_ID.forEach((i) => {
-            fetchData(i);
-        });
+        fetchData()
     }, []);
 
     const handleSelectChange = (e) => {
