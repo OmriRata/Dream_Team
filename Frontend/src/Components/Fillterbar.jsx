@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {Avatar, Button, Select, Separator} from '@radix-ui/themes'
 const { forwardRef, useImperativeHandle } = React;
+import '../style/PlayerSelection.css'
+import { ResetIcon } from '@radix-ui/react-icons';
+import {Flex} from '@radix-ui/themes'
 
 
 
@@ -24,9 +27,6 @@ const Fillterbar = forwardRef((props,ref)=>{
     const filterByPosition = (position)=>{
         props.setPositionFilter(position)
         if(props.teamFilter ==''){
-            console.log("first")
-            console.log(props.positionFilter)
-            console.log("first")
             
             props.setPlayers(
                 allPlayers.filter((player)=>{
@@ -48,9 +48,10 @@ const Fillterbar = forwardRef((props,ref)=>{
     }
 
     useEffect(()=>{
-        setPlay(props.players)
-    },[players,props.players])
-
+        // setPlay(props.players)
+        // setAllPlayers(props.players)
+    },[])
+    
     useEffect(()=>{
         setAllPlayers(props.players)
     },[allPlayers,props.placeholder])
@@ -78,23 +79,25 @@ const Fillterbar = forwardRef((props,ref)=>{
             )
         }
     }
+    
 
     return (
-        <Select.Root key={key}  onValueChange={placeholder=='Position'?filterByPosition:filterByteam}>
-            <Select.Trigger radius="full" color="gray" placeholder={props.placeholder}/> 
-                <Select.Content color="gray" variant="solid" highContrast>
-                {/* <Select.Item id="place/holder" disabled> {placeholder}</Select.Item> */}
+        <Flex>
+        <Select.Root key={key} color='red'  onValueChange={placeholder=='Position'?filterByPosition:filterByteam}>
+            <Select.Trigger radius='large' style={{width:'100%'}} color="green" placeholder={props.placeholder}/> 
+                <Select.Content color="blue" variant="solid" highContrast>
                 {
                     props.values.map((val,i)=>{
-                        return <Select.Item key={i} value={val}>
+                        return <Select.Item style={{width:'100%'}} key={i} value={val}>
                             <Avatar src={props.placeholder =='Position'?val:val.logo} style={{marginRight:'10px'}} size={'1'}></Avatar>
                             {props.placeholder =='Position'?val:val.name}
                             </Select.Item>
                     })
                 }
                 </Select.Content>
-                <Separator color="cyan" orientation="vertical" size="2" />
                 </Select.Root>
+            </Flex>
+
     )
 
 })
