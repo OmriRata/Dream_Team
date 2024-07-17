@@ -48,7 +48,7 @@ function Navbar(props){
                         <NavLink className="navLink" to="/leagues">Leagues</NavLink>
                     </li>
                     <li>
-                        <NavLink onClick={()=>logout()}className="navLink" to="/login">Logout</NavLink>
+                        <NavLink onClick={()=>logout()}className="navLink" to="/">Logout</NavLink>
                     </li>
                     </>
                 ):(<>
