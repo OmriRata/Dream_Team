@@ -49,12 +49,12 @@ def getPlayersByTeam(team_id):
 @api.route("/playersByLeague/<league_id>") 
 def getPlayersByLeague(league_id):
     # querystring = {"team":team_id}
-    querystring = {"league":"39","season":"2020"}
+    querystring = {"league":league_id,"season":"2024"}
 
     
     response = requests.get(URL+"players", headers=HEADERS, params=querystring)
     return response.json()["response"]
-    print(response.json()["response"][0]["players"])
+    # print(response.json()["response"][0]["players"])
     return response.json()["response"][0]["players"]
 
 @api.route("/teamId/<team_name>") 
