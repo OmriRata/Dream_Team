@@ -7,6 +7,7 @@ import pymongo
 import uuid
 import hashlib
 from bson.objectid import ObjectId
+from bson import json_util
 
 
 user = Blueprint('user',__name__)
@@ -135,19 +136,49 @@ def getLeagues():
     username = data.get('username')
     query = {'participants': {'$in': [username]}}
     result = league_collection.find(query)
-    
 
-    # Print the results
-    if not list(league_collection.find(query)):
+    if not list(result):
         return jsonify({"error": "ther is no leagues for this user"}), 400
 
-        
-    for doc in result:
-        print(doc)
+    response = json_util.dumps(league_collection.find(query))
+
+    return jsonify({'leagues':response,'username':username})
 
 
-    return jsonify({'leagues': list(result)})
+@user.route('/joinLeague', methods=['POST'])
+def joinLeague():
+    data = request.json
+    username = data.get('username')
+    key = data.get('key')
+    input = data.get('input')
+    print(input)
+    try:
+        if key == 'league_code':
+            league = league_collection.find_one({"league_code":int(input)})
+        else:
+            league = league_collection.find_one({"league_name":input})
+        print(league)
+        league_code = league['league_code']
+    except:
+        print("Error - League Not Found")
+        return jsonify({"error": "League Not Found"}), 400
+    
+    #add the user to the league
+    participants = league['participants']
+    if username in participants:
+        return jsonify({"error": "You are already in this league"}), 400
 
+    query = {'league_code': league_code}
+    participants.append(username)
+    update = {"$set": {"participants":participants}}  # Change this to your update
+    result = league_collection.find_one_and_update(
+    query, 
+    update, 
+    return_document=True)
+
+    
+    return jsonify({"data": "Ok"}), 200
+    pass
 
 
 @user.route('/createLeague', methods=['POST'])
@@ -170,7 +201,7 @@ def create_league():
         "league_id":league_id,
         # "email":email,
         'username':username,
-        'id':id,
+        'league_code':id,
         'participants':[username]
 
     }
