@@ -7,6 +7,8 @@
     right: 10rem;
     z-index: -2;
     max-width: 700px;
+    height: 50%;
+
 }
 
 .home-image-section {
@@ -15,7 +17,8 @@
 }
 .home-text-section {
     flex: 1;
-    display: flex;
+    /* display: flex; */
+    margin-top: 7%;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
@@ -36,7 +39,7 @@
 }
 .secondary-button {
     padding: 1rem 2.5rem;
-    background-color: #fe9e0d;
+    background-color: #7d0dfe;
     outline: none;
     border: none;
     border-radius: 5rem;
@@ -49,10 +52,28 @@
     align-items: center;
     justify-content: center;
 }
+.joinBtn{
+    margin-right: 10px ;
+    background-color: #fece0d;
+    font-size: 90%;
+    height: 10%;
+    width: 30%;
+    text-align: center;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowing content */
+    text-overflow: ellipsis; /*Add ellipsis (...) for overflow*/
+    display: inline-block; 
+    margin-top: 3%;
+    margin-left: 3%;
+}  
 .secondary-button svg {
     margin-left: 0.75rem;
     font-size: 1.5rem;
 }
+
 .secondary-button:hover {
-    background-color: #e48f0f;
+    background-color: #920fe4;
+}
+.joinBtn:hover {
+    background-color: #e4a40f;
 }  
