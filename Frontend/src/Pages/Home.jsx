@@ -28,6 +28,10 @@ function Home(props){
         props.c("ExplanationPage")
         navigate("/ExplanationPage")
     }
+    const joinLeague = ()=>{
+        navigate("/joinLeague")
+
+    }
     
     props.c('HomePage')
     return (
@@ -41,7 +45,11 @@ function Home(props){
             </div>
             
         </div>
-        <Flex direction="row" gap="2">
+        <button className="secondary-button joinBtn" onClick={joinLeague}>
+                        <h2>JOIN A LEAGUE</h2>
+                        Click here to join a league with friends. <FiArrowRight />
+                    </button>
+        <Flex direction="row" >
 
         <div className="home-text-section">
                         <h1 className="primary-heading">
@@ -55,11 +63,12 @@ function Home(props){
                         <button className="secondary-button" onClick={info}>
                         information <FiArrowRight />
                         </button>
+                        
                 </div>
-                <>
+                
+                
                 <img src={player} alt="" />
-                </>
-                </Flex>
+        </Flex>
 
         </>
     )
