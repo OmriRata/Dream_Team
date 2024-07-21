@@ -10,6 +10,7 @@ import LeagueBuilder from './Pages/LeagueBuilder'
 import '@radix-ui/themes/styles.css';
 import TeamBuilder from './Pages/TeamBuilder';
 import Leagues from './Pages/Leagues';
+import JoinLeague from './Pages/JoinLeague';
 import Team from './Pages/Team';
 import PrivateRoutes from './Components/PrivateRoutes';
 import ExplanationPage from './Pages/ExplanationPage';
@@ -30,6 +31,7 @@ function App() {
               <Route element={<PrivateRoutes token={token}/>}>
                 <Route path="/leagues" element={< Leagues />}/>
                 <Route path="/team" element={< Team />}/>
+                <Route path="/joinLeague" element={< JoinLeague />}/>
                 <Route path="/createLeague" element={< LeagueBuilder />}/>
                 <Route path="/createTeam" element={< TeamBuilder />}/>
               </Route>

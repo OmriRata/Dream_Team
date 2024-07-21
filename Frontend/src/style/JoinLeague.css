@@ -1,0 +1,60 @@
+.join_league{
+    display: flex;
+    justify-content: center; /* Align children horizontally at the center */
+    align-items: center;
+    
+}
+.leagueLabel{
+    /* width: 10%; */
+    text-align: center !important;
+    justify-content: center !important;
+    font-size: larger;
+    margin-bottom: 10px;
+}
+.join-btn{
+    padding: 25px !important;
+    height: 50px !important;
+    width: 100% !important;
+    border-radius: 30px!important;
+    margin-top: 20% !important;
+    background: linear-gradient(#00aaf8b3,rgba(0, 240, 136, 0.983)) !important;
+    cursor:pointer !important;
+    opacity: 0.9 !important;
+    font-size: 140% !important;
+    
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    text-align: center !important;
+    margin: 15% 0px 5%  0px;
+
+}
+.form input{
+    padding: 15px !important;
+    /* margin: 10px 0px !important; */
+    border-radius: 20px !important;
+    /* width: 100% !important; */
+    /* height: 100% !important; */
+    text-align: center !important;
+    /* border: 3px solid #ccc; */
+    font-size: 14px;
+    /* font-weight:520; */
+    /* background-color: #f1f1f1 !important; */
+}
+.join_league_form{
+    padding: 20% 10% 20% 10%;
+    margin-top: 30%;
+    display:flexbox;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    /* padding: 50px; */
+    background: transparent;
+    border: 2px solid rgba(255,255,255,.2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 60px rgba(10, 65, 229, 0.298);
+    border-radius: 30px;  
+    /* margin-left: 25%; */
+    width: 400px;
+}
