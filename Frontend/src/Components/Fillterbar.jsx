@@ -18,8 +18,19 @@ const Fillterbar = forwardRef((props,ref)=>{
     useImperativeHandle(ref, () => ({
 
         resetFilters() {
+
             setKey(+new Date())
             setPlaceHolder(props.placeholder)
+            if((props.teamFilter==''&&props.placeholder=='Position')||
+                (props.positionFilter==''&&props.placeholder=='Team')){
+                props.setPlayers(allPlayers)
+                console.log(props.players)
+
+                return
+            }
+            props.placeholder == 'Position'?filterByteam(props.teamFilter):filterByPosition(props.positionFilter);
+            console.log(props.placeholder)
+            console.log(props.positionFilter)
         }
     
     }));
@@ -83,8 +94,8 @@ const Fillterbar = forwardRef((props,ref)=>{
 
     return (
         <Flex>
-        <Select.Root key={key} color='red'  onValueChange={placeholder=='Position'?filterByPosition:filterByteam}>
-            <Select.Trigger radius='large' style={{width:'100%'}} color="green" placeholder={props.placeholder}/> 
+        <Select.Root key={key} color='red' width='83%' onValueChange={placeholder=='Position'?filterByPosition:filterByteam}>
+            <Select.Trigger radius='large' width='83%' style={{width:'100%'}} color="green" placeholder={props.placeholder}/> 
                 <Select.Content color="blue" variant="solid" highContrast>
                 {
                     props.values.map((val,i)=>{

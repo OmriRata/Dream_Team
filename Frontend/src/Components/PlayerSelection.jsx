@@ -3,6 +3,7 @@ import Slider from '@mui/material/Slider';
 import Alert from '@mui/material/Alert'
 import {Theme,TextField,Container,Box,Card,Flex,Avatar,Text,AlertDialog,Button,ScrollArea } from '@radix-ui/themes'
 import '../style/PlayerSelection.css'
+import { ReloadIcon } from '@radix-ui/react-icons';
 import {playersData,barcePlayers, englandTeams,englandPlayers} from '../Data/data'
 import { useEffect, useState,useRef } from 'react'
 import Fillterbar from './Fillterbar'
@@ -31,15 +32,19 @@ function PlayerSelection(props) {
     const [value,setValue] = useState([1,10])
     const minDistance = 1;
 
-    const resetFillters = ()=>{
-        positionRef.current.resetFilters()
-        teamRef.current.resetFilters()
+    const resetTeamFillter = ()=>{
         setData(allPlayers)
-        setPositionFilter('')
         setTeamFilter('')
-        setValue([1,10])
+        teamRef.current.resetFilters()
+        // setValue([1,10])
     }
 
+    const resetPositionFillter = ()=>{
+        setData(allPlayers)
+        setPositionFilter('')
+        positionRef.current.resetFilters()
+        // setValue([1,10])
+    }
     const fetchTeams = async ()=>{
         try {
             const response = await axios.get("/api/leagueTeams/"+league);
@@ -238,6 +243,7 @@ function PlayerSelection(props) {
                     </form>
                     
                     <Flex className='fillterCat' direction={'column'} gap={'4'}>
+                    <Flex  direction={'row'} gap={6}>
                             <Fillterbar
                             getPrice={getPrice}
                             priceRange={value}
@@ -250,7 +256,12 @@ function PlayerSelection(props) {
                             values={teams}
                             setPositionFilter={setPositionFilter}
                             />
-                            
+                            <Button onClick={resetTeamFillter} width='100%' color="gray" variant="classic" >
+                                <ReloadIcon/>
+                                Reset
+                            </Button>
+                        </Flex>
+                        <Flex  direction={'row'} gap={6}>
                             <Fillterbar
                             className='filter'
                             getPrice={getPrice}
@@ -260,11 +271,15 @@ function PlayerSelection(props) {
                             positionFilter={positionFilter}
                             teamFilter={teamFilter}
                             setTeamFilter={setTeamFilter}
-
                             players={data}
                             setPlayers={setData}
                             placeholder={'Position'}
                             values={positions} />
+                            <Button onClick={resetPositionFillter} width='100%' color="gray" variant="classic">
+                                <ReloadIcon />
+                                Reset
+                            </Button>
+                        </Flex>
                         <Flex  direction={'row'} gap={6}>
                             <Text className='priceHeader'>Price:</Text>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -281,9 +296,7 @@ function PlayerSelection(props) {
                             />
                             </Flex>
                         </Flex>
-                        <Button width='100%' color="gray" variant="classic" onClick={resetFillters}>
-                            Reset Filters
-                        </Button>
+                        
                     <ScrollArea className='scroll' type="always" scrollbars="vertical" size="3" style={{ height: 600 ,color:'ActiveBorder'}}>
                             {data.filter(i=>{
                                 return search.toLowerCase()===''? i: i.player.name.toLowerCase().includes(search);
