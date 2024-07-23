@@ -2,29 +2,36 @@ import React, { useState, useEffect, useRef } from "react";
 import "../style/JoinLeague.css";
 import axios from "axios";
 import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import { AlertDialog, RadioCards } from '@radix-ui/themes';
 import { Flex,  Button } from '@radix-ui/themes';
 import { leaguesData } from '../Data/data';
+import {NavLink, useNavigate } from "react-router-dom";
+
 
 function JoinLeague() {
+    const navigate = useNavigate() 
     const [selectedValue, setSelectedValue] = useState("League code");
     const [leagueId, setLeagueId] = useState('');
-    const [username, setUsername] = useState('');
+    const [leagueName, setLeagueName] = useState('');
+    const [leagueCode, setLeagueCode] = useState('');
     const [flag,setFlag] = useState(true);
     const [input, setInput] = useState('');
     const [message, setMessage] = useState("");
-    const [timeoutID, setTimeoutID] = useState();
     const btnRef = useRef();
+    const btnRef2 = useRef();
+    const [open,setOpen] = useState(false)
 
-
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const setErrorMessage = (message) => {
-        clearTimeout(timeoutID);
+        // clearTimeout(timeoutID);
         setMessage(message);
-        setTimeoutID(setTimeout(() => {
-            setMessage("");
-            btnRef.current?.click();
-        }, 3000));
+        // setTimeoutID(setTimeout(() => {
+        //     setMessage("");
+        //     btnRef.current?.click();
+        // }, 3000));
     };
     const handeChanged = (value)=>{
         setSelectedValue(value)
@@ -40,8 +47,11 @@ function JoinLeague() {
                 input,
                 key
             });
-            console.log(response);
-            btnRef.current?.click();
+            const data = response.data;
+            setLeagueId(data.league_id)
+            setLeagueCode(data.league_code)
+            setLeagueName(data.league_name)
+            btnRef2.current?.click();
 
         } catch (error) {
             setFlag(false)
@@ -66,16 +76,31 @@ function JoinLeague() {
                     <Button className="join-btn" color="blue" variant="soft" type="submit">Join</Button>
                 </form>
             </Flex>
-            <AlertDialog.Root>
+            <AlertDialog.Root open={open}>
                 <AlertDialog.Trigger>
-                    <button ref={btnRef} hidden variant="soft">Size 2</button>
+                    <button onClick={handleOpen} ref={btnRef} hidden variant="soft">Size 2</button>
                 </AlertDialog.Trigger>
                 <AlertDialog.Content size="2" maxWidth="400px">
-                    {flag?
-                        <Alert severity="error" variant="outlined">create a league</Alert>
-                        :<Alert severity="warning" variant="outlined">{message}</Alert>
-
-                    }
+                    <Alert severity="warning" onClose={handleClose}>
+                        {message}
+                    </Alert>
+                </AlertDialog.Content>
+            </AlertDialog.Root>
+            <AlertDialog.Root>
+                <AlertDialog.Trigger>
+                    <button ref={btnRef2} hidden variant="soft">Size 2</button>
+                </AlertDialog.Trigger>
+                <AlertDialog.Content style={{bottom:'0px'}} size="2" maxWidth="40%">
+                <Alert
+                severity="success"
+                action={
+                    <NavLink to={'/createTeam'} state={{leagueId:leagueId,league_code:leagueCode }}><Button  color="gray" variant="solid" highContrast className='updateBtn'>
+                    Create Team</Button>
+                    </NavLink>
+                }
+                >
+                    You have successfully joined the League
+                </Alert>
                 </AlertDialog.Content>
             </AlertDialog.Root>
         </div>
