@@ -121,28 +121,23 @@ def updateTeam():
 def getPlayers():
     data = request.json
     username = data.get('username')
-    team = teams_collection.find({'username':username})
-    teams = []
-    if not team:
+    result = []
+    data = (getLeagues().data).decode('utf-8')  
+
+    leagues = json.loads(json.loads(data)['leagues'])
+    if not leagues:
         return jsonify({"error": "Team Not Found"}), 400
-    
-    # response = json_util.dumps(teams_collection.find({'username':username}))
 
-    # print(response)
-    team = teams_collection.find({'username':username})
-    # with user.test_client() as client:
-    #     response = client.post('/users/getUserLeagues', json={'username':username})
-    #     data = response.get_json()
-    #     print(data)
-    for t in team:
-        code = t['league_code']
-        league = league_collection.find_one({'league_code':code})
-        id = str(t['_id'])
-        obj = {'team_id':str(id),"league_id":league['league_id'],'league_code':code,'players':t['players'],'league_name':league['league_name'] if league else "leagueName"}
-        teams.append(obj)
+    for league in leagues:
+        team = teams_collection.find_one({'league_code':league['league_code'],'username':username})
 
-    
-    return teams
+        players = team['players'] if team else None
+        team_id = str(team['_id']) if team else None
+
+        obj = {'team_id':str(team_id),"league_id":league['league_id'],'league_code':league['league_code'],'players':players,'league_name':league['league_name']}
+        result.append(obj)
+
+    return result
 
 @user.route('/getUserLeagues',methods=['POST'])
 def getLeagues():
