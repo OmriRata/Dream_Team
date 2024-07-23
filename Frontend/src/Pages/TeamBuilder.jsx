@@ -10,6 +10,7 @@ function TeamBuilder() {
     const location = useLocation();
     const isEditMode = location.state?.isEditMode;
     const league_code = location.state?.league_code;
+    const leagueId = location.state?.leagueId;
     const team_id = location.state?.team_id ;
 
     const [players,setPlayers] = useState(location.state?.players?location.state?.players:[])
@@ -18,7 +19,7 @@ function TeamBuilder() {
 return (
         <Flex className="team-builder" direction="column" gap="2">
             <div className="playerSelect" >
-                <PlayerSelection setAmount={setAmount} setPlayers={setPlayers} players={players} />
+                <PlayerSelection leagueId={leagueId} setAmount={setAmount} setPlayers={setPlayers} players={players} />
             </div>
             <div className='Line-up'>
                 <LineUp team_id={team_id} league_code={league_code} isEditMode={isEditMode?true:false} amount={amount} isCreate={true} players={players} setPlayers={setPlayers}/>
