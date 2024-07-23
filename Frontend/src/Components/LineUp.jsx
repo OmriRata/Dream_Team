@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 function LineUp(props) {
     const navigate = useNavigate();
-    const league_code = 27922503;
+    const league_code = props.league_code;
     const [isCreateMode,setIsCreateMode] = useState(props.isCreate)
     const btnRef = useRef();
     const [errorMsg,setError] = useState('You Need to Choose 11 players')

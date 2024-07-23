@@ -1,11 +1,12 @@
 import React from 'react';
 import "../style/ExplanationPage.css";
 import VideoPlayer from '../Components/VideoPlayer';
-
+import Popup from '../Components/Popup';
 const ExplanationPage = () => {
   return (
     <div className="explanation-container">
       <h1>Welcome to Dream Team League</h1>
+      <Popup/>
       <section>
         <h2>Key Features</h2>
         <ul>
