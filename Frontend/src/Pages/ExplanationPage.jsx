@@ -17,7 +17,6 @@ const ExplanationPage = () => {
           <li><strong>Real-Time Updates</strong>: Live scores and notifications for important events.</li>
         </ul>
       </section>
-      <VideoPlayer />
       <section>
         <h2>How to Use</h2>
         <h3>Getting Started</h3>

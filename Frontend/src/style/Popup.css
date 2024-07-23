@@ -23,7 +23,7 @@
 .scroll-button {
   position: absolute;
   top: 30%;
-  right:400px;
+  right: 400px;
   width: 300px; /* Adjust to desired width */
   height: 150px; /* Adjust to desired height */
   background-image: url('../assets/scroll.jpg'); /* Path to your image */
@@ -33,11 +33,29 @@
   color: transparent; /* Hide text to use image as button */
   cursor: pointer;
   text-align: center;
-  line-height: 80px; /* Vertically center text if used */
-  font-size: 24px; /* Adjust font size if text is included */
+  font-size: 24px; /* Adjust font size */
   transition: opacity 0.3s, transform 0.3s;
 }
 
 .scroll-button:hover {
   opacity: 0.8; /* Slightly fade on hover */
+}
+
+.button-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(15, 13, 13); /* Adjust color as needed */
+  font-size: 24px; /* Adjust font size */
+  text-shadow: 1px 1px 2px black; /* Optional: add text shadow for better readability */
+}
+
+.close-button {
+  background: #f00; /* Red background for visibility */
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
 }
