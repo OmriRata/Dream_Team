@@ -86,7 +86,8 @@ def addTeam():
     newTeam = {
         "league_code":league_code,
         "players":players,
-        'username':username,
+        "username":username,
+        "points" : 0
     }
     id = teams_collection.insert_one(newTeam);
     print(id.inserted_id)
@@ -99,7 +100,6 @@ def updateTeam():
     league_code = data.get('league_code')
     players = data.get('players')
     team_id= data.get('team_id')
-
     query = {"_id": ObjectId(team_id) }
 
     update = {"$set": {"players":players}}  # Change this to your update
@@ -121,14 +121,28 @@ def updateTeam():
 def getPlayers():
     data = request.json
     username = data.get('username')
-    team = teams_collection.find_one({'username':username})
-    
+    team = teams_collection.find({'username':username})
+    teams = []
     if not team:
         return jsonify({"error": "Team Not Found"}), 400
     
-    print(team['_id'])
-    return jsonify({"players":team["players"],'league_code':team["league_code"],'team_id':str(team['_id'])}),200
+    # response = json_util.dumps(teams_collection.find({'username':username}))
+
+    # print(response)
+    team = teams_collection.find({'username':username})
+    # with user.test_client() as client:
+    #     response = client.post('/users/getUserLeagues', json={'username':username})
+    #     data = response.get_json()
+    #     print(data)
+    for t in team:
+        code = t['league_code']
+        league = league_collection.find_one({'league_code':code})
+        id = str(t['_id'])
+        obj = {'team_id':str(id),"league_id":league['league_id'],'league_code':code,'players':t['players'],'league_name':league['league_name'] if league else "leagueName"}
+        teams.append(obj)
+
     
+    return teams
 
 @user.route('/getUserLeagues',methods=['POST'])
 def getLeagues():
@@ -176,9 +190,9 @@ def joinLeague():
     update, 
     return_document=True)
 
-    
-    return jsonify({"data": "Ok"}), 200
-    pass
+    obj = {"league_id":result['league_id'],'league_code':result['league_code'],'league_name':league['league_name']}
+
+    return jsonify(obj), 200
 
 
 @user.route('/createLeague', methods=['POST'])
