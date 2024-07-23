@@ -23,7 +23,7 @@ function PlayerSelection(props) {
     const [search,setSearch] = useState('');
     const [positionFilter,setPositionFilter] = useState('');
     const [teamFilter,setTeamFilter] = useState('');
-    const [league,setLeague] = useState('39');
+    const [league,setLeague] = useState(props.leagueId);
     const [teams,setTeams] = useState([]);
     const [errorMsg,setErrorMsg] = useState('');
     const disabled = true;
