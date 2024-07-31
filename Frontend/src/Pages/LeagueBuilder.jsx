@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate,NavLink } from "react-router-dom";
 import "../style/LeagueBuilder.css";
 import axios from "axios";
 import logo from "../assets/download.png";
@@ -11,6 +11,7 @@ import { Avatar, Flex, Text, Button, Select } from '@radix-ui/themes';
 import { leaguesData } from '../Data/data';
 
 function LeagueBuilder() {
+    const navigate = useNavigate();
     const [value, setValue] = useState('');
     const [leagueId, setLeagueId] = useState('');
     const [leagues, setLeagues] = useState([]);
@@ -69,6 +70,8 @@ function LeagueBuilder() {
                 username: localStorage.getItem("username")
             });
             console.log(response.data);
+            navigate('/createTeam',{ state: { leagueId:leagueId ,league_code:response.data.league_code} })
+
         } catch (error) {
             console.error(error.response.data.error);
             setErrorMessage(error.response.data.error);

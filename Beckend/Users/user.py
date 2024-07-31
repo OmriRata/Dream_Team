@@ -8,12 +8,14 @@ import uuid
 import hashlib
 from bson.objectid import ObjectId
 from bson import json_util
+import os
 
 
 user = Blueprint('user',__name__)
 
 
-DB_URL = "mongodb://localhost:27017/"
+DB_URL1 = "mongodb://localhost:27017/"
+DB_URL = os.getenv('DB_URL')
 client = pymongo.MongoClient(DB_URL)
 db = client.myDb
 users_collection = db.users
@@ -217,14 +219,13 @@ def create_league():
     newLeague = {
         "league_name":league_name,
         "league_id":league_id,
-        # "email":email,
         'username':username,
         'league_code':id,
         'participants':[username]
 
     }
     league_collection.insert_one(newLeague);
-    return jsonify({"message": "League created successfully"}), 200
+    return jsonify({'league_code':id,"message": "League created successfully"}), 200
 
 @user.after_request
 def refresh_expiring_jwts(response):
