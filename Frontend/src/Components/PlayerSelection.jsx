@@ -81,15 +81,15 @@ function PlayerSelection(props) {
     }
     const fetchPlayers = async ()=>{
         try {
-            // const response = await axios.get("/api/playersByLeague/"+league);
-            // const players = response.data
-            // console.log(players)
-            // setData(players)
-            // setAll(players)
-            // setFlag(true)
-            setAll(englandPlayers)
-            setData(englandPlayers)
+            const response = await axios.get("/api/playersByLeague/"+league);
+            const players = response.data
+            console.log(players)
+            setData(players)
+            setAll(players)
             setFlag(true)
+            // setAll(englandPlayers)
+            // setData(englandPlayers)
+            // setFlag(true)
 
         }
         catch(e){

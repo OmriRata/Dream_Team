@@ -28,7 +28,7 @@ function LineUp(props) {
             return <Box key={id} className='plyr' size="9" width='250'>
                             {isCreateMode?<Button className='rmvBtn' size='1' color="red" radius='full' onClick={()=>{removePlayer(player)}}>X</Button>:<></>}
                             <Avatar className='plyrImg' size="5" src={player.player.photo} radius='full' fallback="T" color="indigo" />
-                            {/* <h5 className='plyrName'><span>{player.player.name}</span></h5> */}
+                            <h5 className='plyrName'><span>{player.player.name}</span></h5>
                     </Box>
         }
         

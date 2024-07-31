@@ -56,31 +56,31 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     // })
 
     return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} style={{margin:'20px'}}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
+        {props.leagueName}
             <TableRow>
             {/* <StyledTableCell>Dessert (100g serving)</StyledTableCell> */}
+            <StyledTableCell align='left'>user</StyledTableCell>
             <StyledTableCell align="left">Calories</StyledTableCell>
-            <StyledTableCell align="left">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="left">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align='center'>Dessert (100g serving)</StyledTableCell>
-
+            <StyledTableCell align="left">budget remain</StyledTableCell>
+            <StyledTableCell align="left">points</StyledTableCell>
             {/* <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell> */}
             </TableRow>
         </TableHead>
-        <TableBody>
-            {rows.map((row) => (
-            <StyledTableRow key={row.username}>
+        <TableBody> 
+            {props.participants.map((participant) => (
+            <StyledTableRow key={participant.username}>
                 {/* <StyledTableCell component="th" scope="row">
                 {row.username}
                 </StyledTableCell> */}
-                <StyledTableCell align="left">{row.leagueName}</StyledTableCell>
-                <StyledTableCell align="left">{row.league_code}</StyledTableCell>
-                <StyledTableCell align="left">{row.points}</StyledTableCell>
-                <StyledTableCell align='center' component="th" scope="row">
-                {row.username}
+                <StyledTableCell align='left' component="th" scope="row">
+                {participant}
                 </StyledTableCell>
+                <StyledTableCell align="left">{participant.leagueName}</StyledTableCell>
+                <StyledTableCell align="left">{participant.league_code}</StyledTableCell>
+                <StyledTableCell align="left">{participant.points}</StyledTableCell>
                 {/* <StyledTableCell align="right">{row.protein}</StyledTableCell> */}
             </StyledTableRow>
             ))}

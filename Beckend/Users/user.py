@@ -145,10 +145,21 @@ def getLeagues():
     username = data.get('username')
     query = {'participants': {'$in': [username]}}
     result = league_collection.find(query)
+    lst = list(result)
 
-    if not list(result):
-        return jsonify({"error": "ther is no leagues for this user"}), 400
+    for i,league in enumerate(lst):
+        print(i)
+        code = league['league_code']
+        for user in league['participants']:
+            team = teams_collection.find_one({'league_code':code,'username':user})
+            if team:
+                print(i,team['points'])
+            else:
+                print(user,code)
 
+    if not lst:
+        return jsonify({"error": "There is no leagues for this user"}), 400
+    
     response = json_util.dumps(league_collection.find(query))
 
     return jsonify({'leagues':response,'username':username})
@@ -160,13 +171,11 @@ def joinLeague():
     username = data.get('username')
     key = data.get('key')
     input = data.get('input')
-    print(input)
     try:
         if key == 'league_code':
             league = league_collection.find_one({"league_code":int(input)})
         else:
             league = league_collection.find_one({"league_name":input})
-        print(league)
         league_code = league['league_code']
     except:
         print("Error - League Not Found")

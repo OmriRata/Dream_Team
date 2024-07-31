@@ -8,7 +8,8 @@ import os
 api = Blueprint('api',__name__)
 
 load_dotenv('../env')
-#                 using Sport API from Rpid APi.              #
+
+################    using Sport API from Rpid APi.    ################
 HEADERS = {
         "X-RapidAPI-Key": os.getenv('RapidAPI_Key'),
         "X-RapidAPI-Host": os.getenv('RapidAPI_Host')
@@ -36,15 +37,12 @@ def getPlayerStatisticsByTeamId(team_id):
 
 @api.route("/players/<team_id>") 
 def getPlayersByTeam(team_id):
-    # querystring = {"team":team_id}
-    querystring = {"league":"39","season":"2023"}
+    querystring = {"team":team_id,"season":"2023"}
+    # querystring = {"league":"39","season":"2023"}
 
     
     response = requests.get(URL+"players", headers=HEADERS, params=querystring)
     return response.json()["response"]
-    print(response.json()["response"][0]["team"])
-    print(response.json()["response"][0]["players"])
-    return response.json()["response"][0]["players"]
 
 @api.route("/playersByLeague/<league_id>") 
 def getPlayersByLeague(league_id):
@@ -54,8 +52,6 @@ def getPlayersByLeague(league_id):
     
     response = requests.get(URL+"players", headers=HEADERS, params=querystring)
     return response.json()["response"]
-    # print(response.json()["response"][0]["players"])
-    return response.json()["response"][0]["players"]
 
 @api.route("/teamId/<team_name>") 
 # @jwt_required()
@@ -64,7 +60,6 @@ def getTeamIdByName(team_name):
     querystring = {"name":team_name}
 
     response = requests.get(URL+"teams", headers=HEADERS, params=querystring)
-    print(response.json()["response"][0]["team"]["id"])
     return jsonify(response.json()["response"][0]["team"])
 
 @api.route("/leagueTeams/<league_id>")
@@ -73,8 +68,6 @@ def getTeamsByLeague(league_id):
 
     response = requests.get(URL+"teams", headers=HEADERS, params=querystring)
     teams_info = [ i["team"] for i in response.json()["response"] ]
-    print(teams_info)
-    ##print(response.json()["response"][0])
     return teams_info
 
 
@@ -84,7 +77,6 @@ def getLeagueIdByCountry(country_name):
     querystring = {"country":country_name}
 
     response = requests.get(URL+"leagues", headers=HEADERS, params=querystring)
-    print(response.json()["response"][0]["league"])
     return response.json()["response"][0]["league"]
 
 @api.route("/leagueInfo/<league_id>") 
@@ -92,7 +84,4 @@ def getLeagueIdByCountry(country_name):
 def getLeagueInfoById(league_id):
     querystring = {"id":league_id}
     response = requests.get(URL+"leagues", headers=HEADERS, params=querystring)
-    print("=================================")
-    # print(response.json()["response"][0)
-    print("=================================")
     return response.json()["response"][0]['league']

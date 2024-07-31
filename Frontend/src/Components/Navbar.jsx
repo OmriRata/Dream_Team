@@ -36,9 +36,6 @@ function Navbar(props){
                 <span></span>
             </div>
             <ul className={menuOpen?"open":""}>
-                <li>
-                    <h1 color="white" >{props.page}</h1>
-                </li>
                 { isConnected?(
                     <>
                     <li>

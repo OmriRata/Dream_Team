@@ -2,6 +2,8 @@ import React,{ useEffect, useState,useRef }  from "react";
 //import "../style/Team.css"
 import LineUp from "../Components/LineUp";
 import "../style/Team.css";
+import Alert from '@mui/material/Alert';
+import { AlertDialog, RadioCards } from '@radix-ui/themes';
 import { englandPlayers, playersData } from "../Data/data";
 import axios from "axios";
 import {NavLink} from 'react-router-dom'
@@ -16,14 +18,18 @@ import Select from '@mui/material/Select';
 
 function Team(){
     const lineupRef = useRef()
+    const btnRef = useRef()
     const [players,setPlayers] = useState([]);
     const [league_code,setLeagueCode] = useState();
     const [team_id,setTeamId] = useState();
     const [leagueId,setLeagueId] = useState();
     const [isPlayers,setIsPlayers] = useState(false);
     const [flag,setFlag] = useState(false)
-    const [teams,setTeams] = useState([])
+    const [leagues,setLeagues] = useState([])
     const [league_name,setLeagueName] = useState('')
+    const [open,setOpen] = useState(false)
+
+    const handleOpen = () => setOpen(true);
 
     const getPlayers= async ()=>{
         try{
@@ -31,7 +37,8 @@ function Team(){
                 username:localStorage.getItem('username'),
             });
             const data = response.data
-            setTeams(data)
+            setLeagues(data)
+            console.log(data)
             setIsPlayers(true)
         }catch(error){
             console.log(error)
@@ -46,10 +53,16 @@ function Team(){
         const _league_code = event.target.value
         setLeagueName(_league_code);
         setLeagueCode(_league_code)
-        const team = teams.filter(team=> team.league_code == _league_code)[0];
+        console.log(leagues)
+        const team = leagues.filter(team=> team.league_code == _league_code)[0];
+        if (!(team.players)){
+            btnRef.current?.click();
+            return
+        }
         setTeamId(team.team_id)
         setPlayers(team.players)
         setLeagueId(team.league_id)
+        console.log(localStorage.getItem('username'))
         setFlag(true)
     };
 
@@ -65,8 +78,8 @@ function Team(){
                         label="League Name"
                         onChange={handleChange}
                         >
-                        {teams.map((team)=>{
-                                return <MenuItem id={team.league_code} value={team.league_code}>{team.league_name}</MenuItem>
+                        {leagues.map((league)=>{
+                                return <MenuItem id={league.league_code} value={league.league_code}>{league.league_name}</MenuItem>
 
                         })}
                         </Select>
@@ -87,6 +100,24 @@ function Team(){
                 <NavLink  style={{color:'black',backgroundColor:'green'}}  className="navLink" to="/createTeam">Create Team</NavLink>
             </div>
         }
+        <AlertDialog.Root open={open}>
+                <AlertDialog.Trigger>
+                    <button ref={btnRef} onClick={handleOpen} hidden variant="soft">Size 2</button>
+                </AlertDialog.Trigger>
+                <AlertDialog.Content style={{bottom:'0px'}} size="2" maxWidth="50%">
+                <Alert
+                severity="error"
+                action={
+                    <NavLink to={'/createTeam'} state={{leagueId:leagueId,league_code:league_code }}><Button  color="gray" variant="solid" highContrast className='updateBtn'>
+                        Create Team</Button>
+                    </NavLink>
+                }
+                >
+                    <h3>Reminder: Complete Your Team!</h3>
+                    Your team isn't complete yet. Please finish building your roster to get started!
+                </Alert>
+                </AlertDialog.Content>
+            </AlertDialog.Root>
     </div>
 }
 
