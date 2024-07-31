@@ -57,6 +57,8 @@ function Team(){
         const team = leagues.filter(team=> team.league_code == _league_code)[0];
         if (!(team.players)){
             btnRef.current?.click();
+            setLeagueId(team.league_id)
+
             return
         }
         setTeamId(team.team_id)
