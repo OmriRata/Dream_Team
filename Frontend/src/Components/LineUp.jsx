@@ -25,7 +25,7 @@ function LineUp(props) {
         
         const player = props.players.find(p => p.player.id === id);
         if (player && position == player.statistics[0].games.position) {
-            return <Box key={id} className='plyr' size="9" width='250'>
+            return <Box onClick={()=>console.log(player)} key={id} className='plyr' size="9" width='250'>
                             {isCreateMode?<Button className='rmvBtn' size='1' color="red" radius='full' onClick={()=>{removePlayer(player)}}>X</Button>:<></>}
                             <Avatar className='plyrImg' size="5" src={player.player.photo} radius='full' fallback="T" color="indigo" />
                             <h5 className='plyrName'><span>{player.player.name}</span></h5>

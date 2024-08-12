@@ -33,8 +33,8 @@ function Leagues(){
 
     return <div className="leagues">
         <Flex direction={'column'} className="container">
-            {leagues.map((league)=>{
-                return <CustomizedTables style={{margin:'30px'}} leagueId={league.league_id} leagueCode={league.league_code} leagueName={league.league_name} participants={league.participants} className='league_table'/>
+            {leagues.map((league,i)=>{
+                return <CustomizedTables creator={league.username} key={i} style={{margin:'30px'}} leagueId={league.league_id} leagueCode={league.league_code} leagueName={league.league_name} participants={league.participants} className='league_table'/>
             })
             }
         </Flex>

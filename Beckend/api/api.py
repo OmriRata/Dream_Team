@@ -3,6 +3,11 @@ import requests
 from flask_jwt_extended import jwt_required
 from dotenv import load_dotenv
 import os
+from utils.util import calculatePlayerPoints
+import aiohttp
+import asyncio
+from threading import Timer
+
 
 
 api = Blueprint('api',__name__)
@@ -15,16 +20,19 @@ HEADERS = {
         "X-RapidAPI-Host": os.getenv('RapidAPI_Host')
     }
 URL =  os.getenv('RapidAPI_URL')
-SEASON = "2024"
+SEASON = "2023"
 
 
 # player statistic by team id and league id
 @api.route("/playerStatistic/<player_id>") 
 def getPlayerStatisticsById(player_id):
     querystring = {"id":player_id,"season":SEASON}
-    response = requests.get(URL+"player", headers=HEADERS, params=querystring)
-    
-    return response.json()["response"][0]
+    response = requests.get(URL+"players", headers=HEADERS, params=querystring)
+    # print(response.json()['response'][0])
+    print(response.json())
+    # statistics = response.json()['response'][0]['statistics']
+    # points = calculatePlayerPoints(statistics)
+    return response.json()['response'][0]
 
 # player statistic by team id and league id
 @api.route("/playerStatistics/<team_id>") 
@@ -37,21 +45,45 @@ def getPlayerStatisticsByTeamId(team_id):
 
 @api.route("/players/<team_id>") 
 def getPlayersByTeam(team_id):
-    querystring = {"team":team_id,"season":"2023"}
+    querystring = {"team":team_id,"season":SEASON}
     # querystring = {"league":"39","season":"2023"}
 
     
     response = requests.get(URL+"players", headers=HEADERS, params=querystring)
     return response.json()["response"]
 
-@api.route("/playersByLeague/<league_id>") 
-def getPlayersByLeague(league_id):
-    # querystring = {"team":team_id}
-    querystring = {"league":league_id,"season":"2024"}
 
+
+@api.route("/playersByLeague/<league_id>") 
+async def getPlayersByLeague(league_id):
+
+    async def fetch_data(session,params):
+        async with session.get(URL+"players", headers=HEADERS, params=params) as response:
+            print(params)
+            return await response.json()
+
+    querystring = {"league":league_id,"season":SEASON}
     
     response = requests.get(URL+"players", headers=HEADERS, params=querystring)
-    return response.json()["response"]
+
+
+    total_pages = response.json()["paging"]['total']
+    print(total_pages)
+    async with aiohttp.ClientSession() as session:
+        tasks = []
+        for page in range(1, total_pages + 1):
+            copyQuery = querystring.copy()
+            copyQuery['page'] = str(page)
+            tasks.append(fetch_data(session,copyQuery))
+        
+        # Fetch all pages concurrently, limiting the number of concurrent tasks
+        responses = await asyncio.gather(*tasks)
+    
+    all_data = []
+    for response in responses:
+            all_data.extend(response['response'])
+    return all_data
+
 
 @api.route("/teamId/<team_name>") 
 # @jwt_required()

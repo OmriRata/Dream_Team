@@ -7,11 +7,15 @@ import { ReloadIcon } from '@radix-ui/react-icons';
 import {playersData,barcePlayers, englandTeams,englandPlayers} from '../Data/data'
 import { useEffect, useState,useRef } from 'react'
 import Fillterbar from './Fillterbar'
+import PlayerCard from './PlayerCard'
 import axios from "axios";
 
 
 
 function PlayerSelection(props) {
+    const [open, setOpen] = useState(false);
+    const [popUpPlayer, setPopUpPlayer] = useState(null);
+
     const [flag,setFlag] = useState(false)
     const [amountInt,setAmountInt] = useState(100)
     const InitialAmount = 100;
@@ -98,6 +102,7 @@ function PlayerSelection(props) {
 
     }
     const checkPlayers = (player)=>{
+        console.log("checkPlayers")
         const newPlayers = props.players.concat(player)
         const goalkeeperCount = newPlayers.filter(
             player => player.statistics[0].games.position == 'Goalkeeper').length;
@@ -107,7 +112,16 @@ function PlayerSelection(props) {
             player => player.statistics[0].games.position == 'Midfielder').length;
         const attackerCount = newPlayers.filter(
             player => player.statistics[0].games.position == 'Attacker').length;
-        if(goalkeeperCount > 1){
+        console.log("----------------------------------")    
+        console.log(goalkeeperCount)
+        console.log(defenderCount)
+        console.log(midfielderCount)
+        console.log(attackerCount)
+        console.log(goalkeeperCount+defenderCount+midfielderCount+attackerCount)
+        console.log("----------------------------------")
+        if(goalkeeperCount+defenderCount+midfielderCount+attackerCount>11){
+            return 'Players Limit'
+        }else if(goalkeeperCount>1){
             return 'Goalkeeper'
         }else if(defenderCount>5){
             return 'Defender'
@@ -115,27 +129,30 @@ function PlayerSelection(props) {
             return 'Midfielder'
         }else if(attackerCount>3){
             return 'Attacker'
-        }else if(goalkeeperCount+defenderCount+midfielderCount+attackerCount>11){
-            return 'Players Limit'
         }
     }
     const addPlayers = (player,e)=>{
+        console.log("first")
         switch(checkPlayers(player)){
             case 'Goalkeeper':
                 setErrorMsg('Only 1 Goalkeeper.')
                 btnRef.current?.click()
+                console.log("goalkeeper")
                 break;
             case 'Defender':
                 setErrorMsg('Only 3-5 Defender.')
                 btnRef.current?.click()
+                console.log("defender")
                 break;
             case 'Midfielder':
                 setErrorMsg('Only 2-5 Midfielder.')
                 btnRef.current?.click()
-                    break;
+                console.log("Midfielder")
+                break;
             case 'Attacker':
                 setErrorMsg('Only 1-3 Attacker.')
                 btnRef.current?.click()
+                console.log("Attacker")
                 break;
             case 'Players Limit':
                 setErrorMsg('You Can Choose Only 11 players.')
@@ -146,6 +163,9 @@ function PlayerSelection(props) {
                 player
             ]);
         }
+        btnRef.current?.click()
+
+        console.log(checkPlayers(player))
     } 
 
     useEffect(() => {
@@ -212,11 +232,24 @@ function PlayerSelection(props) {
         
 
     }
-    
-    
+    const playerPopUp = ()=>{
+        return <AlertDialog.Root open={open}>
+        <AlertDialog.Trigger>
+            <button ref={btnRef} hidden variant="soft">Size 2</button>
+        </AlertDialog.Trigger>
+        <AlertDialog.Content style={{bottom:'0px'}} size="2" maxWidth="25%">
+        <Flex direction={'column'}>
+            
+            <PlayerCard leagueId={league} player={popUpPlayer}/>
+            <AlertDialog.Cancel asChild>
+                <Button onClick={()=>setOpen(false)}>Cancel</Button>
+            </AlertDialog.Cancel>
+        </Flex>
+        </AlertDialog.Content>
+    </AlertDialog.Root>
+    }
     return (
             <div className='player-selection'>
-            {flag&&<>
             <AlertDialog.Root>
                 <AlertDialog.Trigger>
                     <button ref={btnRef} hidden variant="soft">Size 2</button>
@@ -242,9 +275,9 @@ function PlayerSelection(props) {
                         </Theme>
                     </form>
                     
-                    <Flex className='fillterCat' direction={'column'} gap={'4'}>
+                    {flag&&<Flex className='fillterCat' direction={'column'} gap={'4'}>
                     <Flex  direction={'row'} gap={6}>
-                            <Fillterbar
+                    <Fillterbar
                             getPrice={getPrice}
                             priceRange={value}
                             ref={teamRef}
@@ -253,6 +286,8 @@ function PlayerSelection(props) {
                             teamFilter={teamFilter} players={data}
                             setPlayers={setData}
                             placeholder={'Team'}
+                            allPlayers={allPlayers}
+
                             values={teams}
                             setPositionFilter={setPositionFilter}
                             />
@@ -272,6 +307,7 @@ function PlayerSelection(props) {
                             teamFilter={teamFilter}
                             setTeamFilter={setTeamFilter}
                             players={data}
+                            allPlayers={allPlayers}
                             setPlayers={setData}
                             placeholder={'Position'}
                             values={positions} />
@@ -295,7 +331,7 @@ function PlayerSelection(props) {
                             disableSwap
                             />
                             </Flex>
-                        </Flex>
+                        </Flex>}
                         
                     <ScrollArea className='scroll' type="always" scrollbars="vertical" size="3" style={{ height: 600 ,color:'ActiveBorder'}}>
                             {data.filter(i=>{
@@ -304,6 +340,7 @@ function PlayerSelection(props) {
                                 return  <Box key={index} className='player-box' width='350px'>
                                             <Card size="2">
                                                 <Flex position="relative" gap="3" align="center">
+                                                    <Flex onClick={() => {setPopUpPlayer(item);setOpen(true)}}>
                                                     <Avatar size="5" src={item.player.photo} radius="full" fallback="T" color="indigo" />
                                                     <Box className='boxx'>
                                                     <Text as="div" size="2" weight="bold">
@@ -322,7 +359,8 @@ function PlayerSelection(props) {
                                                     </Text>
                                                     <Avatar size="1" src={item.statistics[0].team.logo}></Avatar>
                                                     </Flex>
-                                                    </Box> 
+                                                    </Box>
+                                                    </Flex>
                                                     <label className='price'>price :{getPrice(item.statistics[0].games.rating)}M</label>
                                                     {
                                                     props.players.some( player => player.player.id === item.player.id)?
@@ -339,7 +377,8 @@ function PlayerSelection(props) {
                     </ScrollArea>
 
             </Container>
-            </>}
+            
+            {playerPopUp()}
     </div>
     )
 

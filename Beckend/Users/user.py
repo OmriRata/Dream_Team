@@ -14,8 +14,8 @@ import os
 user = Blueprint('user',__name__)
 
 
-DB_URL1 = "mongodb://localhost:27017/"
-DB_URL = os.getenv('DB_URL')
+DB_URL = "mongodb://localhost:27017/"
+DB_URL1 = os.getenv('DB_URL')
 client = pymongo.MongoClient(DB_URL)
 db = client.myDb
 users_collection = db.users
@@ -148,23 +148,29 @@ def getLeagues():
     query = {'participants': {'$in': [username]}}
     result = league_collection.find(query)
     lst = list(result)
-
+    print("---------------------------------")
+    print(username)
+    print("---------------------------------")
     for i,league in enumerate(lst):
-        print(i)
         code = league['league_code']
+        participants = []
         for user in league['participants']:
             team = teams_collection.find_one({'league_code':code,'username':user})
             if team:
                 print(i,team['points'])
+                userInfo = {'user':user,'points':team['points'] }
             else:
                 print(user,code)
-
+                userInfo = {'user':user,'points':0 }
+            participants.append(userInfo)
+        league['participants']= participants
+        print(league)
     if not lst:
         return jsonify({"error": "There is no leagues for this user"}), 400
     
     response = json_util.dumps(league_collection.find(query))
 
-    return jsonify({'leagues':response,'username':username})
+    return jsonify({'leagues':json_util.dumps(lst),'username':username})
 
 
 @user.route('/joinLeague', methods=['POST'])

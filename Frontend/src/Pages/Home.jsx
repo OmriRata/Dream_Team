@@ -45,10 +45,6 @@ function Home(props){
             </div>
             
         </div>
-        <button className="secondary-button joinBtn" onClick={joinLeague}>
-                        <h2>JOIN A LEAGUE</h2>
-                        Click here to join a league with friends. <FiArrowRight />
-                    </button>
         <Flex direction="row" >
 
         <div className="home-text-section">
@@ -57,9 +53,14 @@ function Home(props){
                         </h1>
                         <button className="secondary-button" onClick={createLeague}>
                         Create League <FiArrowRight />
-                        </button><button className="secondary-button" onClick={createTeam}>
-                            Create Your Team <FiArrowRight />
                         </button>
+                        {/* <button className="secondary-button" onClick={createTeam}>
+                            Create Your Team <FiArrowRight />
+                        </button> */}
+                        <button className="secondary-button" onClick={joinLeague}>
+                        {/* <h2>JOIN A LEAGUE</h2> Click here to join a league with friends. */}
+                         Join a League <FiArrowRight />
+                    </button>
                         <button className="secondary-button" onClick={info}>
                         information <FiArrowRight />
                         </button>

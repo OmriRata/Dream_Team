@@ -80,8 +80,8 @@ function Team(){
                         label="League Name"
                         onChange={handleChange}
                         >
-                        {leagues.map((league)=>{
-                                return <MenuItem id={league.league_code} value={league.league_code}>{league.league_name}</MenuItem>
+                        {leagues.map((league,id)=>{
+                                return <MenuItem key={id} id={league.league_code} value={league.league_code}>{league.league_name}</MenuItem>
 
                         })}
                         </Select>
