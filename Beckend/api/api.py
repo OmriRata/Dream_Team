@@ -20,7 +20,7 @@ HEADERS = {
         "X-RapidAPI-Host": os.getenv('RapidAPI_Host')
     }
 URL =  os.getenv('RapidAPI_URL')
-SEASON = "2023"
+SEASON = "2024"
 
 
 # player statistic by team id and league id
@@ -53,6 +53,16 @@ def getPlayersByTeam(team_id):
     return response.json()["response"]
 
 
+@api.route("/nextMatch/<league_id>") 
+def getNextMatch(league_id):
+    print("2000")
+    querystring = {"id":"1215853"}
+    response = requests.get(URL+'fixtures', headers=HEADERS, params=querystring)
+
+    fixtures = response.json()["response"]
+    for i in fixtures:
+        print(i)
+    return fixtures[0]
 
 @api.route("/playersByLeague/<league_id>") 
 async def getPlayersByLeague(league_id):
@@ -66,7 +76,7 @@ async def getPlayersByLeague(league_id):
     
     response = requests.get(URL+"players", headers=HEADERS, params=querystring)
 
-
+    # return response.json()['response']
     total_pages = response.json()["paging"]['total']
     print(total_pages)
     async with aiohttp.ClientSession() as session:

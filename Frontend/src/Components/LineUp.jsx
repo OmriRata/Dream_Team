@@ -44,6 +44,7 @@ function LineUp(props) {
                 const response = await axios.post('/users/addTeam', {
                     players : props.players,
                     league_code:league_code,
+                    amount:props.amount,
                     username:localStorage.getItem("username")
                 });
                 console.log(response.data);
@@ -64,6 +65,7 @@ function LineUp(props) {
                 const response = await axios.post('/users/updateTeam', {
                     players : props.players,
                     team_id :props.team_id,
+                    amount:props.amount
                 });
                 navigate('/team')
             } catch (error) {

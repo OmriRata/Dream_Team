@@ -4,7 +4,9 @@
     position: relative;
     height: 900px;
 }
-
+.filter{
+    width: 400px;
+}
 .fillterCat{
     padding: 2%;
     /* background-color:azure; */
