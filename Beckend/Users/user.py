@@ -160,9 +160,8 @@ def getLeagues():
         for user in league['participants']:
             team = teams_collection.find_one({'league_code':code,'username':user})
             if team:
-                print(i,team['points'])
-                amount = 30
-                if team['amount']:
+                amount = '30M'
+                if 'amount' in team:
                     amount = team['amount']
                 userInfo = {'user':user,'points':team['points'] ,'amount':amount}
             else:
