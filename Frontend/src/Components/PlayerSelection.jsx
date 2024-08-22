@@ -118,6 +118,7 @@ function PlayerSelection(props) {
 
     }
     const checkPlayers = (player)=>{
+        console.log(props.players)
         console.log("checkPlayers")
         const newPlayers = props.players.concat(player)
         const goalkeeperCount = newPlayers.filter(
@@ -188,6 +189,7 @@ function PlayerSelection(props) {
         fetchTeams()
         fetchPlayers()
         fetchCsvData(); // Fetch CSV data when component mounts
+        
     },[])
 
     useEffect(()=>{

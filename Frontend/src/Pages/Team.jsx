@@ -31,6 +31,15 @@ function Team(){
 
     const handleOpen = () => setOpen(true);
 
+
+    const printMatches = async (leagueId)=>{
+        try{
+            const response = await axios.get("/api/nextMatch/"+leagueId)
+            console.log(response)
+        }catch(error){
+            console.log(error)
+        }
+    }
     const getPlayers= async ()=>{
         try{
             const response = await axios.post("/users/getTeamPlayers", {
@@ -46,6 +55,7 @@ function Team(){
     }
     useEffect(()=>{
         getPlayers()
+        console.log(players)
     },[])
     
 
@@ -66,6 +76,7 @@ function Team(){
         setLeagueId(team.league_id)
         console.log(localStorage.getItem('username'))
         setFlag(true)
+        printMatches(team.league_id)
     };
 
     return <div className="team">

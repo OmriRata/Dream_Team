@@ -20,18 +20,18 @@ function LeagueBuilder() {
     const [message, setMessage] = useState("");
     const [timeoutID, setTimeoutID] = useState();
     const btnRef = useRef();
-    const LEAGUES_ID = ['39', '140', '78', '135', '61'];
+    const LEAGUES_ID = ['39', '140', '78', '135', '61','40','2'];
     const LEAGUES = ['england', 'spain', 'germany', 'france', 'italy'];
 
     const fetchData = async () => {
         try {
-            // const responses = await Promise.all(LEAGUES_ID.map(id =>{
-            //     return fetch(`/api/leagueInfo/${id}`)
-            // }))
-            // const result = await Promise.all(responses.map(res=>res.json()));
-            // setLeagues(result)
-            // console.log(result)
-            setLeagues(leaguesData);
+            const responses = await Promise.all(LEAGUES_ID.map(id =>{
+                return fetch(`/api/leagueInfo/${id}`)
+            }))
+            const result = await Promise.all(responses.map(res=>res.json()));
+            setLeagues(result)
+            console.log(result)
+            // setLeagues(leaguesData);
         } catch (err) {
             console.log(err);
         }

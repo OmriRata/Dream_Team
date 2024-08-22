@@ -42,7 +42,7 @@ const Fillterbar = forwardRef((props,ref)=>{
             
             props.setPlayers(
                 props.allPlayers.filter((player)=>{
-                    const price = props.getPrice(player.statistics[0].games.rating);
+                    const price = props.getPrice(player.player,player.statistics[0].games.rating);
                     return player.statistics[0].games.position == position
                         && price >= props.priceRange[0] && price <= props.priceRange[1]
                 })
@@ -50,7 +50,7 @@ const Fillterbar = forwardRef((props,ref)=>{
         }else{
             props.setPlayers(
                 props.allPlayers.filter((player)=>{
-                    const price = props.getPrice(player.statistics[0].games.rating);
+                    const price = props.getPrice(player.player,player.statistics[0].games.rating);
                     return player.statistics[0].team.name == props.teamFilter 
                         && player.statistics[0].games.position == position
                         && price >= props.priceRange[0] && price <= props.priceRange[1]
@@ -77,7 +77,7 @@ const Fillterbar = forwardRef((props,ref)=>{
             console.log("first")
             props.setPlayers(
                 props.allPlayers.filter((player)=>{
-                    const price = props.getPrice(player.statistics[0].games.rating);
+                    const price = props.getPrice(player.player,player.statistics[0].games.rating);
                     return player.statistics[0].team.name == teamName
                         && price >= props.priceRange[0] && price <= props.priceRange[1]
                 })
@@ -88,7 +88,7 @@ const Fillterbar = forwardRef((props,ref)=>{
 
             props.setPlayers(
                 props.allPlayers.filter((player)=>{
-                    const price = props.getPrice(player.statistics[0].games.rating);
+                    const price = props.getPrice(player.player,player.statistics[0].games.rating);
                     return player.statistics[0].team.name == teamName 
                         && player.statistics[0].games.position == props.positionFilter
                         && price >= props.priceRange[0] && price <= props.priceRange[1]

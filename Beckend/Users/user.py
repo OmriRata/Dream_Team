@@ -83,13 +83,15 @@ def logout():
 def addTeam():
     data = request.json
     league_code = data.get('league_code')
+    amount = data.get('amount')
     players = data.get('players')
     username = data.get('username')
     newTeam = {
         "league_code":league_code,
         "players":players,
         "username":username,
-        "points" : 0
+        "points" : 0,
+        "amount":amount
     }
     id = teams_collection.insert_one(newTeam);
     print(id.inserted_id)
@@ -99,12 +101,13 @@ def addTeam():
 @user.route('/updateTeam',methods=['POST'])
 def updateTeam():
     data = request.json
+    amount = data.get('amount')
     league_code = data.get('league_code')
     players = data.get('players')
     team_id= data.get('team_id')
     query = {"_id": ObjectId(team_id) }
 
-    update = {"$set": {"players":players}}  # Change this to your update
+    update = {"$set": {"players":players,"amount":amount}}  # Change this to your update
 
     result = teams_collection.find_one_and_update(
     query, 
@@ -158,7 +161,10 @@ def getLeagues():
             team = teams_collection.find_one({'league_code':code,'username':user})
             if team:
                 print(i,team['points'])
-                userInfo = {'user':user,'points':team['points'] }
+                amount = 30
+                if team['amount']:
+                    amount = team['amount']
+                userInfo = {'user':user,'points':team['points'] ,'amount':amount}
             else:
                 print(user,code)
                 userInfo = {'user':user,'points':0 }
