@@ -77,7 +77,7 @@ export default function CustomizedTables(props) {
                         Show Team
                     </Button>
                 </StyledTableCell>
-                <StyledTableCell align="left">{participant.budgetRemain}</StyledTableCell>
+                <StyledTableCell align="left">{participant.amount}</StyledTableCell>
                 <StyledTableCell align="left">{participant.points}</StyledTableCell>
             </StyledTableRow>
         ))}
