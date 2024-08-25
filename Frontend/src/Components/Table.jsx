@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button,Flex,Separator} from '@radix-ui/themes';
 import { FiAlignRight } from 'react-icons/fi';
-
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -32,15 +32,20 @@ const StyledTableRow = styled(TableRow)(({username, theme }) => ({
     },
 }));
 
+
 export default function CustomizedTables(props) {
     const [participants,setParticipants] = useState([])
+    const navigate = useNavigate(); // Initialize navigate
 
     useEffect(()=>{
         // sort the league table 
         const sortParticipants = props.participants.sort((userA,userB)=>userB.points-userA.points) 
         setParticipants(sortParticipants)
     },[])
-
+    const handleShowTeam = (user) => {
+        navigate(`/show-team/${user}`); // Navigate to the ShowTeam page
+    };
+    
     return (
     <TableContainer component={Paper} style={{padding:'10px', margin:'20px'}}>
         <Flex style={{justifyContent:'space-between'}} >
@@ -54,31 +59,29 @@ export default function CustomizedTables(props) {
             {/* <StyledTableCell>Dessert (100g serving)</StyledTableCell> */}
             <StyledTableCell align='left'>place</StyledTableCell>
             <StyledTableCell align='left'>user</StyledTableCell>
-            <StyledTableCell align="left">Calories</StyledTableCell>
+            <StyledTableCell align="left">team</StyledTableCell>
             <StyledTableCell align="left">budget remain</StyledTableCell>
             <StyledTableCell align="left">points</StyledTableCell>
             {/* <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell> */}
             </TableRow>
         </TableHead>
-        <TableBody> 
-            {participants.map((participant,id) => (
-                
-            <StyledTableRow username={participant.user} key={id} >
-                {/* <StyledTableCell component="th" scope="row">
-                {row.username}
-                </StyledTableCell> */}
-                <StyledTableCell align="left">{id+1}</StyledTableCell>
+        <TableBody>
+        {participants.map((participant, id) => (
+            <StyledTableRow username={participant.user} key={id}>
+                <StyledTableCell align="left">{id + 1}</StyledTableCell>
                 <StyledTableCell align='left' component="th" scope="row">
-                {participant.user}
+                    {participant.user}
                 </StyledTableCell>
-                <StyledTableCell align="left">{participant.leagueName}</StyledTableCell>
-                <StyledTableCell align="left">{participant.league_code}</StyledTableCell>
+                <StyledTableCell align="left">
+                    <Button onClick={() => handleShowTeam(participant.user)}>
+                        Show Team
+                    </Button>
+                </StyledTableCell>
+                <StyledTableCell align="left">{participant.budgetRemain}</StyledTableCell>
                 <StyledTableCell align="left">{participant.points}</StyledTableCell>
-                {/* <StyledTableCell align="right">{row.protein}</StyledTableCell> */}
-
             </StyledTableRow>
-            ))}
-        </TableBody>
+        ))}
+    </TableBody>
         </Table>
     </TableContainer>
     );

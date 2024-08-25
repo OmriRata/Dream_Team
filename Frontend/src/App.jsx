@@ -15,6 +15,7 @@ import Team from './Pages/Team';
 import PrivateRoutes from './Components/PrivateRoutes';
 import ExplanationPage from './Pages/ExplanationPage';
 import useToken from './Components/useToken';
+import ShowTeam from './Components/ShowTeam'; // Import ShowTeam component
 // import ResetPassword from './Pages/ResetPassword';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Routes>
               <Route element={<PrivateRoutes token={token}/>}>
                 <Route path="/leagues" element={< Leagues />}/>
+                <Route path="/show-team/:username" element={<ShowTeam />} />
                 <Route path="/team" element={< Team />}/>
                 <Route path="/joinLeague" element={< JoinLeague />}/>
                 <Route path="/createLeague" element={< LeagueBuilder />}/>
