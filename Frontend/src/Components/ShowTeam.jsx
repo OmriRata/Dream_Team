@@ -6,7 +6,7 @@ import { Button, Flex } from "@radix-ui/themes";
 import "../style/Team.css";
 
 function ShowTeam() {
-    const { username } = useParams(); // Get the username from the URL params
+    const { username, leagueCode } = useParams(); // Get the username and leagueCode from URL params
     const [players, setPlayers] = useState([]);
     const [isPlayers, setIsPlayers] = useState(false);
     const [loading, setLoading] = useState(true); // Add a loading state
@@ -18,17 +18,16 @@ function ShowTeam() {
                     username: username,
                 });
                 const data = response.data;
-
-                // Debug: Log the entire response
+        
                 console.log("API response data:", data);
 
-                // Assuming response.data is an array with one object
-                if (Array.isArray(data) && data.length > 0 && data[0].players) {
-                    const teamData = data[0];
-                    setPlayers(teamData.players); // Set the players array
+                // Find the league with the given leagueCode
+                const league = data.find(league => league.league_code === parseInt(leagueCode));
+                if (league && league.players) {
+                    setPlayers(league.players); // Set the players array
                     setIsPlayers(true);
                 } else {
-                    console.error("No players found in the response:", data);
+                    console.error("No players found for this league code:", data);
                     setIsPlayers(false);
                 }
             } catch (error) {
@@ -40,9 +39,8 @@ function ShowTeam() {
         };
 
         getPlayers();
-    }, [username]);
+    }, [username, leagueCode]);
 
-    // Debug: Log players to check the state before rendering
     console.log("Players state:", players);
 
     return (
@@ -51,7 +49,7 @@ function ShowTeam() {
                 <div>Loading...</div> // Show loading until API call is complete
             ) : isPlayers ? (
                 <Flex direction={'column'}>
-                    <h2>Team of {username}</h2>
+                    <h2>Team of: {username} in League: {leagueCode}</h2>
                     <LineUp
                         isCreate={false} // Since we're just showing the team, not creating/editing
                         players={players}
@@ -64,7 +62,7 @@ function ShowTeam() {
                     </NavLink>
                 </Flex>
             ) : (
-                <div>No players found for this team.</div> // Inform if no players were found
+                <div>No players found for this league.</div> // Inform if no players were found
             )}
         </div>
     );

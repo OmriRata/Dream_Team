@@ -31,7 +31,7 @@ function App() {
           <Routes>
               <Route element={<PrivateRoutes token={token}/>}>
                 <Route path="/leagues" element={< Leagues />}/>
-                <Route path="/show-team/:username" element={<ShowTeam />} />
+                <Route path="/show-team/:username/:leagueCode" element={<ShowTeam />} />
                 <Route path="/team" element={< Team />}/>
                 <Route path="/joinLeague" element={< JoinLeague />}/>
                 <Route path="/createLeague" element={< LeagueBuilder />}/>

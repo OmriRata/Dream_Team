@@ -42,8 +42,8 @@ export default function CustomizedTables(props) {
         const sortParticipants = props.participants.sort((userA,userB)=>userB.points-userA.points) 
         setParticipants(sortParticipants)
     },[])
-    const handleShowTeam = (user) => {
-        navigate(`/show-team/${user}`); // Navigate to the ShowTeam page
+    const handleShowTeam = (user, leagueCode) => {
+        navigate(`/show-team/${user}/${props.leagueCode}`); // Pass both username and leagueCode
     };
     
     return (
