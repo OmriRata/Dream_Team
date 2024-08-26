@@ -20,23 +20,11 @@ const Fillterbar = forwardRef((props,ref)=>{
         resetFilters() {
             setKey(+new Date())
             setPlaceHolder(props.placeholder)
-            if((props.teamFilter==''&&props.placeholder=='Position')||
-                (props.positionFilter==''&&props.placeholder=='Team')){
-                props.setPlayers(props.allPlayers)
-                console.log(props.players)
-
-                return
-            }
-            props.placeholder == 'Position'?filterByteam(props.teamFilter):filterByPosition(props.positionFilter);
-            console.log(props.placeholder)
-            console.log(props.positionFilter)
-
         }
     
     }));
 
     const filterByPosition = (position)=>{
-        // console.log(props.allPlayers.length)
         props.setPositionFilter(position)
         if(props.teamFilter ==''){
             

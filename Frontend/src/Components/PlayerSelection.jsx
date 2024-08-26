@@ -38,17 +38,26 @@ function PlayerSelection(props) {
     const minDistance = 1;
 
     const resetTeamFillter = ()=>{
-        setData(allPlayers)
         setTeamFilter('')
+        if(positionFilter == ''){
+            setData(allPlayers)
+        }else{
+            const newPlayers  = allPlayers.filter(i=>i.statistics[0].games.position == positionFilter)
+            setData(newPlayers)
+        }
+        console.log(data)
         teamRef.current.resetFilters()
-        // setValue([1,10])
     }
 
     const resetPositionFillter = ()=>{
-        setData(allPlayers)
         setPositionFilter('')
+        if(teamFilter == ''){
+            setData(allPlayers)
+        }else{
+            const newPlayers  = allPlayers.filter(i=>i.statistics[0].team.name == teamFilter)
+            setData(newPlayers)
+        }
         positionRef.current.resetFilters()
-        // setValue([1,10])
     }
     const fetchTeams = async ()=>{
         try {
@@ -64,6 +73,7 @@ function PlayerSelection(props) {
 
     }
     const getPrice = (player, rating) => {
+        return 7
         const firstname = player.firstname.trim().toLowerCase();
         const lastname = player.lastname.trim().toLowerCase();
         const fullName = `${firstname} ${lastname}`;
@@ -107,9 +117,11 @@ function PlayerSelection(props) {
             setData(players)
             setAll(players)
             setFlag(true)
-            // setAll(englandPlayers)
-            // setData(englandPlayers)
-            // setFlag(true)
+
+            // reset the filters
+            teamRef.current.resetFilters()
+            positionRef.current.resetFilters()
+
 
         }
         catch(e){
@@ -118,8 +130,7 @@ function PlayerSelection(props) {
 
     }
     const checkPlayers = (player)=>{
-        console.log(props.players)
-        console.log("checkPlayers")
+
         const newPlayers = props.players.concat(player)
         const goalkeeperCount = newPlayers.filter(
             player => player.statistics[0].games.position == 'Goalkeeper').length;
@@ -129,13 +140,8 @@ function PlayerSelection(props) {
             player => player.statistics[0].games.position == 'Midfielder').length;
         const attackerCount = newPlayers.filter(
             player => player.statistics[0].games.position == 'Attacker').length;
-        console.log("----------------------------------")    
-        console.log(goalkeeperCount)
-        console.log(defenderCount)
-        console.log(midfielderCount)
-        console.log(attackerCount)
-        console.log(goalkeeperCount+defenderCount+midfielderCount+attackerCount)
-        console.log("----------------------------------")
+
+        
         if(goalkeeperCount+defenderCount+midfielderCount+attackerCount>11){
             return 'Players Limit'
         }else if(goalkeeperCount>1){
@@ -153,47 +159,44 @@ function PlayerSelection(props) {
         switch(checkPlayers(player)){
             case 'Goalkeeper':
                 setErrorMsg('Only 1 Goalkeeper.')
-                btnRef.current?.click()
+                setErrOpen(true)
                 console.log("goalkeeper")
                 break;
             case 'Defender':
                 setErrorMsg('Only 3-5 Defender.')
-                btnRef.current?.click()
+                setErrOpen(true)
                 console.log("defender")
                 break;
             case 'Midfielder':
                 setErrorMsg('Only 2-5 Midfielder.')
-                btnRef.current?.click()
+                setErrOpen(true)
                 console.log("Midfielder")
                 break;
             case 'Attacker':
                 setErrorMsg('Only 1-3 Attacker.')
-                btnRef.current?.click()
+                setErrOpen(true)
                 console.log("Attacker")
                 break;
             case 'Players Limit':
                 setErrorMsg('You Can Choose Only 11 players.')
-                btnRef.current?.click()
+                setErrOpen(true)
                 break;
             default:props.setPlayers([
                 ...props.players,
                 player
             ]);
         }
-        btnRef.current?.click()
-
-        console.log(checkPlayers(player))
     } 
 
     useEffect(() => {
         fetchTeams()
         fetchPlayers()
-        fetchCsvData(); // Fetch CSV data when component mounts
-        
+        // fetchCsvData(); // Fetch CSV data when component mounts
     },[])
 
     useEffect(()=>{
         updateAmount()
+
     },[props.players])
     const fetchCsvData = async () => {
         try {
@@ -268,6 +271,8 @@ function PlayerSelection(props) {
         
 
     }
+    const [errOpen, setErrOpen] = useState(false);
+
     const playerPopUp = ()=>{
         return <AlertDialog.Root open={open}>
         <AlertDialog.Trigger>
@@ -286,14 +291,14 @@ function PlayerSelection(props) {
     }
     return (
             <div className='player-selection'>
-            <AlertDialog.Root>
+            <AlertDialog.Root open ={errOpen}>
                 <AlertDialog.Trigger>
                     <button ref={btnRef} hidden variant="soft">Size 2</button>
                 </AlertDialog.Trigger>
                 <AlertDialog.Content size="2" maxWidth="400px">
                     <Alert severity="warning" variant="outlined">{errorMsg}</Alert>
                     <AlertDialog.Cancel>
-                        <Button style={{ marginTop: '16px' }}variant="soft" color="gray">
+                        <Button  onClick={()=>setErrOpen(false)} style={{ marginTop: '16px' }}variant="soft" color="gray">
                         Cancel
                         </Button>
                     </AlertDialog.Cancel>
