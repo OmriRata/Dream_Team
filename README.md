@@ -11,9 +11,6 @@ This project is a web application for managing a Dream Team League in soccer. It
 5. [Installation](#installation)
 6. [Running the Application](#running-the-application)
 7. [API Endpoints](#api-endpoints)
-8. [Usage](#usage)
-9. [Contributing](#contributing)
-10. [License](#license)
 
 ## Introduction
 
@@ -55,10 +52,30 @@ Before you begin, ensure you have met the following requirements:
 * Navigate to the backend directory:
 cd Backend
 * Create a virtual environment and activate it:
-python Server.py
+python3 -m venv venv
 * Set up environment variables:
 Create a .env file in the backend directory with the following content:
 FLASK_APP=app.py
 FLASK_ENV=development
 MONGO_URI=mongodb://localhost:27017/dreamteamdb
 SECRET_KEY=your_secret_key
+3. Setup the Frontend (React):
+  * Navigate to the frontend directory:
+    cd Frontend
+  * Install the required npm packages:
+    npm install
+## Running the Application
+1. Start the Backend Server:
+   In the backend directory, run the following command to start the Flask server:
+   python Server.py
+   The server should start running on http://localhost:5000.
+2. Start the Frontend Server:
+   In the frontend directory, run the following command to start the React development server:
+   npm run dev
+   The app should open automatically in your browser at :Local:   http://127.0.0.1:5173/
+   
+## API Endpoints
+Here are some of the main API endpoints used in the application:
+
+* POST /api/register - Register a new user
+* POST /api/login - User login
