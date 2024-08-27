@@ -9,6 +9,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button,Flex,Separator} from '@radix-ui/themes';
 import { FiAlignRight } from 'react-icons/fi';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -51,7 +54,25 @@ export default function CustomizedTables(props) {
         <Flex style={{justifyContent:'space-between'}} >
         <h2><b>League</b> : {props.leagueName} </h2>
         {/* <Separator my={'0'} orientation="vertical" color="cyan" size="2"  /> */}
-        <Button onClick={i=>console.log(props.leagueCode)} style={{float:'right;!important'}}>Invite friend</Button>
+        <Popup trigger=
+        {<button  style={{float:'right;!important', background:'#3E63DD'}}> Invite friend </button>} 
+        modal nested>
+        {
+            close => (
+                <div className='modal'>
+                    <div className='content'>
+                     league code:  {props.leagueCode}
+                    </div>
+                    <div>
+                        <button style={{color: '#f00',padding: '7px'}} onClick=
+                            {() => close()}>
+                                Close 
+                        </button>
+                    </div>
+                </div>
+            )
+        }
+    </Popup>
         </Flex>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
