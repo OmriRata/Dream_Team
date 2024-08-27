@@ -72,8 +72,6 @@ const Fillterbar = forwardRef((props,ref)=>{
                 
             )
         }else{
-            console.log("second")
-
             props.setPlayers(
                 props.allPlayers.filter((player)=>{
                     const price = props.getPrice(player.player,player.statistics[0].games.rating);

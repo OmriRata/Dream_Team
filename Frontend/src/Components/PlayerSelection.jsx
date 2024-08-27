@@ -122,7 +122,7 @@ function PlayerSelection(props) {
             // reset the filters
             teamRef.current.resetFilters()
             positionRef.current.resetFilters()
-
+            setSearch('')
 
         }
         catch(e){
@@ -160,22 +160,18 @@ function PlayerSelection(props) {
             case 'Goalkeeper':
                 setErrorMsg('You Can Choose only 1 Goalkeeper.')
                 setErrOpen(true)
-                console.log("goalkeeper")
                 break;
             case 'Defender':
                 setErrorMsg('You Can Choose 3-5 Defender.')
                 setErrOpen(true)
-                console.log("defender")
                 break;
             case 'Midfielder':
                 setErrorMsg('You Can Choose 2-5 Midfielder.')
                 setErrOpen(true)
-                console.log("Midfielder")
                 break;
             case 'Attacker':
                 setErrorMsg('You Can Choose 1-3 Attacker.')
                 setErrOpen(true)
-                console.log("Attacker")
                 break;
             case 'Players Limit':
                 setErrorMsg('You Can Choose Only 11 players.')
@@ -277,6 +273,7 @@ function PlayerSelection(props) {
     
 
     const playerPopUp = ()=>{
+        console.log("first")
         return <AlertDialog.Root open={open}>
         <AlertDialog.Trigger>
             <button ref={btnRef} hidden variant="soft">Size 2</button>
@@ -311,7 +308,7 @@ function PlayerSelection(props) {
                     <h1 className='text-center mt-4'>Add Players</h1>
                     <form className='search-form'>
                         <Theme radius="large">
-                            <TextField.Root size="3" onChange={(e)=>{setSearch(e.target.value)}} placeholder="Search Players…">
+                            <TextField.Root size="3" value={search} onChange={(e)=>{setSearch(e.target.value)}} placeholder="Search Players…">
                                 <TextField.Slot side="right" px="1">
                                     <Button size="2">Send</Button>
                                 </TextField.Slot>
