@@ -51,3 +51,14 @@ Before you begin, ensure you have met the following requirements:
    ```bash
    git clone [https://github.com/yourusername/dream-team-league.git](https://github.com/OmriRata/Dream_Team.git)
    cd dream-team-league
+2. **Setup the Backend (Flask):**
+* Navigate to the backend directory:
+cd Backend
+* Create a virtual environment and activate it:
+python Server.py
+* Set up environment variables:
+Create a .env file in the backend directory with the following content:
+FLASK_APP=app.py
+FLASK_ENV=development
+MONGO_URI=mongodb://localhost:27017/dreamteamdb
+SECRET_KEY=your_secret_key
