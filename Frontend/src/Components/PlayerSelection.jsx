@@ -1,8 +1,8 @@
 import React from 'react'
 import Papa from 'papaparse';  // Import Papa Parse
 import Slider from '@mui/material/Slider';
-import Alert from '@mui/material/Alert'
 import {Theme,TextField,Container,Box,Card,Flex,Avatar,Text,AlertDialog,Button,ScrollArea } from '@radix-ui/themes'
+import Alert from '@mui/material/Alert'
 import '../style/PlayerSelection.css'
 import { ReloadIcon } from '@radix-ui/react-icons';
 import {playersData,barcePlayers, englandTeams,englandPlayers} from '../Data/data'
@@ -15,6 +15,8 @@ import axios from "axios";
 
 function PlayerSelection(props) {
     const [open, setOpen] = useState(false);
+    const [errOpen, setErrOpen] = useState(false);
+    const [errorMsg,setErrorMsg] = useState('');
     const [popUpPlayer, setPopUpPlayer] = useState(null);
     const [flag,setFlag] = useState(false)
     const [amountInt,setAmountInt] = useState(100)
@@ -29,7 +31,6 @@ function PlayerSelection(props) {
     const [teamFilter,setTeamFilter] = useState('');
     const [league,setLeague] = useState(props.leagueId);
     const [teams,setTeams] = useState([]);
-    const [errorMsg,setErrorMsg] = useState('');
     const [csvData, setCsvData] = useState([]);  // State to store CSV data
     const disabled = true;
     const positions = [
@@ -129,16 +130,14 @@ function PlayerSelection(props) {
         }
 
     }
-    const checkPlayers = (player)=>{
-
-        const newPlayers = props.players.concat(player)
-        const goalkeeperCount = newPlayers.filter(
+    const checkPlayers = (players)=>{
+        const goalkeeperCount = players.filter(
             player => player.statistics[0].games.position == 'Goalkeeper').length;
-        const defenderCount = newPlayers.filter(
+        const defenderCount = players.filter(
             player => player.statistics[0].games.position == 'Defender').length;
-        const midfielderCount = newPlayers.filter(
+        const midfielderCount = players.filter(
             player => player.statistics[0].games.position == 'Midfielder').length;
-        const attackerCount = newPlayers.filter(
+        const attackerCount = players.filter(
             player => player.statistics[0].games.position == 'Attacker').length;
 
         
@@ -154,26 +153,27 @@ function PlayerSelection(props) {
             return 'Attacker'
         }
     }
+
     const addPlayers = (player,e)=>{
-        console.log("first")
-        switch(checkPlayers(player)){
+        const newPlayers = props.players.concat(player)
+        switch(checkPlayers(newPlayers)){
             case 'Goalkeeper':
-                setErrorMsg('Only 1 Goalkeeper.')
+                setErrorMsg('You Can Choose only 1 Goalkeeper.')
                 setErrOpen(true)
                 console.log("goalkeeper")
                 break;
             case 'Defender':
-                setErrorMsg('Only 3-5 Defender.')
+                setErrorMsg('You Can Choose 3-5 Defender.')
                 setErrOpen(true)
                 console.log("defender")
                 break;
             case 'Midfielder':
-                setErrorMsg('Only 2-5 Midfielder.')
+                setErrorMsg('You Can Choose 2-5 Midfielder.')
                 setErrOpen(true)
                 console.log("Midfielder")
                 break;
             case 'Attacker':
-                setErrorMsg('Only 1-3 Attacker.')
+                setErrorMsg('You Can Choose 1-3 Attacker.')
                 setErrOpen(true)
                 console.log("Attacker")
                 break;
@@ -181,11 +181,14 @@ function PlayerSelection(props) {
                 setErrorMsg('You Can Choose Only 11 players.')
                 setErrOpen(true)
                 break;
-            default:props.setPlayers([
-                ...props.players,
-                player
-            ]);
+            default:
+                props.setPlayers([
+                    ...props.players,
+                    player
+                ]);
+                break;
         }
+        
     } 
 
     useEffect(() => {
@@ -271,7 +274,7 @@ function PlayerSelection(props) {
         
 
     }
-    const [errOpen, setErrOpen] = useState(false);
+    
 
     const playerPopUp = ()=>{
         return <AlertDialog.Root open={open}>
@@ -291,9 +294,9 @@ function PlayerSelection(props) {
     }
     return (
             <div className='player-selection'>
-            <AlertDialog.Root open ={errOpen}>
+                <AlertDialog.Root open ={errOpen}>
                 <AlertDialog.Trigger>
-                    <button ref={btnRef} hidden variant="soft">Size 2</button>
+                    <button hidden></button>
                 </AlertDialog.Trigger>
                 <AlertDialog.Content size="2" maxWidth="400px">
                     <Alert severity="warning" variant="outlined">{errorMsg}</Alert>

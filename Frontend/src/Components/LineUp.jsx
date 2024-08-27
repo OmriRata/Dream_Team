@@ -13,9 +13,38 @@ function LineUp(props) {
     const [isCreateMode,setIsCreateMode] = useState(props.isCreate)
     const btnRef = useRef();
     const [errorMsg,setError] = useState('You Need to Choose 11 players')
+    const [open, setOpen] = useState(false);
 
     // const errorMsg= 'You Need to Choose 11 players';
+    const checkPlayers = ()=>{
+        const goalkeeperCount = props.players.filter(
+            player => player.statistics[0].games.position == 'Goalkeeper').length;
+        const defenderCount = props.players.filter(
+            player => player.statistics[0].games.position == 'Defender').length;
+        const midfielderCount = props.players.filter(
+            player => player.statistics[0].games.position == 'Midfielder').length;
+        const attackerCount = props.players.filter(
+            player => player.statistics[0].games.position == 'Attacker').length;
 
+        
+        if(goalkeeperCount+defenderCount+midfielderCount+attackerCount<11){
+            setError('You Need to Choose 11 players')
+            return false
+        }else if(goalkeeperCount<1){
+            setError('You Need to Choose 1 Goalkeeper.')
+            return false
+        }else if(defenderCount<3){
+            setError('You Need to Choose 3-5 Defender.')
+            return false
+        }else if(midfielderCount<2){
+            setError('You Need to Choose 2-5 Midfielder.')
+            return false
+        }else if(attackerCount<1){
+            setError('You Need to Choose 1-3 Attacker.')
+            return false
+        }
+        return true
+    }
         
     const removePlayer = (player)=>{
         props.setPlayers(props.players.filter(p => p.player.id !== player.player.id))
@@ -35,9 +64,9 @@ function LineUp(props) {
     }
 
     const createTeam = async ()=>{
-        if(props.players.length<11){
-            setError(errorMsg)
-            btnRef.current?.click()
+        if(!checkPlayers()){
+            setOpen(true)
+            return
         }
         else{
             try {
@@ -56,9 +85,10 @@ function LineUp(props) {
     }
 
     const editTeam = async ()=>{
-        if(props.players.length<11){
-            setError(errorMsg)
-            btnRef.current?.click()
+        
+        if(!checkPlayers()){
+            setOpen(true)
+            return
         }
         else{
             try {
@@ -119,14 +149,14 @@ function LineUp(props) {
             </Flex>
             {isCreateMode?<Button onClick={props.isEditMode?editTeam:createTeam} className='applyBtn'> {props.isEditMode?"Update":"Apply"} </Button>:<></>}
 
-            <AlertDialog.Root>
+            <AlertDialog.Root  open ={open}>
             <AlertDialog.Trigger>
                 <button ref={btnRef} hidden variant="soft">Size 2</button>
             </AlertDialog.Trigger>
             <AlertDialog.Content size="2" maxWidth="400px">
                 <Alert severity="warning" variant="outlined">{errorMsg}</Alert>
                 <AlertDialog.Cancel>
-                    <Button style={{ marginTop: '16px' }}variant="soft" color="gray">
+                    <Button onClick={()=>setOpen(false)} style={{ marginTop: '16px' }}variant="soft" color="gray">
                     Cancel
                     </Button>
                 </AlertDialog.Cancel>
