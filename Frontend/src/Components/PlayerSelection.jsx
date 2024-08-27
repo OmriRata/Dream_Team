@@ -1,7 +1,7 @@
 import React from 'react'
 import Papa from 'papaparse';  // Import Papa Parse
 import Slider from '@mui/material/Slider';
-import {Theme,TextField,Container,Box,Card,Flex,Avatar,Text,AlertDialog,Button,ScrollArea } from '@radix-ui/themes'
+import {Theme,TextField,Container,Box,Card,Flex,Avatar,Text,AlertDialog,Button,ScrollArea,Spinner } from '@radix-ui/themes'
 import Alert from '@mui/material/Alert'
 import '../style/PlayerSelection.css'
 import { ReloadIcon } from '@radix-ui/react-icons';
@@ -288,6 +288,10 @@ function PlayerSelection(props) {
         </Flex>
         </AlertDialog.Content>
     </AlertDialog.Root>
+    }
+    if(!flag){
+        return <Spinner className='spinner' size="7" />
+
     }
     return (
             <div className='player-selection'>
