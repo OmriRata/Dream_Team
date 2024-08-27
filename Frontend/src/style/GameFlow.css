@@ -1,0 +1,32 @@
+
+.header{
+    margin:auto;
+    line-height:51px;
+    vertical-align:middle;
+    color: wheat;
+    margin-bottom: 5%;
+}
+.infoBtn{
+    margin-top: 5% !important;
+    padding: 1rem 2.5rem !important;
+    outline: none;
+    border: none;
+    border-radius: 5rem !important;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    transition: 0.2s !important;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+.game_flow {
+    color:white;
+    margin-right: 2%;
+    margin-top: 15%;
+    float: right;
+    width: 23%;
+    text-align:center;
+    /* background-color:black; */
+}

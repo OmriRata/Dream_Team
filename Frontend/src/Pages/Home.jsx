@@ -3,6 +3,8 @@ import "../style/Home.css"
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"
 import Button from 'react-bootstrap/Button';
+import CountdownTimer from '../Components/CountdownTimer';
+import GameFlow from '../Components/GameFlow';
 import Orange_bg from "../assets/home-banner-background.png"
 import Green_bg from "../assets/home-banner-background_green.png"
 import Blue_bg from "../assets/home-banner-background_blue.png"
@@ -23,19 +25,17 @@ function Home(props){
         props.c("TeamBuilder")
         navigate("/createTeam")
     }
-    const info = ()=>{
-        console.log("change page")
-        props.c("ExplanationPage")
-        navigate("/ExplanationPage")
-    }
+
     const joinLeague = ()=>{
         navigate("/joinLeague")
 
     }
     
-    props.c('HomePage')
+    // props.c('HomePage')
     return (
-        <>
+        <div className="a">
+        {/* <CountdownTimer targetDate={"2024-09-02T10:00:00"}/> */}
+
         <div className="home-container">
             
             <div className="home-banner-container">
@@ -45,8 +45,7 @@ function Home(props){
             </div>
             
         </div>
-        <Flex direction="row" >
-
+        <Flex className="home" direction="row" >
         <div className="home-text-section">
                         <h1 className="primary-heading">
                             Build Your Dream Team !
@@ -59,19 +58,15 @@ function Home(props){
                         </button> */}
                         <button className="secondary-button" onClick={joinLeague}>
                         {/* <h2>JOIN A LEAGUE</h2> Click here to join a league with friends. */}
-                         Join a League <FiArrowRight />
+                        Join a League <FiArrowRight />
                     </button>
-                        <button className="secondary-button" onClick={info}>
-                        information <FiArrowRight />
-                        </button>
                         
-                </div>
-                
-                
-                <img src={player} alt="" />
+        </div>
+                <img className="playerImg" src={player} alt="" />
+        <GameFlow/>
         </Flex>
 
-        </>
+        </div>
     )
 }
 
