@@ -45,6 +45,14 @@ const ExplanationPage = () => {
         <h3>Creating and Managing Teams</h3>
         <ol>
           <li><strong>Create a Team</strong>: Enter a league name and draft players.</li>
+          <li><strong>You can choose:</strong></li>
+          <ul>
+          <li>11 players</li>
+          <li>1 Goalkeeper</li>
+          <li>3-5 Defender</li>
+          <li>2-5 Midfielder</li>
+          <li>1-3 Attacker</li>
+          </ul>
           <li><strong>Manage Teams</strong>: Edit existing teams, add/remove players, and view stats.</li>
         </ol>
         <h3>Joining and Managing Leagues</h3>
