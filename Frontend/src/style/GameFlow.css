@@ -4,29 +4,40 @@
     line-height:51px;
     vertical-align:middle;
     color: wheat;
-    margin-bottom: 5%;
+    /* margin-bottom: 5%; */
+    padding-bottom: 5% ;
 }
 .infoBtn{
-    margin-top: 5% !important;
-    padding: 1rem 2.5rem !important;
+    margin-top: 7% !important;
+    /* padding: 1rem 2.5rem !important; */
+    padding: 0.7rem!important;
     outline: none;
     border: none;
     border-radius: 5rem !important;
-    font-size: 1.1rem;
-    cursor: pointer;
-    font-weight: 600;
+    font-size: 1.1rem!important;
+    cursor: pointer !important;
+    width: 75% !important;
+    height: 30% !important;
     color: white;
+    
     transition: 0.2s !important;
     display: flex;
     align-items: center;
-    justify-content: center
+    justify-content: center;
 }
+/* .stack{
+    padding: 2%;
+} */
 .game_flow {
+    padding: 2%;
+    height: 100%;
     color:white;
-    margin-right: 2%;
-    margin-top: 15%;
-    float: right;
-    width: 23%;
+    /* margin-right: 2%; */
+    margin-top: 10%;
+    /* float: right; */
+    width: 30%;
     text-align:center;
+    /* border: 0.1rem solid blue; */
+    border-radius: 3rem;
     /* background-color:black; */
 }

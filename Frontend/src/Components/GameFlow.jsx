@@ -6,19 +6,27 @@ import { styled } from '@mui/material/styles';
 import '../style/GameFlow.css'
 import { useNavigate } from "react-router-dom";
 
+
+
+
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: 'white',
+    backgroundColor:'aliceblue',
     ...theme.typography.body2,
-    padding: theme.spacing(2),
-    textAlign: 'left',
+    padding: theme.spacing(1.1),
+    textAlign: 'center',
+    // opacity: '0.5',
+    // fontFamily:'fantasy',
+    fontSize:'17px',
     borderRadius:'5rem',
     border: '2px solid rgba(255,255,255,.2);',
     width:'100%',
     marginRight:'5%',
-    backdropFilter: 'blur(10px);',
+    marginBottom:'5%',   
+    fontWeight:'bold',
+    // backdropFilter: 'blur(20px);',
     color: theme.palette.text.secondary,
     ...theme.applyStyles('dark', {
-    backgroundColor: '#1A2027',
+    backgroundColor: 'red',
     }),
 }));
 
@@ -39,8 +47,11 @@ function GameFlow(){
         <div className="game_flow" >
             <h1 className="header">How to Play ?</h1>
             <Stack className="stack"  spacing={2}>
+
             {flowSteps.map((step,i)=>{
-                return<Item className="item" id={i}> {i+1}. {step}</Item>
+                return<Item className="item" id={i}>
+                    {i+1} . {step}
+                </Item>
 
             })
             }

@@ -20,18 +20,11 @@ function Home(props){
         props.c("LeagueBuilder")
         navigate("/createLeague")
     }
-    const createTeam = ()=>{
-        console.log("change page")
-        props.c("TeamBuilder")
-        navigate("/createTeam")
-    }
-
     const joinLeague = ()=>{
         navigate("/joinLeague")
 
     }
     
-    // props.c('HomePage')
     return (
         <div className="a">
         {/* <CountdownTimer targetDate={"2024-09-02T10:00:00"}/> */}
@@ -53,11 +46,7 @@ function Home(props){
                         <button className="secondary-button" onClick={createLeague}>
                         Create League <FiArrowRight />
                         </button>
-                        {/* <button className="secondary-button" onClick={createTeam}>
-                            Create Your Team <FiArrowRight />
-                        </button> */}
                         <button className="secondary-button" onClick={joinLeague}>
-                        {/* <h2>JOIN A LEAGUE</h2> Click here to join a league with friends. */}
                         Join a League <FiArrowRight />
                     </button>
                         
