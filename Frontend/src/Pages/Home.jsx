@@ -3,7 +3,7 @@ import "../style/Home.css"
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"
 import Button from 'react-bootstrap/Button';
-import CountdownTimer from '../Components/CountdownTimer';
+// import CountdownTimer from '../Components/CountdownTimer';
 import GameFlow from '../Components/GameFlow';
 import Orange_bg from "../assets/home-banner-background.png"
 import Green_bg from "../assets/home-banner-background_green.png"
