@@ -325,7 +325,7 @@ function PlayerSelection(props) {
             </AlertDialog.Root>
                 <Container className='search'>
                 <div className='text-center mt-4'>
-                <h1 >{leagueLogo && <img src={leagueLogo} alt={`${leagueName} logo`} style={{ width: '50px', height: '50px' ,backgroundColor:'white' }} />} {leagueName && ` ${leagueName}`} </h1>
+                <h1 >{leagueLogo && <Avatar radius="full" src={leagueLogo} alt={`${leagueName} logo`} style={{ width: '50px', height: '50px' ,backgroundColor:'white' }} />} {leagueName && ` ${leagueName}`} </h1>
                 </div>
                 <h1 className='text-center mt-4' >Add Players </h1>
                     <form className='search-form'>
