@@ -34,7 +34,7 @@ const Popup = () => {
                 <li>Yellow card: -1 point</li>
                 <li>Red card: -2 points</li>
               </ol>
-              <li className="list-group-item">Clean goal:</li>
+              <li className="list-group-item">Clean sheet:</li>
               <ol>
                 <li>GoalKeeper, Defender: 4 points</li>
               </ol>

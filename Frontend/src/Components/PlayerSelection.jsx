@@ -37,7 +37,20 @@ function PlayerSelection(props) {
         'Goalkeeper','Defender','Midfielder','Attacker']
     const [value,setValue] = useState([1,10])
     const minDistance = 1;
-
+    const [leagueName, setLeagueName] = useState('');  // State for league name
+    const [leagueLogo, setLeagueLogo] = useState('');  // State for league logo
+    const fetchLeagueInfo = async () => {
+        try {
+            const response = await axios.get(`api/leagueInfo/${props.leagueId}`);
+            const leagueData = response.data;
+            setLeagueName(leagueData.name);
+            setLeagueLogo(leagueData.logo);
+            console.log(leagueData.logo)
+            console.log(leagueData.name)
+        } catch (error) {
+            console.error("Error fetching league information: ", error);
+        }
+    };
     const resetTeamFillter = ()=>{
         setTeamFilter('')
         if(positionFilter == ''){
@@ -190,6 +203,8 @@ function PlayerSelection(props) {
     useEffect(() => {
         fetchTeams()
         fetchPlayers()
+        fetchLeagueInfo();
+        
         // fetchCsvData(); // Fetch CSV data when component mounts
     },[])
 
@@ -309,7 +324,10 @@ function PlayerSelection(props) {
                 </AlertDialog.Content>
             </AlertDialog.Root>
                 <Container className='search'>
-                    <h1 className='text-center mt-4'>Add Players</h1>
+                <div className='text-center mt-4'>
+                <h1 >{leagueLogo && <img src={leagueLogo} alt={`${leagueName} logo`} style={{ width: '50px', height: '50px' ,backgroundColor:'white' }} />} {leagueName && ` ${leagueName}`} </h1>
+                </div>
+                <h1 className='text-center mt-4' >Add Players </h1>
                     <form className='search-form'>
                         <Theme radius="large">
                             <TextField.Root size="3" value={search} onChange={(e)=>{setSearch(e.target.value)}} placeholder="Search Players…">

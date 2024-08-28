@@ -55,15 +55,16 @@ export default function CustomizedTables(props) {
         <h2><b>League</b> : {props.leagueName} </h2>
         {/* <Separator my={'0'} orientation="vertical" color="cyan" size="2"  /> */}
         <Popup trigger=
-        {<button  style={{float:'right;!important', background:'#3E63DD'}}> Invite friend </button>} 
+        {<Button onClick={i=>console.log(props.leagueCode)} style={{float:'right;!important'}}>Invite friend</Button>} 
         modal nested>
         {
             close => (
                 <div className='modal'>
                     <div className='content'>
-                     league code:  {props.leagueCode}
+                     <u style={{fontSize:'22px'}}><strong>league code:</strong></u>  {props.leagueCode}
                     </div>
                     <div>
+                    <br></br>
                         <button style={{color: '#f00',padding: '7px'}} onClick=
                             {() => close()}>
                                 Close 
