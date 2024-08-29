@@ -9,6 +9,7 @@ import hashlib
 from bson.objectid import ObjectId
 from bson import json_util
 import os
+from utils.util import checkIsStarted
 
 
 user = Blueprint('user',__name__)
@@ -140,8 +141,14 @@ def getPlayers():
         team_id = str(team['_id']) if team else None
 
         obj = {'team_id':str(team_id),"league_id":league['league_id'],'league_code':league['league_code'],'players':players,'league_name':league['league_name']}
-        result.append(obj)
 
+        isStarted ,date = checkIsStarted(str(league['league_id']))
+        if isStarted:
+            obj["isStarted"] = True
+        else:
+            obj["isStarted"] = False
+        obj["date"] = date
+        result.append(obj)
     return result
 
 @user.route('/getUserLeagues',methods=['POST'])

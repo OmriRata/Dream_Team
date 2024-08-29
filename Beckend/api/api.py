@@ -3,10 +3,10 @@ import requests
 from flask_jwt_extended import jwt_required
 from dotenv import load_dotenv
 import os
-from utils.util import calculatePlayerPoints
 import aiohttp
 import asyncio
 from threading import Timer
+from utils.util import checkIsStarted
 
 
 
@@ -55,7 +55,6 @@ def getPlayersByTeam(team_id):
 
 @api.route("/nextMatch/<league_id>") 
 def getNextMatch(league_id):
-    print("2000")
     querystring = {"id":"1215853"}
     response = requests.get(URL+'fixtures', headers=HEADERS, params=querystring)
 
@@ -80,8 +79,8 @@ async def getPlayersByLeague(league_id):
     total_pages = response.json()["paging"]['total']
     print(total_pages)
     async with aiohttp.ClientSession() as session:
-        tasks = []
-        for page in range(1, total_pages + 1):
+        tasks = []  
+        for page in range(1, 5):
             copyQuery = querystring.copy()
             copyQuery['page'] = str(page)
             tasks.append(fetch_data(session,copyQuery))
@@ -111,7 +110,6 @@ def getTeamsByLeague(league_id):
     response = requests.get(URL+"teams", headers=HEADERS, params=querystring)
     teams_info = [ i["team"] for i in response.json()["response"] ]
     return teams_info
-
 
 @api.route("/leagueId/<country_name>") 
 # @jwt_required()
