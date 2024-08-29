@@ -8,7 +8,7 @@ import math
 
 
 
-LEAGUES_ID = ['78','135','39', '140', '61','40'];
+LEAGUES_ID = ['78','135','39', '140', '61','40']; # germany,italy,england,spain,france
 # LEAGUES_ID = ['78'];
 
 
@@ -189,6 +189,8 @@ def updatePoints(team,new_points):
     return_document=True)
 
 def main():
+    print("main")
+    exit()
     leagues_map = getsUserLeaguesById()
 
     # leagues_map = {'2':[37733397]}  # example for league with 1 team that i created to test
