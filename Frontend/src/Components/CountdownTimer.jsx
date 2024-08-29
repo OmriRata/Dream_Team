@@ -1,47 +1,90 @@
 import React, { useState, useEffect } from 'react';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import '../style/CountdownTimer.css'; 
 
 const CountdownTimer = ({ targetDate }) => {
-  const calculateTimeLeft = () => {
-    const difference = +new Date(targetDate) - +new Date();
-    let timeLeft = {};
+    const getRemainingTime = () => {
+        const totalTime = new Date(targetDate).getTime() - new Date().getTime();
+        return totalTime / 1000; // Total time in seconds
+    };
+    const formatTime = (remainingTime) => {
+        const days = Math.floor(remainingTime / (60 * 60 * 24));
+        const hours = Math.floor((remainingTime % (60 * 60 * 24)) / (60 * 60));
+        const minutes = Math.floor((remainingTime % (60 * 60)) / 60);
+        const seconds = Math.floor(remainingTime % 60);
 
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-    }
+        return { days, hours, minutes, seconds };
+    };
 
-    return timeLeft;
-  };
+    const [remainingTime, setRemainingTime] = useState(getRemainingTime);
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setRemainingTime(getRemainingTime());
+        }, 1000);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
+        return () => clearInterval(timer);
+    }, [targetDate]);
 
-    return () => clearTimeout(timer);
-  });
-
-  const timerComponents = [];
-
-  Object.keys(timeLeft).forEach((interval) => {
-    // if (!timeLeft[interval]) {
-    //   return;
-    // }
-
-    timerComponents.push(
-<span key={interval}>{timeLeft[interval]} {interval}{" "}</span>
-    );
-  });
-
+    const { days, hours, minutes, seconds } = formatTime(remainingTime);
     return (
-        <div>
-        {timerComponents.length ? timerComponents : <span>Time's up!</span>}
+        <div className="countdown-timer">
+            <div className="timer-circle">
+                <CountdownCircleTimer
+                    isPlaying
+                    duration={remainingTime}
+                    colors={["#004777"]}
+                    colorsTime={[0]}
+                    size={80}
+                    strokeWidth={8}
+                    initialRemainingTime={remainingTime}
+                >
+                    {() => <div className="value">{days}</div>}
+                </CountdownCircleTimer>
+                <div className="label">Days</div>
+            </div>
+            <div className="timer-circle">
+                <CountdownCircleTimer
+                    isPlaying
+                    duration={24 * 60 * 60}
+                    colors={["#004777"]}
+                    colorsTime={[0]}
+                    size={80}
+                    strokeWidth={8}
+                    initialRemainingTime={hours * 3600}
+                >
+                    {() => <div className="value">{hours}</div>}
+                </CountdownCircleTimer>
+                <div className="label">Hours</div>
+            </div>
+            <div className="timer-circle">
+                <CountdownCircleTimer
+                    isPlaying
+                    duration={60 * 60}
+                    colors={["#004777"]}
+                    colorsTime={[0]}
+                    size={80}
+                    strokeWidth={8}
+                    initialRemainingTime={minutes * 60}
+                >
+                    {() => <div className="value">{minutes}</div>}
+                </CountdownCircleTimer>
+                <div className="label">Minutes</div>
+            </div>
+            <div className="timer-circle">
+                <CountdownCircleTimer
+                    isPlaying
+                    duration={60}
+                    colors={["#004777"]}
+                    colorsTime={[0]}
+                    size={80}
+                    strokeWidth={8}
+                    initialRemainingTime={seconds}
+                >
+                    {() => <div className="value">{seconds}</div>}
+                </CountdownCircleTimer>
+                <div className="label">Seconds</div>
+            </div>
         </div>
     );
 };

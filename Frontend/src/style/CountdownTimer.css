@@ -1,0 +1,29 @@
+/* CountdownTimer.css */
+
+.countdown-timer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.timer-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+  width: 80px; /* Adjust to match circle size */
+  height: 80px; /* Adjust to match circle size */
+}
+
+.timer-circle .value {
+  font-size: 18px; /* Adjust the font size of the value */
+  font-weight: bold;
+  color: #004777;
+}
+
+.timer-circle .label {
+  font-size: 12px; /* Adjust the font size of the label */
+  margin-top: 4px;
+  color: #333;
+}

@@ -1,5 +1,4 @@
 import React,{ useEffect, useState,useRef }  from "react";
-//import "../style/Team.css"
 import LineUp from "../Components/LineUp";
 import CountdownTimer from "../Components/CountdownTimer";
 import "../style/Team.css";
@@ -14,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { emphasize } from "@mui/material";
+//npm install react-countdown-circle-timer
 
 
 
@@ -79,11 +79,11 @@ function Team(){
     return <div className="team">
         {isPlayers?
                 <Flex direction={'column'}>
-                    {flag&&<Flex direction={'column'}>
-                        {isRoundStarted?<span>
+                    {flag&&<Flex className="fontStyle" direction={'column'}>
+                        {isRoundStarted?<span className="mod2" >
                             Substitution Window Closed:
                             </span>:<span>
-                            Substitution Window Open:<br/> Time remaining:
+                            Substitution Window Open Time remaining:
                             </span>}
                     <CountdownTimer targetDate={date}/>
                     </Flex>}
