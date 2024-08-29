@@ -10,6 +10,7 @@ from bson.objectid import ObjectId
 from bson import json_util
 import os
 from utils.util import checkIsStarted
+import re
 
 
 user = Blueprint('user',__name__)
@@ -36,10 +37,14 @@ def register():
     # Simple user registration logic (no database involved for simplicity)
     if not username or not password:
         return jsonify({"error": "Username and password are required"}), 400
-
-    # Check if user already exists
     users = users_collection.find()
+    if len(username) < 5:
+        return jsonify({"error": "Username must be at least 5 characters long"}), 400
 
+    # Check if username contains at least one uppercase letter
+    if not re.search(r'[A-Z]', username):
+        return jsonify({"error": "Username must contain at least one uppercase letter"}), 400
+    # Check if user already exists
     if users_collection.find_one({"username":username}) or users_collection.find_one({"email":email}):
         return jsonify({"error": "User already exists"}), 400
     
