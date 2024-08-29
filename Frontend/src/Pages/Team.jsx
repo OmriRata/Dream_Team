@@ -1,6 +1,7 @@
 import React,{ useEffect, useState,useRef }  from "react";
 //import "../style/Team.css"
 import LineUp from "../Components/LineUp";
+import CountdownTimer from "../Components/CountdownTimer";
 import "../style/Team.css";
 import Alert from '@mui/material/Alert';
 import { AlertDialog, RadioCards } from '@radix-ui/themes';
@@ -12,6 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { emphasize } from "@mui/material";
 
 
 
@@ -28,18 +30,13 @@ function Team(){
     const [leagues,setLeagues] = useState([])
     const [league_name,setLeagueName] = useState('')
     const [open,setOpen] = useState(false)
+    const [isRoundStarted,setIsStarted] = useState(false)
+    const [date,setDate] = useState('')
 
     const handleOpen = () => setOpen(true);
 
 
-    const printMatches = async (leagueId)=>{
-        try{
-            const response = await axios.get("/api/nextMatch/"+leagueId)
-            console.log(response)
-        }catch(error){
-            console.log(error)
-        }
-    }
+
     const getPlayers= async ()=>{
         try{
             const response = await axios.post("/users/getTeamPlayers", {
@@ -71,17 +68,25 @@ function Team(){
 
             return
         }
+        setDate(team.date)
+        setIsStarted(team.isStarted)
         setTeamId(team.team_id)
         setPlayers(team.players)
         setLeagueId(team.league_id)
-        console.log(localStorage.getItem('username'))
         setFlag(true)
-        printMatches(team.league_id)
     };
 
     return <div className="team">
         {isPlayers?
                 <Flex direction={'column'}>
+                    {flag&&<Flex direction={'column'}>
+                        {isRoundStarted?<span>
+                            Substitution Window Closed:
+                            </span>:<span>
+                            Substitution Window Open:<br/> Time remaining:
+                            </span>}
+                    <CountdownTimer targetDate={date}/>
+                    </Flex>}
                     <FormControl style={{marginTop:'10px'}} fullWidth>
                         <InputLabel id="demo-simple-select-label">League Name</InputLabel>
                         <Select
@@ -97,12 +102,13 @@ function Team(){
                         })}
                         </Select>
                     </FormControl>
-                {!league_code?
-                    <Button disabled  color="gray" variant="solid" highContrast className='updateBtn'>
+                {!isRoundStarted && league_code?
+                    <NavLink to={'/createTeam'} state={{leagueId:leagueId, team_id:team_id,league_code:league_code, players: players,isEditMode:true }}><Button  color="gray" variant="solid" highContrast className='updateBtn'>
                     Edit Lineup</Button>
-                    :<NavLink to={'/createTeam'} state={{leagueId:leagueId, team_id:team_id,league_code:league_code, players: players,isEditMode:true }}><Button  color="gray" variant="solid" highContrast className='updateBtn'>
+                    </NavLink>
+                    :<Button disabled color="gray" variant="solid" highContrast className='updateBtn'>
                     Edit Lineup</Button>
-                    </NavLink>}
+                    }
                 <LineUp ref={lineupRef} isCreate={false} players={players?players:[]} setPlayers={setPlayers}/>
                     
             </Flex>
