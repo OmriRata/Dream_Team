@@ -44,6 +44,20 @@ def register():
     # Check if username contains at least one uppercase letter
     if not re.search(r'[A-Z]', username):
         return jsonify({"error": "Username must contain at least one uppercase letter"}), 400
+    if len(password) <= 4:
+        return jsonify({"error": "Password must be more than 4 characters long"}), 400
+
+    # Password validation: check for at least one uppercase letter
+    if not re.search(r'[A-Z]', password):
+        return jsonify({"error": "Password must contain at least one uppercase letter"}), 400
+    # Password validation: check for at least one uppercase letter
+    if not re.search(r'[a-z]', password):
+        return jsonify({"error": "Password must contain at least one lowercase letter"}), 400
+
+    # Password validation: check for at least one number
+    if not re.search(r'[0-9]', password):
+        return jsonify({"error": "Password must contain at least one number"}), 400
+    
     # Check if user already exists
     if users_collection.find_one({"username":username}) or users_collection.find_one({"email":email}):
         return jsonify({"error": "User already exists"}), 400
