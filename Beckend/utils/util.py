@@ -70,14 +70,8 @@ def checkIsStarted(leagueId):
         return True , lastMatch[1].strftime('%Y-%m-%d %H:%M:%S %Z')
 
 def main():
-    # pass
-    leagueId = '39'
-    print(getCurrentRound(leagueId))
-    exit()
-    firstMatch = getStartDate(leagueId)
-    sorted =getSortedTime(firstMatch)
-    lastMatch = getEndDate(leagueId)
-    # checkIsStarted
+    pass
+
 
 if __name__ == "__main__":
     main()
