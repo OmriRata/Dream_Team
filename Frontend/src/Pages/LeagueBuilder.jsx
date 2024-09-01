@@ -53,12 +53,8 @@ function LeagueBuilder() {
     };
 
     const setErrorMessage = (message) => {
-        clearTimeout(timeoutID);
         setMessage(message);
-        setTimeoutID(setTimeout(() => {
-            setMessage("");
-            btnRef.current?.click();
-        }, 3000));
+        
     };
 
     const handleSubmit = async (e) => {
@@ -118,11 +114,11 @@ function LeagueBuilder() {
                 </AlertDialog.Trigger>
                 <AlertDialog.Content size="2" maxWidth="400px">
                     <Alert severity="warning" variant="outlined">{message}</Alert>
-                  {/*}  <AlertDialog.Cancel>
+                <AlertDialog.Cancel>
                         <Button style={{ marginTop: '16px' }} variant="soft" color="gray">
                             Cancel
                         </Button>
-                    </AlertDialog.Cancel>*/}
+                    </AlertDialog.Cancel>
                 </AlertDialog.Content>
             </AlertDialog.Root>
         </div>
