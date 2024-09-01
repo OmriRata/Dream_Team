@@ -165,11 +165,20 @@ function PlayerSelection(props) {
         }else if(attackerCount>3){
             return 'Attacker'
         }
+        const newPlayer = players[players.length-1] 
+        const playerPrice = getPrice(newPlayer.player,newPlayer.statistics[0].games.rating) 
+        if( playerPrice > amountInt){
+            return 'Amount'
+        }
     }
 
     const addPlayers = (player,e)=>{
         const newPlayers = props.players.concat(player)
         switch(checkPlayers(newPlayers)){
+            case 'Amount':
+                setErrorMsg('You have No enough Money.')
+                setErrOpen(true)
+                break;
             case 'Goalkeeper':
                 setErrorMsg('You Can Choose only 1 Goalkeeper.')
                 setErrOpen(true)
