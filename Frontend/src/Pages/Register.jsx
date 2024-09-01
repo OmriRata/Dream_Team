@@ -5,7 +5,7 @@ import axios from "axios";
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import "../style/Register.css";
 
-function Register() {
+function Register(props) {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -36,8 +36,10 @@ function Register() {
                 email,
                 password
             });
-            setErrorMessage(response.data.message);
-            navigate('/login');
+            const data = response.data
+            props.setToken(data.access_token)
+            localStorage.setItem('username',data.username)
+            navigate('/');
         } catch (error) {
             setErrorMessage(error.response.data.error);
         }

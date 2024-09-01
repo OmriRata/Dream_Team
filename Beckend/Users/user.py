@@ -70,7 +70,9 @@ def register():
         "email":email,
     }
     users_collection.insert_one(newUser);
-    response = jsonify("User registered successfully")
+    token = create_access_token(identity=username)
+
+    response = jsonify({'msg':"User registered successfully",'access_token':token,'username':username})
     response.status_code = 200
 
     return response

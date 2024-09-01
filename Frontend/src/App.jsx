@@ -39,7 +39,7 @@ function App() {
               </Route>
               <Route path="/" element={< Home c={ setPage }/> }/>
               <Route path="/login" element={< Login setToken={ setToken } /> } />
-              <Route path="/register" element={< Register />}/>
+              <Route path="/register" element={< Register setToken={ setToken }/>}/>
               <Route path="/ExplanationPage" element={< ExplanationPage />}/>
           </Routes>
     </div>
