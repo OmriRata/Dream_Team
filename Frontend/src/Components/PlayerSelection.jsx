@@ -87,7 +87,7 @@ function PlayerSelection(props) {
 
     }
     const getPrice = (player, rating) => {
-        return 7
+        // return 7
         const firstname = player.firstname.trim().toLowerCase();
         const lastname = player.lastname.trim().toLowerCase();
         const fullName = `${firstname} ${lastname}`;
@@ -205,7 +205,7 @@ function PlayerSelection(props) {
         fetchPlayers()
         fetchLeagueInfo();
         
-        // fetchCsvData(); // Fetch CSV data when component mounts
+        fetchCsvData(); // Fetch CSV data when component mounts
     },[])
 
     useEffect(()=>{
