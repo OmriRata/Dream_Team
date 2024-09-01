@@ -20,7 +20,7 @@ function LeagueBuilder() {
     const [message, setMessage] = useState("");
     const [timeoutID, setTimeoutID] = useState();
     const btnRef = useRef();
-    const LEAGUES_ID = ['39', '140', '78', '135', '61','40','2'];
+    const LEAGUES_ID = ['39', '140', '78', '135', '61'];
     const LEAGUES = ['england', 'spain', 'germany', 'france', 'italy'];
 
     const fetchData = async () => {

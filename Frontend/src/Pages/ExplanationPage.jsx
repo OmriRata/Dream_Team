@@ -4,7 +4,8 @@ import VideoPlayer from '../Components/VideoPlayer';
 import Popup from '../Components/Popup';
 import { Avatar} from '@radix-ui/themes';
 const ExplanationPage = () => {
-  const LEAGUES_ID = ['39', '140', '78', '135', '61', '40', '2'];
+  const LEAGUES_ID = ['39', '140', '78', '135', '61'];
+
   const [leagues, setLeagues] = useState([]);
 
   const fetchData = async () => {
@@ -45,9 +46,10 @@ const ExplanationPage = () => {
         <h3>Creating and Managing Teams</h3>
         <ol>
           <li><strong>Create a Team</strong>: Enter a league name and draft players.</li>
-          <li><strong>You can choose:</strong></li>
+          <li><strong>The user need to choose:</strong></li>
+          <strong>11 players :</strong>
+          <br/>
           <ul>
-          <li>11 players</li>
           <li>1 Goalkeeper</li>
           <li>3-5 Defender</li>
           <li>2-5 Midfielder</li>
@@ -76,6 +78,14 @@ const ExplanationPage = () => {
           <li><strong>Join a League</strong>: Enter a league code or name to join an existing league.</li>
           <li><strong>View Standings</strong>: Track your team's rank in the league standings.</li>
         </ol>
+        <h3>Substitutions Rules {'(option to edit the team)'}</h3>
+        <ul>
+          <li> Every user can make Substitutions only between rounds . (if the games of the league started the Substitutions window will be closed).</li>
+          <li> The Substitutions window will be <b>open</b> 1 day after the round complete (1 day after the last match of the round at 7:00 A.M)</li>
+          <li> The Substitutions window will be <b>Close</b> when the first match of the league round start .</li>
+        </ul>
+
+
       </section>
     </div>
   );
