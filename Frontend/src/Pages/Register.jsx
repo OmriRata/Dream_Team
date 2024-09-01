@@ -13,6 +13,7 @@ function Register(props) {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState("");
     const [timeoutID, settimeoutID] = useState();
+    const [showRequirements, setShowRequirements] = useState(false);
 
 
 
@@ -45,6 +46,9 @@ function Register(props) {
         }
 
     };
+    const toggleRequirements = () => {
+        setShowRequirements(!showRequirements);
+    };
 
     return (
         <div className="register">
@@ -52,6 +56,18 @@ function Register(props) {
                 <form onSubmit={handleSubmit} method="POST">
                     <div className="login-header">
                         <h1>Register</h1>
+                        <button type="button" onClick={toggleRequirements}>Username and Password Requirements</button>
+                        {showRequirements && (
+                            <div className="requirements">
+                                <ul>
+                                    <li>Username must contain at least one uppercase letter.</li>
+                                    <li>Password must be more than 4 characters long.</li>
+                                    <li>Password must contain at least one uppercase letter.</li>
+                                    <li>Password must contain at least one lowercase letter.</li>
+                                    <li>Password must contain at least one number.</li>
+                                </ul>
+                            </div>
+                        )}
                     </div>
                     {message && <p className="message">{message}</p>}
                     <div className="input-box">

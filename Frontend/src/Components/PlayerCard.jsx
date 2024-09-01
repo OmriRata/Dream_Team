@@ -89,15 +89,6 @@ return (
         <IconButton aria-label="share">
         <ShareIcon />
         </IconButton> */}
-        <h4>statistics :</h4> 
-        <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-        >
-        <ExpandMoreIcon/>
-        </ExpandMore>
     </CardActions>
     <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
