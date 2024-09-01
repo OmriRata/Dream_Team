@@ -6,7 +6,7 @@ from datetime import datetime ,date,timedelta
 
 import requests
 
-load_dotenv('/home/omrirata/DreamTeam/Dream_Team/Beckend/.env')
+load_dotenv('../.env')
 ################    using Sport API from Rpid APi.    ################
 HEADERS = {
         "X-RapidAPI-Key": os.getenv('RapidAPI_Key'),

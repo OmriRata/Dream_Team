@@ -149,7 +149,7 @@ def getStats(game):
                 yellowCard[playerId] = stats['cards']['yellow'] * -1
             
             # every red card is (-2) points
-            if stats['cards']['red'] and stats['cards']['red'] > 0:
+            if stats['cards']['red']and stats['cards']['yellow'] <=1 and stats['cards']['red'] > 0:
                 redCard[playerId] = stats['cards']['red'] * -2
             
             # every commited penalty is (-1) point
