@@ -80,7 +80,7 @@ async def getPlayersByLeague(league_id):
     print(total_pages)
     async with aiohttp.ClientSession() as session:
         tasks = []  
-        for page in range(1, 10):
+        for page in range(1, 11 ):
             copyQuery = querystring.copy()
             copyQuery['page'] = str(page)
             tasks.append(fetch_data(session,copyQuery))
