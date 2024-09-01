@@ -142,19 +142,22 @@ def getPlayers():
     for league in leagues:
         team = teams_collection.find_one({'league_code':league['league_code'],'username':username})
 
-        players = team['players'] if team else None
+        players= team['players'] if team else None
         team_id = str(team['_id']) if team else None
 
         obj = {'team_id':str(team_id),"league_id":league['league_id'],'league_code':league['league_code'],'players':players,'league_name':league['league_name']}
-
-        isStarted ,date = checkIsStarted(str(league['league_id']))
-        if isStarted:
-            obj["isStarted"] = True
-        else:
-            obj["isStarted"] = False
-        obj["date"] = date
+        
         result.append(obj)
+
     return result
+
+@user.route('/getLeagueDates',methods=['POST'])
+def getDates():
+    data = request.json
+    leagueId = data.get('leagueId')
+    id = str(leagueId)
+    isStarted ,date = checkIsStarted(id)
+    return jsonify({"date": date,'isStarted':isStarted}), 200
 
 @user.route('/getUserLeagues',methods=['POST'])
 def getLeagues():
