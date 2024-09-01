@@ -15,7 +15,7 @@ LEAGUES_ID = ['78','135','39', '140', '61','40']; # germany,italy,england,spain,
 # LEAGUES_ID = ['78'];
 
 
-load_dotenv('/home/omrirata/DreamTeam/Dream_Team/Beckend/.env')
+load_dotenv('../.env')
 
 ################    using Sport API from Rpid API.    ################
 
