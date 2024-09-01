@@ -3,11 +3,32 @@
     height: 50px;
 } */
 .container{
+    display: flex;
+
+    margin-top: 200px;
+    width: 100%;
+}
+.msg{
+    font-size: 25px;
+    font-weight: 500;
+    color: red;
+}
+.start-spinner{
+    position: relative;
+    height: 70px;
+    color:black;
+    margin-left: 45%;
+    margin-top: 20%;
+    margin-bottom:20%;
+    width: 70px;
+    top:35%;
+}
+.table{
     width: 50%;
 
 }
 .leagues{
-    background-color:aliceblue;
+    /* background-color:aliceblue; */
     display: flex;
     justify-content: center; /* Align children horizontally at the center */
     align-items: center; /* Align children vertically at the center */

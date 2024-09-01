@@ -1,6 +1,5 @@
-
 .team{
-    background-color:azure;
+    /* background-color:azure; */
     display: flex;
     height: 20%;
     justify-content: center; /* Align children horizontally at the center */
@@ -20,7 +19,49 @@
     align-items: center;
     margin-bottom: 40px;
 }
-
+.open{
+    margin:auto;
+    line-height:30px;
+    vertical-align:middle;
+    color: rgb(32, 212, 32);
+    /* margin-bottom: 5%; */
+    /* padding-bottom: 5% ; */
+}
+.timer-spinner{
+    position: relative;
+    height: 70px;
+    color:black;
+    margin-left: 45%;
+    margin-top: 5%;
+    margin-bottom:5%;
+    width: 70px;
+    top:35%;
+}
+.create-league{
+    overflow: hidden; 
+    height: 20%;
+}
+.container{
+    display: flex;
+    margin-top: 200px;
+    width: 100%;
+}
+.start-spinner{
+    position: relative;
+    height: 70px;
+    color:black;
+    margin-left: 45%;
+    margin-top: 20%;
+    margin-bottom:20%;
+    width: 70px;
+    top:35%;
+}
+.close{
+    margin:auto;
+    line-height:35px;
+    vertical-align:middle;
+    color: red;
+}
 .timer-circle {
     display: flex;
     flex-direction: column;

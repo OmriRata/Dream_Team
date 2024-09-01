@@ -44,6 +44,11 @@
     width: 600px; /*Adjust the width as needed */
     margin: 0 auto;
 }
+.league-logo{
+    color:rgb(230, 239, 230);
+    font-size: 16px;
+    text-align: center;
+}
 .mt-4{
     color:rgb(230, 239, 230);
     font-size: 20px;

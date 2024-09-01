@@ -188,8 +188,23 @@ def updatePoints(team,new_points):
     update, 
     return_document=True)
 
+def getPlayersByLeague(league_id):
+
+    querystring = {'team':'529'}
+    
+    # response = requests.get(URL+"players", headers=HEADERS, params=querystring)
+    response = requests.get(URL+"players/squads", headers=HEADERS, params=querystring)
+    print(response.json()['paging'])
+    # print(response.json())
+    x = response.json()['response'][0]['players']
+    x = [i['name'] for i in x ]
+    return x
 def main():
     print("main")
+    
+    x = getPlayersByLeague('140')
+    print(len(x))
+    [print(i) for i in x]
     exit()
     leagues_map = getsUserLeaguesById()
 

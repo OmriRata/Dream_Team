@@ -5,6 +5,17 @@
     width: 100%;
     height: 100%;
 }
+.cont{
+    margin-bottom: 1%;
+    /* margin-top: 1%; */
+}
+.team-name{
+    border-radius: 20px ;
+    text-align: center ;
+    width: 40%; 
+    font-size: 20px;
+    /* height: 100%; */
+}
 .line2{
     background: url("../assets/soccer_field2.jpg")no-repeat; 
     background-size: 100% 95%; /* 50% of the element's width and height */
@@ -19,7 +30,7 @@
     background: url("../assets/soccer_field2.jpg")no-repeat; 
     background-size: 100% 95%; /*50% of the element's width and height */
     width: 635px;
-    height: 850px;
+    height: 800px;
     /* width: 100%; */
     /* max-width: 600px; */
     margin-right: 80px;

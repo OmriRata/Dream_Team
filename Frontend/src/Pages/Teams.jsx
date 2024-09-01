@@ -3,7 +3,7 @@ import LineUp from "../Components/LineUp";
 import CountdownTimer from "../Components/CountdownTimer";
 import "../style/Team.css";
 import Alert from '@mui/material/Alert';
-import { AlertDialog, RadioCards } from '@radix-ui/themes';
+import { AlertDialog, RadioCards ,Spinner} from '@radix-ui/themes';
 import { englandPlayers, playersData } from "../Data/data";
 import axios from "axios";
 import {NavLink} from 'react-router-dom'
@@ -18,7 +18,7 @@ import { emphasize } from "@mui/material";
 
 
 
-function Team(){
+function Teams(){
     const lineupRef = useRef()
     const btnRef = useRef()
     const [players,setPlayers] = useState([]);
@@ -31,9 +31,11 @@ function Team(){
     const [league_name,setLeagueName] = useState('')
     const [open,setOpen] = useState(false)
     const [isRoundStarted,setIsStarted] = useState(false)
+    const [isDate,setIsDate] = useState(false)
     const [date,setDate] = useState('')
-
     const handleOpen = () => setOpen(true);
+    const [isLoading,setIsLoading] = useState(true)
+
 
 
 
@@ -44,18 +46,35 @@ function Team(){
             });
             const data = response.data
             setLeagues(data)
-            console.log(data)
             setIsPlayers(true)
+            setIsLoading(false)
         }catch(error){
             console.log(error)
+            setIsLoading(false)
         }
     }
     useEffect(()=>{
         getPlayers()
         console.log(players)
-    },[])
+    },[date])
     
+    const getDates = async(leagueId)=>{
+        setIsDate(false)
+        setIsStarted(false)
+        try{
 
+        const response = await axios.post("/users/getLeagueDates", {
+            leagueId:leagueId,
+        });
+        const data = response.data
+        console.log(data)
+        setDate(data.date)
+        setIsStarted(data.isStarted)
+        setIsDate(true)
+        }catch(error){
+            console.log(error)
+        }
+    }
     const handleChange = (event) => {
         const _league_code = event.target.value
         setLeagueName(_league_code);
@@ -68,25 +87,21 @@ function Team(){
 
             return
         }
-        setDate(team.date)
-        setIsStarted(team.isStarted)
         setTeamId(team.team_id)
         setPlayers(team.players)
         setLeagueId(team.league_id)
+        getDates(team.league_id)
         setFlag(true)
     };
+
+    if(isLoading){
+        return <Spinner className='start-spinner' size="5" />
+
+    }
 
     return <div className="team">
         {isPlayers?
                 <Flex direction={'column'}>
-                    {flag&&<Flex className="fontStyle" direction={'column'}>
-                        {isRoundStarted?<span className="mod2" >
-                            Substitution Window Closed:
-                            </span>:<span>
-                            Substitution Window Open Time remaining:
-                            </span>}
-                    <CountdownTimer targetDate={date}/>
-                    </Flex>}
                     <FormControl style={{marginTop:'10px'}} fullWidth>
                         <InputLabel id="demo-simple-select-label">League Name</InputLabel>
                         <Select
@@ -102,7 +117,20 @@ function Team(){
                         })}
                         </Select>
                     </FormControl>
-                {!isRoundStarted && league_code?
+                    {isDate&&flag?<Flex className="fontStyle" direction={'column'}>
+                        {isRoundStarted?<><span className="close" >
+                            Substitution Window Closed
+                            </span><span className="close" >
+                            Will open in:
+                            </span></>:<><span className="open">
+                            Substitution Window Open:</span>
+                            <span className="open">Will close in:</span>
+                            </>}
+                            <CountdownTimer targetDate={date}/>
+                    </Flex>:
+                    flag&&<Spinner className='timer-spinner' size="5" />
+                    }
+                    {!isRoundStarted&&isDate&&flag?
                     <NavLink to={'/createTeam'} state={{leagueId:leagueId, team_id:team_id,league_code:league_code, players: players,isEditMode:true }}><Button  color="gray" variant="solid" highContrast className='updateBtn'>
                     Edit Lineup</Button>
                     </NavLink>
@@ -113,10 +141,11 @@ function Team(){
                     
             </Flex>
             :
-            <div>
-                You need to create a Team
-                <br></br>
-                <NavLink  style={{color:'black',backgroundColor:'green'}}  className="navLink" to="/createTeam">Create Team</NavLink>
+            <div className="create-league">
+                <Flex direction={'column'} className="container">
+                <span className="msg">You haven't created any teams yet! </span>
+                <NavLink  style={{color:'black'}}  className="navLink" to="/createLeague">Create League</NavLink>
+                </Flex>
             </div>
         }
         <AlertDialog.Root open={open}>
@@ -140,4 +169,4 @@ function Team(){
     </div>
 }
 
-export default Team;
+export default Teams;

@@ -106,12 +106,14 @@ def addTeam():
     amount = data.get('amount')
     players = data.get('players')
     username = data.get('username')
+    teamName = data.get('teamName')
     newTeam = {
         "league_code":league_code,
         "players":players,
         "username":username,
         "points" : 0,
-        "amount":amount
+        "amount":amount,
+        "teamName":teamName
     }
     id = teams_collection.insert_one(newTeam);
     print(id.inserted_id)
@@ -190,9 +192,12 @@ def getLeagues():
             team = teams_collection.find_one({'league_code':code,'username':user})
             if team:
                 amount = '30M'
+                teamName = 'teamName'
                 if 'amount' in team:
                     amount = team['amount']
-                userInfo = {'user':user,'points':team['points'] ,'amount':amount}
+                if 'teamName' in team:
+                    teamName = team['teamName']
+                userInfo = {'user':user,'points':team['points'] ,'amount':amount,'teamName':teamName}
             else:
                 print(user,code)
                 userInfo = {'user':user,'points':0 }

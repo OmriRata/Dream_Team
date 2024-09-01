@@ -11,7 +11,7 @@ import '@radix-ui/themes/styles.css';
 import TeamBuilder from './Pages/TeamBuilder';
 import Leagues from './Pages/Leagues';
 import JoinLeague from './Pages/JoinLeague';
-import Team from './Pages/Team';
+import Team from './Pages/Teams';
 import PrivateRoutes from './Components/PrivateRoutes';
 import ExplanationPage from './Pages/ExplanationPage';
 import useToken from './Components/useToken';
@@ -39,7 +39,6 @@ function App() {
               </Route>
               <Route path="/" element={< Home c={ setPage }/> }/>
               <Route path="/login" element={< Login setToken={ setToken } /> } />
-              {/* <Route path="/res" element={< ResetPassword/>} />   */}
               <Route path="/register" element={< Register />}/>
               <Route path="/ExplanationPage" element={< ExplanationPage />}/>
           </Routes>

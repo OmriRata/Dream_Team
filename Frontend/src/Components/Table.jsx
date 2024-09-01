@@ -88,7 +88,7 @@ export default function CustomizedTables(props) {
                             <StyledTableCell align="left" component="th" scope="row">
                                 {participant.user}
                             </StyledTableCell>
-                            <StyledTableCell align="left">{participant.name || 'Unnamed Team'}</StyledTableCell> {/* Display Team Name */}
+                            <StyledTableCell align="left">{participant.teamName }</StyledTableCell> {/* Display Team Name */}
                             <StyledTableCell align="left">
                                 <Button onClick={() => handleShowTeam(participant.user)}>
                                     Show Team

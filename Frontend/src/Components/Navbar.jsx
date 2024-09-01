@@ -39,10 +39,10 @@ function Navbar(props){
                 { isConnected?(
                     <>
                     <li>
-                        <NavLink className="navLink" to="/team">Team</NavLink>
+                        <NavLink className="navLink" to="/team">My Teams</NavLink>
                     </li>
                     <li>
-                        <NavLink className="navLink" to="/leagues">Leagues</NavLink>
+                        <NavLink className="navLink" to="/leagues">My Leagues</NavLink>
                     </li>
                     <li>
                         <NavLink onClick={()=>logout()}className="navLink" to="/">Logout</NavLink>

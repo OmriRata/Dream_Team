@@ -17,7 +17,6 @@ SEASON = "2024"
 
 def getCurrentRound(leagueId):
     querystring = {"league":leagueId,"season":SEASON,"current":'true'}
-
     response = requests.get(URL+'fixtures/rounds', headers=HEADERS, params=querystring)
     return response.json()['response'][0]
 
@@ -61,11 +60,12 @@ def checkIsStarted(leagueId):
     sorted = getSortedTime(firstMatch)
     if sorted[0][0] == 'now':
         return False,firstMatch[1].strftime('%Y-%m-%d %H:%M:%S %Z')
-    else:
+    else:   
         lastMatch = getEndDate(leagueId)
         return True , lastMatch[1].strftime('%Y-%m-%d %H:%M:%S %Z')
 
 def main():
+    pass
     leagueId = '39'
     firstMatch = getStartDate(leagueId)
     sorted =getSortedTime(firstMatch)

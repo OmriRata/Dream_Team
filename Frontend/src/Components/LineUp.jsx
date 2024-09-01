@@ -14,6 +14,8 @@ function LineUp(props) {
     const btnRef = useRef();
     const [errorMsg,setError] = useState('You Need to Choose 11 players')
     const [open, setOpen] = useState(false);
+    const [teamName, setTeamName] = useState('');
+
 
     // const errorMsg= 'You Need to Choose 11 players';
     const checkPlayers = ()=>{
@@ -67,11 +69,15 @@ function LineUp(props) {
         if(!checkPlayers()){
             setOpen(true)
             return
+        }else if(teamName==''||teamName==' '){
+            setError('Enter your team Name')
+            setOpen(true)
         }
         else{
             try {
                 const response = await axios.post('/users/addTeam', {
                     players : props.players,
+                    teamName:teamName,
                     league_code:league_code,
                     amount:props.amount,
                     username:localStorage.getItem("username")
@@ -105,7 +111,12 @@ function LineUp(props) {
     }
     return (
         <div className='line-up'>
-            {isCreateMode?<h1 className='teamH1'>Amount: {props.amount}</h1>:<></>}
+            {isCreateMode?<Flex className='cont' direction={'row'} gap={'5'}>
+                    {!props.isEditMode&&<input className='team-name' onChange={e=>setTeamName(e.target.value)}  placeholder={'Team Name:'} />}
+                    <h1 className='teamH1'>Amount: {props.amount}</h1>
+            </Flex>
+            :<></>
+            }
             <Flex className={isCreateMode?'line':"line2"} direction="column" rows="4" gap="3" width="auto">
                 <div id='goalkeeper' className='position goalkeeper'>
                     {
