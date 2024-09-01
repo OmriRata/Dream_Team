@@ -9,8 +9,10 @@ import hashlib
 from bson.objectid import ObjectId
 from bson import json_util
 import os
-from utils.util import checkIsStarted
+from utils.util import checkIsStarted,getCurrentRound
 import re
+import pytz
+
 
 
 user = Blueprint('user',__name__)
@@ -19,7 +21,7 @@ user = Blueprint('user',__name__)
 DB_URL = "mongodb://localhost:27017/"
 DB_URL1 = os.getenv('DB_URL')
 client = pymongo.MongoClient(DB_URL)
-db = client.myDb
+db = client.DreamTeam
 users_collection = db.users
 league_collection=db.league
 teams_collection=db.teams
@@ -109,13 +111,16 @@ def addTeam():
     players = data.get('players')
     username = data.get('username')
     teamName = data.get('teamName')
+    leagueId = data.get('leagueId')
+    date = datetime.fromisoformat(str(datetime.now(pytz.utc)))
     newTeam = {
         "league_code":league_code,
         "players":players,
         "username":username,
         "points" : 0,
         "amount":amount,
-        "teamName":teamName
+        "teamName":teamName,
+        "createdDate" : date
     }
     id = teams_collection.insert_one(newTeam);
     print(id.inserted_id)

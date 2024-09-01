@@ -2,7 +2,8 @@ from dotenv import load_dotenv
 import os
 # from updatePlayerPoints import getLeagueGames
 import pytz
-from datetime import datetime
+from datetime import datetime ,date,timedelta
+
 import requests
 
 load_dotenv('/home/omrirata/DreamTeam/Dream_Team/Beckend/.env')
@@ -44,7 +45,11 @@ def getEndDate(leagueId):
 
     parsed_events.sort(key=lambda x: x[1])
     parsed_events.reverse()
-    return parsed_events[0]
+    game_id = parsed_events[0][0]
+    new_date = parsed_events[0][1] + timedelta(days=1)
+    new_date = new_date.replace(hour=7, minute=0, second=0) # the Substitution Window will open day after the last match of the league 
+
+    return (game_id,new_date)
 
 
 def getSortedTime(firstMatch):
@@ -65,11 +70,14 @@ def checkIsStarted(leagueId):
         return True , lastMatch[1].strftime('%Y-%m-%d %H:%M:%S %Z')
 
 def main():
-    pass
+    # pass
     leagueId = '39'
+    print(getCurrentRound(leagueId))
+    exit()
     firstMatch = getStartDate(leagueId)
     sorted =getSortedTime(firstMatch)
     lastMatch = getEndDate(leagueId)
+    # checkIsStarted
 
 if __name__ == "__main__":
     main()

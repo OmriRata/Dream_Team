@@ -78,6 +78,7 @@ function LineUp(props) {
                 const response = await axios.post('/users/addTeam', {
                     players : props.players,
                     teamName:teamName,
+                    leagueId:props.leagueId,
                     league_code:league_code,
                     amount:props.amount,
                     username:localStorage.getItem("username")

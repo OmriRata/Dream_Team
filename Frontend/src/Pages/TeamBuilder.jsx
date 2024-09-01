@@ -22,7 +22,7 @@ return (
                 <PlayerSelection leagueId={leagueId} setAmount={setAmount} setPlayers={setPlayers} players={players} />
             </div>
             <div className='Line-up'>
-                <LineUp team_id={team_id} league_code={league_code} isEditMode={isEditMode?true:false} amount={amount} isCreate={true} players={players} setPlayers={setPlayers}/>
+                <LineUp team_id={team_id} league_code={league_code} isEditMode={isEditMode?true:false} amount={amount} isCreate={true} leagueId={leagueId} players={players} setPlayers={setPlayers}/>
             </div>
         </Flex>
 )

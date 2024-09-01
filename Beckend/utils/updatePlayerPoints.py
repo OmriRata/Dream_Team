@@ -2,9 +2,12 @@ import requests
 from dotenv import load_dotenv
 import os
 import pymongo
-from datetime import date,timedelta
+from datetime import date,timedelta,datetime
 from bson.objectid import ObjectId
 import math
+import pytz
+
+from util import getSortedTime,getStartDate,getCurrentRound,getGamesByRound
 
 
 
@@ -28,7 +31,7 @@ SEASON = "2024"
 DB_URL = "mongodb://localhost:27017/"
 DB_URL1 = os.getenv('DB_URL')
 client = pymongo.MongoClient(DB_URL)
-db = client.myDb
+db = client.DreamTeam
 users_collection = db.users
 league_collection=db.league
 teams_collection=db.teams
@@ -44,7 +47,25 @@ def getsUserLeaguesById():
         leagues_map[leagueId] = x 
     return leagues_map
 
+def isInTheMiddleRound(createdDate,leagueId):
+    timezone = pytz.timezone('UTC')
+    firstMatch =  getStartDate(leagueId)
+    lastMatch =  getEndDate(leagueId)
+    created = ('created',timezone.localize(datetime.fromisoformat(str(createdDate))))
+    lst = [firstMatch,lastMatch,created]
+    lst.sort(key=lambda x: x[1])
 
+    return lst[1][0] == 'created'
+
+def getEndDate(leagueId):
+    round = getCurrentRound(leagueId)
+    games = getGamesByRound(leagueId,round)
+    teams = [(i['fixture']['id'],i['fixture']['date'])for i in games ]
+    parsed_events = [(id, datetime.fromisoformat(time)) for id, time in teams]
+
+    parsed_events.sort(key=lambda x: x[1])
+    parsed_events.reverse()
+    return parsed_events[0]
 
 def getLeagueGames(leagueId):
     fixtures = []
@@ -194,18 +215,11 @@ def getPlayersByLeague(league_id):
     
     # response = requests.get(URL+"players", headers=HEADERS, params=querystring)
     response = requests.get(URL+"players/squads", headers=HEADERS, params=querystring)
-    print(response.json()['paging'])
     # print(response.json())
     x = response.json()['response'][0]['players']
     x = [i['name'] for i in x ]
     return x
 def main():
-    print("main")
-    
-    x = getPlayersByLeague('140')
-    print(len(x))
-    [print(i) for i in x]
-    exit()
     leagues_map = getsUserLeaguesById()
 
     # leagues_map = {'2':[37733397]}  # example for league with 1 team that i created to test
@@ -247,8 +261,11 @@ def main():
             teams = teams_collection.find({'league_code':league_code})
             total_teams += list(teams)
         for team in list(total_teams):
-            new_points = calculatePoints(team,goals,assists,played,played60,ownGoal,commitedPenalty,missPenalty,wonPenalty,yellowCard,redCard,cleanSheet,penaltySave,threeSaves);
-            updatePoints(team,new_points)   # update the points on the database
+            if isInTheMiddleRound(team['createdDate'],league):
+                pass
+            else:
+                new_points = calculatePoints(team,goals,assists,played,played60,ownGoal,commitedPenalty,missPenalty,wonPenalty,yellowCard,redCard,cleanSheet,penaltySave,threeSaves);
+                updatePoints(team,new_points)   # update the points on the database
 
 
 if __name__ == "__main__":
