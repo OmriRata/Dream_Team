@@ -20,7 +20,7 @@ user = Blueprint('user',__name__)
 
 DB_URL = "mongodb://localhost:27017/"
 DB_URL1 = os.getenv('DB_URL')
-client = pymongo.MongoClient(DB_URL)
+client = pymongo.MongoClient(DB_URL1)
 db = client.DreamTeam
 users_collection = db.users
 league_collection=db.league

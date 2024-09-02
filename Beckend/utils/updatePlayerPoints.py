@@ -30,7 +30,7 @@ SEASON = "2024"
 
 DB_URL = "mongodb://localhost:27017/"
 DB_URL1 = os.getenv('DB_URL')
-client = pymongo.MongoClient(DB_URL)
+client = pymongo.MongoClient(DB_URL1)
 db = client.DreamTeam
 users_collection = db.users
 league_collection=db.league
@@ -259,7 +259,10 @@ def main():
         total_teams = []
         for league_code in leagues_map[league]:
             teams = teams_collection.find({'league_code':league_code})
-            total_teams += list(teams)
+            teams = list(teams) 
+            # print(teams)
+            if len(teams) >=2: # if there is more then 1 team in the league  
+                total_teams += teams
         for team in list(total_teams):
             if isInTheMiddleRound(team['createdDate'],league):
                 pass
